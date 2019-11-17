@@ -1,0 +1,22 @@
+{
+  "name": "boksl-moneny-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "Boksl",
+    "복슬이",
+    "복슬가계부",
+    "BokslMoney",
+    "household account book",
+    "Electron"
+  ],
+  "author": "setvect",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^7.1.1"
+  }
+}

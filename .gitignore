@@ -1,0 +1,6 @@
+### web ##
+/node_modules/
+
+### ETC ###
+#/.vscode/
+/logs/
