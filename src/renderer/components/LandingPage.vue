@@ -4,7 +4,7 @@
     <main>
       <div class="left-side">
         <span class="title">
-          안녕 복슬이..
+          안녕 복슬이...
         </span>
         <system-information></system-information>
       </div>
