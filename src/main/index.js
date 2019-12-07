@@ -1,7 +1,29 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import {
+  app,
+  BrowserWindow
+} from 'electron'
+console.log('###############111111111111111111111111')
 
+var sqlite3 = require('sqlite3').verbose()
+var db = new sqlite3.Database(':memory:')
+
+db.serialize(function () {
+  db.run('CREATE TABLE lorem (info TEXT)')
+
+  var stmt = db.prepare('INSERT INTO lorem VALUES (?)')
+  for (var i = 0; i < 10; i++) {
+    stmt.run('Ipsum ' + i)
+  }
+  stmt.finalize()
+
+  db.each('SELECT rowid AS id, info FROM lorem', function (_err, row) {
+    console.log(row.id + ': ' + row.info)
+  })
+})
+
+db.close()
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -11,9 +33,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
 function createWindow () {
   /**
