@@ -4,30 +4,51 @@ import {
   app,
   BrowserWindow
 } from 'electron'
-console.log('###############111111111111111111111111')
 
-var sqlite3 = require('sqlite3').verbose()
-var db = new sqlite3.Database(':memory:')
+const {
+  Sequelize,
+  DataTypes
+} = require('sequelize')
 
-db.serialize(function () {
-  db.run('CREATE TABLE lorem (info TEXT)')
-
-  var stmt = db.prepare('INSERT INTO lorem VALUES (?)')
-  for (var i = 0; i < 10; i++) {
-    stmt.run('Ipsum ' + i)
-  }
-  stmt.finalize()
-
-  db.each('SELECT rowid AS id, info FROM lorem', function (_err, row) {
-    console.log(row.id + ': ' + row.info)
-  })
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: 'db/test.db'
 })
 
-db.close()
-/**
- * Set `__static` path to static files in production
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
- */
+let Memo = sequelize.define('Memo', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  body: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  reg_date: {
+    type: DataTypes.DATE,
+    allowNull: true
+  }
+}, {
+  classMethods: {},
+  tableName: 'Memo',
+  freezeTableName: true,
+  underscored: true,
+  timestamps: false
+})
+
+Memo.sync().then(() => Memo.create({
+  title: '복슬이',
+  body: 'Sequelize.js is ORM for Node.js.',
+  reg_date: new Date()
+})).then(boksl => {
+  console.log('boksl :', boksl)
+})
+
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
