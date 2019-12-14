@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     loginProc () {
+      Swal.fire('로그인 실패', '아이디 또는 비밀번호가 틀렸다.', 'error')
     }
   },
   mounted () {

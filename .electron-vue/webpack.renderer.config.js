@@ -186,13 +186,16 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    }),
-    new webpack.ProvidePlugin({
-      // node_moudles
-      Swal: "sweetalert2",
-      // 직접 만든거
     })
   )
 }
+rendererConfig.plugins.push(
+  new webpack.ProvidePlugin({
+    // node_moudles
+    Swal: "sweetalert2",
+    // 직접 만든거
+  })
+)
+
 
 module.exports = rendererConfig
