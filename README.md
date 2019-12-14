@@ -14,6 +14,8 @@ npm run dev
 # build electron application for production
 npm run build
 
+./build/ 폴더에 실행파일 만들어짐.
+
 # run unit & end-to-end tests
 npm test
 
