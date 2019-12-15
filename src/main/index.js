@@ -5,49 +5,11 @@ import {
   BrowserWindow
 } from 'electron'
 
-const {
-  Sequelize,
-  DataTypes
-} = require('sequelize')
-
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: 'db/test.db'
-})
-
-let Memo = sequelize.define('Memo', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  body: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  },
-  reg_date: {
-    type: DataTypes.DATE,
-    allowNull: true
-  }
-}, {
-  classMethods: {},
-  tableName: 'Memo',
-  freezeTableName: true,
-  underscored: true,
-  timestamps: false
-})
-
-Memo.sync().then(() => Memo.create({
-  title: '복슬이',
-  body: 'Sequelize.js is ORM for Node.js.',
-  reg_date: new Date()
-})).then(boksl => {
-  // console.log('boksl :', boksl)
-})
+import memo from './orm/memo-vo.js'
+console.log('init start')
+memo.init()
+console.log('init end')
+memo.addMemo()
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
