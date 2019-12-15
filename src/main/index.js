@@ -8,10 +8,10 @@ import {
 import memoVo from './module/memo/memo-vo.js'
 import memoEvent from './module/memo/memo-event.js'
 import menu from './menu.js'
+import util from './util.js'
 
-const fs = require('fs')
-const dir = './db'
-!fs.existsSync(dir) && fs.mkdirSync('./db')
+// 0. 디렉토리 생성
+util.makeDir('./db')
 
 // 1. 윈도우 메뉴 초기화
 menu.init()
