@@ -6,7 +6,13 @@ import {
 } from 'electron'
 
 import memo from './orm/memo-vo.js'
-memo.init(() => { memo.addMemo() })
+import menu from './menu.js'
+
+memo.init(() => {
+  memo.addMemo()
+})
+
+menu.init()
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
@@ -15,7 +21,9 @@ if (process.env.NODE_ENV !== 'development') {
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
-const { ipcMain } = require('electron')
+const {
+  ipcMain
+} = require('electron')
 
 ipcMain.on('asynchronous-message', (event, arg) => {
   console.log('arg :', arg)
