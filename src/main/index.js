@@ -5,14 +5,18 @@ import {
   BrowserWindow
 } from 'electron'
 
-import memo from './orm/memo-vo.js'
+import memoVo from './module/memo/memo-vo.js'
+import memoEvent from './module/memo/memo-event.js'
 import menu from './menu.js'
 
-memo.init(() => {
-  memo.addMemo()
-})
-
+// 1. 윈도우 메뉴 초기화
 menu.init()
+
+// 2. 각 모듈 초기화
+memoVo.init(() => {
+  memoVo.addMemo()
+})
+memoEvent.init()
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
@@ -20,20 +24,6 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
-
-const {
-  ipcMain
-} = require('electron')
-
-ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log('arg :', arg)
-  event.sender.send('asynchronous-reply', 'pong asynchronous')
-})
-
-ipcMain.on('synchronous-message', (event, arg) => {
-  console.log('@@@@@', arg) // "ping" 출력
-  event.returnValue = 'pong synchronous'
-})
 
 function createWindow () {
   /**
