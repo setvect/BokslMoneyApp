@@ -1,6 +1,6 @@
 export default {
   Memo: null,
-  init () {
+  async init (callback) {
     const {
       Sequelize,
       DataTypes
@@ -35,17 +35,13 @@ export default {
       underscored: true,
       timestamps: false
     })
-    console.log('sync start')
-    this.Memo.sync()
-    console.log('sync end')
+    await this.Memo.sync().then(() => callback())
   },
   addMemo () {
-    console.log('add start')
     this.Memo.create({
       title: '복슬이',
       body: 'Sequelize.js is ORM for Node.js.',
       reg_date: new Date()
     })
-    console.log('add end')
   }
 }

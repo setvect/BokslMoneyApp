@@ -6,10 +6,7 @@ import {
 } from 'electron'
 
 import memo from './orm/memo-vo.js'
-console.log('init start')
-memo.init()
-console.log('init end')
-memo.addMemo()
+memo.init(() => { memo.addMemo() })
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
