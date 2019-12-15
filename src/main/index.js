@@ -9,6 +9,10 @@ import memoVo from './module/memo/memo-vo.js'
 import memoEvent from './module/memo/memo-event.js'
 import menu from './menu.js'
 
+const fs = require('fs')
+const dir = './db'
+!fs.existsSync(dir) && fs.mkdirSync('./db')
+
 // 1. 윈도우 메뉴 초기화
 menu.init()
 
