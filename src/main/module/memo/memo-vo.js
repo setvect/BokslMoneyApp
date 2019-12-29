@@ -1,17 +1,13 @@
+import connSeque from '../connSeque.js'
+
 export default {
   Memo: null,
   async init (callback) {
     const {
-      Sequelize,
       DataTypes
     } = require('sequelize')
 
-    const sequelize = new Sequelize({
-      dialect: 'sqlite',
-      storage: 'db/test.db'
-    })
-
-    this.Memo = sequelize.define('Memo', {
+    this.Memo = connSeque.define('Memo', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -41,7 +37,7 @@ export default {
   addMemo () {
     this.Memo.create({
       title: '복슬이',
-      body: 'Sequelize.js is ORM for Node.js.',
+      body: '12345',
       reg_date: new Date()
     })
   }
