@@ -1,6 +1,4 @@
-import {
-  ipcMain
-} from 'electron'
+import { ipcMain } from 'electron'
 
 export default {
   init () {
