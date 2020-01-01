@@ -4,7 +4,7 @@ export default {
   init (callback) {
     userVo.sync().then(() => callback())
   },
-  addUser () {
-    userVo.create({ userId: 'boksl', name: '복슬이', password: '1234', deleteF: false })
+  addUser (userItem) {
+    userVo.create(userItem)
   }
 }

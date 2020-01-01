@@ -6,19 +6,20 @@ const userVo = connSeque.define(
   {
     userId: {
       type: DataTypes.STRING(20),
+      allowNull: false,
       primaryKey: true
     },
     name: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING(60),
-      allowNull: true
+      allowNull: false
     },
     deleteF: {
       type: DataTypes.BOOLEAN,
-      allowNull: true,
+      allowNull: false,
       defaultValue: false
     }
   },

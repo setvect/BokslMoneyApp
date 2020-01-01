@@ -18,9 +18,16 @@ menu.init()
 
 // 2. 각 모듈 초기화
 userRepository.init(() => {
-  userRepository.addUser()
+  userRepository.addUser({ userId: 'boksl', name: '복슬이111', password: '1234', deleteF: false })
 })
 memoEvent.init()
+
+// const bcrypt = require('bcrypt')
+// console.log('bcrypt :', bcrypt)
+// bcrypt.hash('keyword', null, null, (err, hash) => {
+//   console.log('err 11111111111111:', err)
+//   console.log('hash 2222222222222222 :', hash)
+// })
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
