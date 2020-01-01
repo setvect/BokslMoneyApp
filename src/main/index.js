@@ -1,14 +1,11 @@
 'use strict'
 
-import {
-  app,
-  BrowserWindow
-} from 'electron'
+import { app, BrowserWindow } from 'electron'
 
-import userRepository from './module/user/user-repository.js'
 import memoEvent from './module/memo/memo-event.js'
 import menu from './menu.js'
 import util from './util.js'
+import userVo from './module/user/user-vo.js'
 
 // 0. 디렉토리 생성
 util.makeDir('./db')
@@ -17,17 +14,29 @@ util.makeDir('./db')
 menu.init()
 
 // 2. 각 모듈 초기화
-userRepository.init(() => {
-  var bcrypt = require('bcryptjs')
-  var salt = bcrypt.genSaltSync(10)
-  var hash = bcrypt.hashSync('1234', salt)
+userVo
+  .sync()
+  .then(() => {
+    return userVo.findAll()
+  }).then((users) => {
+    console.log('users.length:', users.length)
+    if (users.length === 0) {
+      console.log('add User')
+      let hash = util.encodeBcrypt('1234')
+      // 기본 사용자 등록
+      return userVo.create({ userId: 'boksl', name: '복슬이', password: hash, deleteF: false })
+    } else {
+      return null
+    }
+  })
+  .catch(util.errorLog)
 
-  userRepository.addUser({ userId: 'boksl', name: '복슬이111', password: hash, deleteF: false })
-})
 memoEvent.init()
 
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  global.__static = require('path')
+    .join(__dirname, '/static')
+    .replace(/\\/g, '\\\\')
 }
 
 let mainWindow
