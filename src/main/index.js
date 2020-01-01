@@ -5,7 +5,7 @@ import {
   BrowserWindow
 } from 'electron'
 
-import memoRepository from './module/memo/memo-repository.js'
+import userRepository from './module/user/user-repository.js'
 import memoEvent from './module/memo/memo-event.js'
 import menu from './menu.js'
 import util from './util.js'
@@ -17,8 +17,8 @@ util.makeDir('./db')
 menu.init()
 
 // 2. 각 모듈 초기화
-memoRepository.init(() => {
-  memoRepository.addMemo()
+userRepository.init(() => {
+  userRepository.addUser()
 })
 memoEvent.init()
 

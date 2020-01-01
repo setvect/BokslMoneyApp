@@ -9,7 +9,6 @@ Column Name | Attribute Name | Key | Type | Len | Not Null | Description
 USER_ID|아아디|PK|varchar|20|N|
 NAME|이름| |varchar|50|N|
 PASSWD|비밀번호| |varchar|60|N|
-EMAIL|이메일| |varchar|100|N|
 DELETE_F|삭제 여부| |char|1|N|Y, N
 
 ## 가계부
