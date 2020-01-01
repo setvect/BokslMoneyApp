@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
     "bootstrap-vue": "^2.1.0",
     "jquery": "^3.4.1",
     "sequelize": "^5.21.2",
