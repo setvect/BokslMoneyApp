@@ -25,7 +25,7 @@ userVo
       return null
     }
     console.log('add User')
-    let hash = util.encodeBcrypt('1234')
+    const hash = util.encodeBcrypt('1234')
     // 기본 사용자 등록
     return userVo.create({ userId: 'boksl', name: '복슬이', password: hash, deleteF: false })
   })
@@ -40,7 +40,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow
-const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
+const winURL = process.env.NODE_ENV === 'development' ? 'http://localhost:9080' : `file://${__dirname}/index.html`
 
 function createWindow() {
   /**
