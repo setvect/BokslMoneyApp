@@ -115,17 +115,7 @@ function startMain() {
 
 function startElectron() {
   var args = ['--inspect=5858', path.join(__dirname, '../dist/electron/main.js')]
-
-  console.log('process :', process);
-  console.log('process.env :', process.env);
-  console.log('process.env.npm_execpath :', process.env.npm_execpath);
-  // detect yarn or npm and process commandline args accordingly
-  if (process.env.npm_execpath.endsWith('yarn.js')) {
-    args = args.concat(process.argv.slice(3))
-  } else if (process.env.npm_execpath.endsWith('npm-cli.js')) {
-    args = args.concat(process.argv.slice(2))
-  }
-
+  args = args.concat(process.argv.slice(2))
   electronProcess = spawn(electron, args)
 
   electronProcess.stdout.on('data', data => {
