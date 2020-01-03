@@ -52,8 +52,13 @@ function createWindow() {
     width: 1200,
   })
 
-  mainWindow.loadURL(winURL)
+  const path = require('path')
+  const os = require('os')
+  const debugToolPath = path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/nhdogjmejiglipccpnnnanhbledajbpd/5.3.3_0')
+  console.log('debugToolPath: ', debugToolPath)
+  BrowserWindow.addDevToolsExtension(debugToolPath)
 
+  mainWindow.loadURL(winURL)
   mainWindow.on('closed', () => {
     mainWindow = null
   })
