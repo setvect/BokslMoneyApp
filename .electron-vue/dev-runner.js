@@ -127,7 +127,7 @@ function startElectron () {
   }
 
   electronProcess = spawn(electron, args)
-  
+
   electronProcess.stdout.on('data', data => {
     electronLog(data, 'blue')
   })
@@ -158,17 +158,10 @@ function electronLog (data, color) {
 }
 
 function greeting () {
-  const cols = process.stdout.columns
-  let text = ''
-
-  if (cols > 104) text = 'electron-vue'
-  else if (cols > 76) text = 'electron-|vue'
-  else text = false
-
+  const text = 'BokslMoney'
   if (text) {
     say(text, {
-      colors: ['yellow'],
-      font: 'simple3d',
+      font: 'block',
       space: false
     })
   } else console.log(chalk.yellow.bold('\n  electron-vue'))
