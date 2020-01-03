@@ -20,15 +20,16 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 0,
     'comma-dangle': [
-      'never',
+      'off',
       {
-        arrays: 'never',
-        objects: 'never',
-        imports: 'never',
-        exports: 'never',
-        functions: 'never',
+        arrays: 'off',
+        objects: 'off',
+        imports: 'off',
+        exports: 'off',
+        functions: 'off',
       },
     ],
+    'space-before-function-paren': ['off'],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
   },

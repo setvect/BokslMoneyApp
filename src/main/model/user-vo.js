@@ -1,4 +1,4 @@
-import connSeque from '../connSeque.js'
+import connSeque from './connSeque.js'
 const { DataTypes } = require('sequelize')
 
 const userVo = connSeque.define(

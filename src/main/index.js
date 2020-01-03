@@ -5,7 +5,7 @@ import { app, BrowserWindow } from 'electron'
 import memoEvent from './module/memo/memo-event.js'
 import menu from './menu.js'
 import util from './util.js'
-import userVo from './module/user/user-vo.js'
+import userVo from './model/user-vo.js'
 
 // 0. 디렉토리 생성
 util.makeDir('./db')
@@ -18,16 +18,16 @@ userVo
   .sync()
   .then(() => {
     return userVo.findAll()
-  }).then((users) => {
+  })
+  .then(users => {
     console.log('users.length:', users.length)
-    if (users.length === 0) {
-      console.log('add User')
-      let hash = util.encodeBcrypt('1234')
-      // 기본 사용자 등록
-      return userVo.create({ userId: 'boksl', name: '복슬이', password: hash, deleteF: false })
-    } else {
+    if (users.length !== 0) {
       return null
     }
+    console.log('add User')
+    let hash = util.encodeBcrypt('1234')
+    // 기본 사용자 등록
+    return userVo.create({ userId: 'boksl', name: '복슬이', password: hash, deleteF: false })
   })
   .catch(util.errorLog)
 
@@ -42,14 +42,14 @@ if (process.env.NODE_ENV !== 'development') {
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
-function createWindow () {
+function createWindow() {
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
     height: 800,
     useContentSize: true,
-    width: 1200
+    width: 1200,
   })
 
   mainWindow.loadURL(winURL)

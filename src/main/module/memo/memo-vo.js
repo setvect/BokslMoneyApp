@@ -1,4 +1,4 @@
-import connSeque from '../connSeque.js'
+import connSeque from '../../model/connSeque.js/index.js'
 const { DataTypes } = require('sequelize')
 
 const memoVo = connSeque.define(
@@ -7,28 +7,28 @@ const memoVo = connSeque.define(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     body: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: true,
     },
     reg_date: {
       type: DataTypes.DATE,
-      allowNull: true
-    }
+      allowNull: true,
+    },
   },
   {
     classMethods: {},
     tableName: 'Memo',
     freezeTableName: true,
     underscored: true,
-    timestamps: false
-  }
+    timestamps: false,
+  },
 )
 
 export default memoVo
