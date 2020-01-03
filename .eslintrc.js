@@ -19,6 +19,17 @@ module.exports = {
   },
   plugins: ['html', 'vue'],
   rules: {
-
+    semi: ['error', 'never'], // 세미콜론 사용 안함.
+    indent: ['error', 2],
+    'comma-dangle': [
+      'error',
+      {
+        arrays: 'never',
+        objects: 'always',
+        imports: 'never',
+        exports: 'never',
+        functions: 'never',
+      },
+    ],
   },
 }

@@ -18,5 +18,5 @@ export default{
   // promise 에러 처리. 공통
   errorLog (err) {
     console.error('err :', err)
-  }
+  },
 }

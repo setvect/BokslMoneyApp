@@ -27,7 +27,7 @@ userVo
     console.log('add User')
     const hash = util.encodeBcrypt('1234')
     // 기본 사용자 등록
-    return userVo.create({ userId: 'boksl', name: '복슬이', password: hash, deleteF: false })
+    return userVo.create({ userId: 'boksl', name: '복슬이', password: hash, deleteF: false, })
   })
   .catch(util.errorLog)
 

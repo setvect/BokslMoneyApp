@@ -1,5 +1,5 @@
 import connSeque from './connSeque.js'
-const { DataTypes } = require('sequelize')
+const { DataTypes, } = require('sequelize')
 
 const userVo = connSeque.define(
   'user',
@@ -7,28 +7,28 @@ const userVo = connSeque.define(
     userId: {
       type: DataTypes.STRING(20),
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING(60),
-      allowNull: false
+      allowNull: false,
     },
     deleteF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false
-    }
+      defaultValue: false,
+    },
   },
   {
     classMethods: {},
     tableName: 'TBAA_USER',
     freezeTableName: true,
     underscored: true,
-    timestamps: false
+    timestamps: false,
   }
 )
 

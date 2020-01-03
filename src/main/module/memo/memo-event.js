@@ -11,5 +11,5 @@ export default {
       console.log('@@@@@', arg) // "ping" 출력
       event.returnValue = 'pong synchronous'
     })
-  }
+  },
 }

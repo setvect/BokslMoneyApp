@@ -23,9 +23,9 @@ export default {
   data () {
     return {
       form: {
-        password: ''
+        password: '',
       },
-      redirect: undefined
+      redirect: undefined,
     }
   },
   watch: {
@@ -33,8 +33,8 @@ export default {
       handler (route) {
         this.redirect = route.query && route.query.redirect
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   beforeCreate () {
     document.body.className = 'login'
@@ -44,17 +44,17 @@ export default {
       console.log('process :', process)
       // Swal.fire('로그인 실패', '아이디 또는 비밀번호가 틀렸다.', 'error')
       // renderer 프로세스(웹 페이지)안에서
-      const { ipcRenderer } = require('electron')
+      const { ipcRenderer, } = require('electron')
       console.log('synchronous', ipcRenderer.sendSync('synchronous-message', 'ping 복슬이')) // "pong"이 출력됩니다.
 
       ipcRenderer.on('asynchronous-reply', (event, arg) => {
         console.log('asynchronous', arg) // "pong"이 출력됩니다.
       })
       ipcRenderer.send('asynchronous-message', 'ping')
-    }
+    },
   },
   mounted () {
     this.$refs.password.$el.focus()
-  }
+  },
 }
 </script>

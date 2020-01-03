@@ -7,12 +7,12 @@ export default {
     const template = [{
       role: 'Window',
       submenu: [{
-        role: 'minimize'
+        role: 'minimize',
       },
       {
-        role: 'close'
+        role: 'close',
       }
-      ]
+      ],
     },
     {
       role: 'Help',
@@ -20,19 +20,19 @@ export default {
         label: 'Toggle DevTools',
         click (item, focusedWindow) {
           focusedWindow.toggleDevTools()
-        }
+        },
       },
       {
         label: 'Learn More',
         click () {
           require('electron').shell.openExternal('https://github.com/setvect/BokslMoneyApp')
-        }
+        },
       }
-      ]
+      ],
     }
     ]
 
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
-  }
+  },
 }
