@@ -49,7 +49,10 @@ let mainConfig = {
     path: path.join(__dirname, '../dist/electron')
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.SourceMapDevToolPlugin({
+      filename: "[name].js.map"
+    }),
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
   resolve: {
     extensions: ['.js', '.json', '.node']

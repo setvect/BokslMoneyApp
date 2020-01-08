@@ -6,6 +6,7 @@ import memoEvent from './module/memo/memo-event.js'
 import menu from './menu.js'
 import util from './util.js'
 import userVo from './model/user-vo.js'
+import accountVo from './model/account-vo.js'
 
 // 0. 디렉토리 생성
 util.makeDir('./db')
@@ -30,6 +31,8 @@ userVo
     return userVo.create({ userId: 'boksl', name: '복슬이', password: hash, deleteF: false, })
   })
   .catch(util.errorLog)
+
+accountVo.sync().then(() => console.log('account ..'))
 
 memoEvent.init()
 

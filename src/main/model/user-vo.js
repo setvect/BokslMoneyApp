@@ -25,7 +25,7 @@ const userVo = connSeque.define(
   },
   {
     classMethods: {},
-    tableName: 'TBAA_USER',
+    tableName: 'AA_USER',
     freezeTableName: true,
     underscored: true,
     timestamps: false,

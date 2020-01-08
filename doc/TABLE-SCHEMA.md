@@ -2,7 +2,7 @@
 
 ## 회원관리
 
-- TBAA_USER: 회원
+- AA_USER: 회원
 
 Column Name | Attribute Name | Key | Type | Len | Not Null | Description
 ----------- | -------------- | --- | ---- | --- | -------- | -----------
@@ -17,7 +17,7 @@ DELETE_F|삭제 여부| |char|1|N|Y, N
 
 Column Name | Attribute Name | Key | Type | Len | Not Null | Description
 ----------- | -------------- | --- | ---- | --- | -------- | -----------
-ACCOUNT_SEQ|계좌_일련번호|PK|integer|Y
+ACCOUNT_SEQ|계좌_일련번호|PK|integer||Y
 NAME|이름||varchar|100|Y
 ACCOUNT_NUMBER|계좌번호||varchar|100
 KIND_CODE|자산종류||integer||Y|CB_CODE_ITEM.CODE_ITEM_SEQ><br>코드 값 KIND_CODE<br>신용카드, 통장, 지갑 등
@@ -28,7 +28,7 @@ EXP_DATE|만기일||varchar|100
 MONTHLY_PAY|월 납입액||varchar|100
 TRANSFER_DATE|이체일||varchar|100
 NOTE|메모 내용||varchar|1000
-DELETE_FLAG|삭제 여부||varchar|1|Y
+DELETE_F|삭제 여부||varchar|1|Y
 
 - BB_CATEGORY: 거래 분류
 
@@ -39,7 +39,7 @@ KIND|유형||varchar|20|Y|INCOME, SPENDING, TRANSFER
 NAME|항목이름||varchar|100|Y|
 PARENT_SEQ|부모항목 번호||integer|||최대 2단계로만 함 기본값: 0
 ORDER_NO|항목내 정렬 순서||integer||Y|
-DELETE_FLAG|삭제 여부||varchar|1|Y|
+DELETE_F|삭제 여부||varchar|1|Y|
 
 - BC_OFTEN_USED: 자주 쓰는 항목
 
@@ -55,7 +55,7 @@ MONEY|금액||integer|||
 NOTE|항목 설명||varchar|200||
 ATTRIBUTE|속성||integer|||CB_CODE_ITEM.CODE_ITEM_SEQ <br/>코드 값 <br/>지출: ATTR_SPENDING  고정지출, 단순지출, <br/>이체: ATTR_TRANSFER  단순이체, 투자이체 <br>수입: ATTR_INCOME  단순 수입,투자 수입
 ORDER_NO|항목내 정렬 순서||integer||Y|
-DELETE_FLAG|삭제 여부||varchar|1|Y|
+DELETE_F|삭제 여부||varchar|1|Y|
 
 - BD_MEMO: 메모
 
@@ -64,7 +64,7 @@ Column Name | Attribute Name | Key | Type | Len | Not Null | Description
 MEMO_SEQ|메모 일련번호|PK|integer||Y
 NOTE|메모 내용||varchar|1000|Y
 MEMO_DATE|메모 일||date||Y
-DELETE_FLAG|삭제 여부||varchar|1|Y
+DELETE_F|삭제 여부||varchar|1|Y
 
 - BE_TRANSACTION: 거래 내역
 
@@ -89,7 +89,7 @@ Column Name | Attribute Name | Key | Type | Len | Not Null | Description
 ----------- | -------------- | --- | ---- | --- | -------- | -----------
 CODE_MAIN_ID|매인 코드 값|PK|varchar|20|Y|자산유형: KIND_CODE<br/>지출항목: ATTR_SPENDING<br/>이체항목: ATTR_TRANSFER<br/>수입항목: ATTR_INCOME<br/>
 NAME|코드 이름||varchar|100|Y
-DELETE_FLAG|삭제 여부||varchar|1|Y
+DELETE_F|삭제 여부||varchar|1|Y
 
 - CB_CODE_ITEM: 코드 항목값
 
@@ -99,4 +99,4 @@ CODE_MAIN_ID|매인 코드 값|PK|varchar|20|Y|CA_CODE_MAIN 외래키
 CODE_ITEM_SEQ|메인코드 종속 일련번호|PK|integer|100|Y|다른 테이블에서 값으로 사용됨.
 NAME|코드 이름||varchar|100|Y|한글로된 설명
 ORDER_NO|메인 코드 내 항목들간의 순서||integer||Y|
-DELETE_FLAG|삭제 여부||varchar|1|Y|
+DELETE_F|삭제 여부||varchar|1|Y|
