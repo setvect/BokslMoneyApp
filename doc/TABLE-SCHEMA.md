@@ -95,7 +95,7 @@ DELETE_F|삭제 여부||varchar|1|Y
 
 Column Name | Attribute Name | Key | Type | Len | Not Null | Description
 ----------- | -------------- | --- | ---- | --- | -------- | -----------
-CODE_MAIN_ID|매인 코드 값|PK|varchar|20|Y|CA_CODE_MAIN 외래키
+CODE_MAIN_ID|매인 코드 값|PK,FK|varchar|20|Y|CA_CODE_MAIN 외래키
 CODE_ITEM_SEQ|메인코드 종속 일련번호|PK|integer||Y|다른 테이블에서 값으로 사용됨.
 NAME|코드 이름||varchar|100|Y|한글로된 설명
 ORDER_NO|메인 코드 내 항목들간의 순서||integer||Y|

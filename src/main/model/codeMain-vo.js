@@ -1,4 +1,5 @@
 import connSeque from './connSeque.js'
+import codeItem from './codeItem-vo'
 const { DataTypes, } = require('sequelize')
 
 const codeMainVo = connSeque.define(
@@ -28,5 +29,6 @@ const codeMainVo = connSeque.define(
     timestamps: false,
   }
 )
+codeMainVo.hasMany(codeItem, { foreignKey: 'code_main_id', })
 
 export default codeMainVo
