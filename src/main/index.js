@@ -7,6 +7,12 @@ import menu from './menu.js'
 import util from './util.js'
 import userVo from './model/user-vo.js'
 import accountVo from './model/account-vo.js'
+import categoryVo from './model/category-vo.js'
+import oftenUsedVo from './model/oftenUsed-vo.js'
+import memoVo from './model/memo-vo.js'
+import transactionVo from './model/transaction-vo.js'
+import codeMainVo from './model/codeMain-vo.js'
+import codeItemVo from './model/codeItem-vo.js'
 
 // 0. 디렉토리 생성
 util.makeDir('./db')
@@ -33,6 +39,12 @@ userVo
   .catch(util.errorLog)
 
 accountVo.sync().then(() => console.log('account ..'))
+categoryVo.sync().then(() => console.log('category ..'))
+oftenUsedVo.sync().then(() => console.log('oftenUsed ..'))
+memoVo.sync().then(() => console.log('memo ..'))
+transactionVo.sync().then(() => console.log('transaction ..'))
+codeMainVo.sync().then(() => console.log('codeMain ..'))
+codeItemVo.sync().then(() => console.log('codeItem ..'))
 
 memoEvent.init()
 

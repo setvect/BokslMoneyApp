@@ -31,5 +31,6 @@ module.exports = {
         functions: 'never',
       },
     ],
+    'no-unused-vars': 'warn', // off, error
   },
 }

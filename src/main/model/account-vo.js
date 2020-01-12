@@ -1,8 +1,8 @@
 import connSeque from './connSeque.js'
 const { DataTypes, } = require('sequelize')
 
-const userVo = connSeque.define(
-  'user',
+const accountVo = connSeque.define(
+  'account',
   {
     accountSeq: {
       type: DataTypes.INTEGER,
@@ -65,4 +65,4 @@ const userVo = connSeque.define(
   }
 )
 
-export default userVo
+export default accountVo
