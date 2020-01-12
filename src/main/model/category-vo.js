@@ -1,4 +1,6 @@
 import connSeque from './connSeque.js'
+import oftenUsed from './oftenUsed-vo.js'
+
 const { DataTypes, } = require('sequelize')
 
 const categoryVo = connSeque.define(
@@ -9,22 +11,22 @@ const categoryVo = connSeque.define(
       allowNull: false,
       primaryKey: true,
     },
-    kind:{
+    kind: {
       type: DataTypes.STRING(20),
       allowNull: false,
       defaultValue: false,
     },
-    name:{
+    name: {
       type: DataTypes.STRING(100),
       allowNull: false,
       defaultValue: false,
     },
-    parentSeq:{
+    parentSeq: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: false,
     },
-    orderNo:{
+    orderNo: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: false,
@@ -43,5 +45,6 @@ const categoryVo = connSeque.define(
     timestamps: false,
   }
 )
+categoryVo.hasMany(oftenUsed, { foreignKey: 'category_seq', })
 
 export default categoryVo
