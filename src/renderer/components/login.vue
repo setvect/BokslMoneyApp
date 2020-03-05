@@ -48,7 +48,7 @@ export default {
       ipcRenderer.on('asynchronous-reply', (event, arg) => {
         console.log('asynchronous111', arg) // "pong"이 출력됩니다.
       })
-      ipcRenderer.send('asynchronous-message', 'ping')
+      ipcRenderer.send('asynchronous-message', this.form.password)
     },
   },
   mounted () {
