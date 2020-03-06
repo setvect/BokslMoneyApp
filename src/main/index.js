@@ -2,7 +2,7 @@
 
 import { app, BrowserWindow } from 'electron'
 
-import memoEvent from './module/memo/memo-event.js'
+import loginEvent from './module/login/login-event.js'
 import menu from './menu.js'
 import util from './util.js'
 import userVo from './model/user-vo.js'
@@ -46,7 +46,7 @@ transactionVo.sync().then(() => console.log('transaction ..'))
 codeMainVo.sync().then(() => console.log('codeMain ..'))
 codeItemVo.sync().then(() => console.log('codeItem ..'))
 
-memoEvent.init()
+loginEvent.init()
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path')

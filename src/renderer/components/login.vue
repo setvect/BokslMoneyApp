@@ -19,6 +19,8 @@
   </div>
 </template>
 <script type="text/javascript">
+import {ipcRenderer} from 'electron'
+
 export default {
   data() {
     return {
@@ -41,18 +43,14 @@ export default {
   },
   methods: {
     loginProc() {
-      console.log('process :', process)
-      // Swal.fire('로그인 실패', '아이디 또는 비밀번호가 틀렸다.', 'error')
-      // renderer 프로세스(웹 페이지)안에서
-      const { ipcRenderer, } = require('electron')
-      ipcRenderer.on('asynchronous-reply', (event, arg) => {
-        console.log('asynchronous111', arg) // "pong"이 출력됩니다.
-      })
-      ipcRenderer.send('asynchronous-message', this.form.password)
+      ipcRenderer.send('loginCheck', this.form.password)
     },
   },
   mounted() {
     this.$refs.password.$el.focus()
+    ipcRenderer.on('loginCheckResponse', (event, loginSuccess) => {
+      console.log('login-check', loginSuccess)
+    })
   },
 }
 </script>
