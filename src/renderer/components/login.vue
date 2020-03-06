@@ -47,9 +47,13 @@ export default {
     },
   },
   mounted() {
-    this.$refs.password.$el.focus()
+    console.log('this.$router :', this.$router)
     ipcRenderer.on('loginCheckResponse', (event, loginSuccess) => {
-      console.log('login-check', loginSuccess)
+      if(!loginSuccess){
+        alert("비밀번호 틀렸다.")
+        return
+      }
+      this.$router.push({ name: "landing-page", })
     })
   },
 }
