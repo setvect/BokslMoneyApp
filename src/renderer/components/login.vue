@@ -20,6 +20,7 @@
 </template>
 <script type="text/javascript">
 import {ipcRenderer} from 'electron'
+import {session} from 'electron'
 
 export default {
   data() {
@@ -47,13 +48,13 @@ export default {
     },
   },
   mounted() {
-    console.log('this.$router :', this.$router)
+    console.log('session :', session)
     ipcRenderer.on('loginCheckResponse', (event, loginSuccess) => {
       if(!loginSuccess){
         alert("비밀번호 틀렸다.")
         return
       }
-      this.$router.push({ name: "landing-page", })
+      this.$router.push({ name: "transaction-calendar", })
     })
   },
 }

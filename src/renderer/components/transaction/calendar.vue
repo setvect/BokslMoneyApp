@@ -3,7 +3,7 @@
     <img id="logo" src="~@/assets/logo.png" alt="electron-vue" />
     <main>
       <div class="left-side">
-        <span class="title">안녕 복슬이111...</span>
+        <span class="title">안녕 복슬이111ssss...</span>
       </div>
     </main>
   </div>

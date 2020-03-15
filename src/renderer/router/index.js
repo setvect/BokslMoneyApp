@@ -12,8 +12,8 @@ export default new Router({
     },
     {
       path: '/main',
-      name: 'landing-page',
-      component: require('@/components/LandingPage.vue').default,
+      name: 'transaction-calendar',
+      component: require('@/components/transaction/calendar.vue').default,
     },
     {
       path: '*',
