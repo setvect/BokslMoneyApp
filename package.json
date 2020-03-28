@@ -8,13 +8,7 @@
   },
   "scripts": {
     "start": "electron .",
-    "build:osx": "build --mac",
-    "build:linux": "npm run build:linux32 && npm run build:linux64",
-    "build:linux32": "build --linux --ia32",
-    "build:linux64": "build --linux --x64",
-    "build:win": "npm run build:win32 && npm run build:win64",
-    "build:win32": "build --win --ia32",
-    "build:win64": "build --win --x64"
+    "build": "electron-builder build"
   },
   "repository": {
     "type": "git",
@@ -34,48 +28,30 @@
     "electron-builder": "^22.4.1"
   },
   "build": {
-    "productName": "HelloElectron",
-    "appId": "com.electron.hello",
-    "asar": true,
-    "protocols": {
-      "name": "helloElectron",
-      "schemes": ["helloelectron"]
+    "appId": "com.myappid",
+    "directories": {
+      "output": "dist"
     },
-    "mac": {
-      "target": [
-        "default"
-      ],
-      "icon": "./resources/installer/Icon.icns"
-    },
-    "dmg": {
-      "title": "HelloElectron",
-      "icon": "./resources/installer/Icon.icns"
-    },
+    "files": [
+      "나의소중한파일들의경로"
+    ],
     "win": {
       "target": [
-        "zip",
-        "nsis"
-      ],
-      "icon": "./resources/installer/Icon.ico"
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb",
-        "rpm",
-        "zip",
-        "tar.gz"
-      ],
-      "icon": "./resources/linuxicon"
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
-    },
-    "directories": {
-      "buildResources": "resources/installer/",
-      "output": "dist/",
-      "app": "."
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "language": 1042,
+      "include": "build/installer.nsh"
     }
   }
 }
