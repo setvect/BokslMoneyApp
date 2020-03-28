@@ -7,7 +7,14 @@
     "doc": "doc"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build:osx": "build --mac",
+    "build:linux": "npm run build:linux32 && npm run build:linux64",
+    "build:linux32": "build --linux --ia32",
+    "build:linux64": "build --linux --x64",
+    "build:win": "npm run build:win32 && npm run build:win64",
+    "build:win32": "build --win --ia32",
+    "build:win64": "build --win --x64"
   },
   "repository": {
     "type": "git",
@@ -23,6 +30,52 @@
   },
   "homepage": "https://github.com/setvect/BokslMoneyApp#readme",
   "devDependencies": {
-    "electron": "^8.2.0"
+    "electron": "^8.2.0",
+    "electron-builder": "^22.4.1"
+  },
+  "build": {
+    "productName": "HelloElectron",
+    "appId": "com.electron.hello",
+    "asar": true,
+    "protocols": {
+      "name": "helloElectron",
+      "schemes": ["helloelectron"]
+    },
+    "mac": {
+      "target": [
+        "default"
+      ],
+      "icon": "./resources/installer/Icon.icns"
+    },
+    "dmg": {
+      "title": "HelloElectron",
+      "icon": "./resources/installer/Icon.icns"
+    },
+    "win": {
+      "target": [
+        "zip",
+        "nsis"
+      ],
+      "icon": "./resources/installer/Icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "zip",
+        "tar.gz"
+      ],
+      "icon": "./resources/linuxicon"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "directories": {
+      "buildResources": "resources/installer/",
+      "output": "dist/",
+      "app": "."
+    }
   }
 }
