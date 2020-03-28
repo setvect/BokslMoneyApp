@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "복슬머니",
   "main": "main.js",
-  "directories": {
-    "doc": "doc"
-  },
   "scripts": {
     "start": "electron .",
     "build": "electron-builder build"
@@ -29,29 +26,14 @@
   },
   "build": {
     "appId": "com.myappid",
+    "productName": "BokslMoney",
     "directories": {
       "output": "dist"
     },
-    "files": [
-      "나의소중한파일들의경로"
-    ],
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ]
-    },
+    "target": "NSIS",
     "nsis": {
       "oneClick": false,
-      "perMachine": true,
-      "allowToChangeInstallationDirectory": true,
-      "language": 1042,
-      "include": "build/installer.nsh"
+      "allowToChangeInstallationDirectory": true
     }
   }
 }
