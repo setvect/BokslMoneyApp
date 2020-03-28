@@ -21,6 +21,7 @@ function createWindow () {
 // 브라우저 윈도우가 생성될 준비가 되었을때 호출된다.
 // 어떤 API는 이 이벤트가 나타난 이후에만 사용할 수 있습니다.
 app.whenReady().then(createWindow)
+console.log("#############################")
 
 // 모든 윈도우가 닫히면 종료된다.
 app.on('window-all-closed', () => {
