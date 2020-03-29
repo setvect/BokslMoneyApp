@@ -1,30 +1,32 @@
-const { app, BrowserWindow } = require('electron')
+import { app, BrowserWindow } from 'electron'
+import path from 'path'
+import { format as formatUrl } from 'url'
 
-function createWindow () {
-  // 브라우저 창을 생성합니다.
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
+app.on('ready', () => {
+  let window = new BrowserWindow({
+    width: 1024,
     webPreferences: {
       nodeIntegration: true
     }
   })
-
-  win.loadFile(`${__dirname}/../renderer/index.html`)
-  win.webContents.openDevTools()
-}
-
-app.whenReady().then(createWindow)
-
-// 모든 윈도우가 닫히면 종료된다.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
+  if (isDevelopment) {
+    window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+  } else {
+    window.loadURL(formatUrl({
+      pathname: path.join(__dirname, 'index.html'),
+      protocol: 'file',
+      slashes: true
+    }))
   }
+  window.on("closed", () => {
+    window = null;
+  })
 })
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
   }
 })

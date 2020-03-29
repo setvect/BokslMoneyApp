@@ -2,9 +2,10 @@
   "name": "bokslmoneyapp",
   "version": "1.0.0",
   "description": "복슬머니",
-  "main": "src/main/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "electron .",
+    "compile": "electron-webpack",
+    "start": "electron-webpack asas",
     "build": "electron-builder build"
   },
   "repository": {
@@ -35,6 +36,7 @@
     "moment": "^2.24.0",
     "moment-lunar": "0.0.3",
     "sequelize": "^5.21.5",
+    "source-map-support": "^0.5.16",
     "sqlite3": "^4.1.1",
     "sweetalert2": "^9.5.4",
     "vee-validate": "^2.1.7",
@@ -48,7 +50,12 @@
   },
   "devDependencies": {
     "electron": "^8.2.0",
-    "electron-builder": "^22.4.1"
+    "electron-builder": "^22.4.1",
+    "electron-webpack": "^2.7.4",
+    "html-webpack-plugin": "^4.0.3",
+    "vue-loader": "^15.9.1",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.42.1"
   },
   "build": {
     "appId": "com.myappid",
