@@ -2,7 +2,7 @@
   "name": "bokslmoneyapp",
   "version": "1.0.0",
   "description": "복슬머니",
-  "main": "main.js",
+  "main": "src/main/index.js",
   "scripts": {
     "start": "electron .",
     "build": "electron-builder build"
