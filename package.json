@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron-webpack dev",
-    "build": "electron-builder build"
+    "build": "electron-webpack && electron-builder -c.mac.identity=null"
   },
   "repository": {
     "type": "git",
