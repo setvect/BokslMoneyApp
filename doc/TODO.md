@@ -16,6 +16,7 @@
 - NEW-20200101: 코드 관리
 
 ### 완료
+- NEW-20200329: electron-webpack 사용으로 인해 vscode를 사용한 디버깅이 안되는 문제 해결
 - NEW-20200329: vue 연동
 - NEW-20200329: sqlite3 추가해 빌드
 - NEW-20200103: main-process debug 환경 만들기

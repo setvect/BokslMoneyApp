@@ -3,6 +3,7 @@ import path from 'path'
 import { format as formatUrl } from 'url'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
+console.log('isDevelopment :', isDevelopment);
 
 app.on('ready', () => {
   let window = new BrowserWindow({
