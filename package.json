@@ -4,8 +4,7 @@
   "description": "복슬머니",
   "main": "index.js",
   "scripts": {
-    "compile": "electron-webpack",
-    "start": "electron-webpack asas",
+    "start": "electron-webpack dev",
     "build": "electron-builder build"
   },
   "repository": {
@@ -52,6 +51,7 @@
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
     "electron-webpack": "^2.7.4",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.0.3",
     "vue-loader": "^15.9.1",
     "vue-template-compiler": "^2.6.11",

@@ -6,7 +6,7 @@
 export default {
   data() {
     return {
-      name: 'Obligatory Bear'
+      name: '복슬이'
     }
   }
 }
