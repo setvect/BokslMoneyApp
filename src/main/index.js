@@ -1,9 +1,11 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import { format as formatUrl } from "url";
+import menu from "./menu.js";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 console.log("isDevelopment :", isDevelopment);
+menu.init();
 
 app.on("ready", () => {
   let window = new BrowserWindow({
