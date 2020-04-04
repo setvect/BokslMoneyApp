@@ -9,7 +9,9 @@
 npm install
 
 # 프로그램 실행
+npm run postinstall # 최초 한번
 npm run start
+
 
 # 인스톨 파일 만들기(최초 한번)
 Start-Process powershell -Verb runAs
