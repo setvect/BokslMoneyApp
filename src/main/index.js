@@ -58,7 +58,8 @@ loginEvent.init();
 
 app.on("ready", () => {
   let window = new BrowserWindow({
-    width: 1024,
+    width: 1500,
+    height: 1000,
     webPreferences: {
       nodeIntegration: true
     }

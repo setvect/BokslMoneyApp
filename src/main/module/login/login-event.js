@@ -4,6 +4,18 @@ import util from '../../util.js'
 
 export default {
   init() {
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
+    console.log("########################");
     ipcMain.on('loginCheck', (event, passwd) => {
       // eslint-disable-next-line no-debugger
       userVo.findByPk("boksl").then(row=>{
