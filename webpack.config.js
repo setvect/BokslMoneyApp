@@ -1,5 +1,5 @@
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
-const { dependencies } = require("../package.json");
+const { dependencies } = require("./package.json");
 const whiteListedModules = ["vue", "bootstrap-vue"];
 
 module.exports = {
