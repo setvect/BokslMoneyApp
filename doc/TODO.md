@@ -3,7 +3,6 @@
 ### 메모
 
 ### 진행예정
-- PBM-20200404: [Vue warn]: $attrs is readonly 오류 해결. bootstrap-vue 문제로 판단됨.
 - NEW-20200331: sequelize 외래키
 - NEW-20200101: 로그인
 - NEW-20200101: 기본 화면 구성
@@ -16,6 +15,7 @@
 - NEW-20200101: 코드 관리
 
 ### 완료
+- PBM-20200404: [Vue warn]: $attrs is readonly 오류 해결. bootstrap-vue 문제로 판단됨.
 - NEW-20200329(20200330): 간단한 DB 연동. sqlite3, sequelize
 - NEW-20200329(20200330): 필요없는 메뉴 제거
 - NEW-20200329: electron-webpack 사용으로 인해 vscode를 사용한 디버깅이 안되는 문제 해결

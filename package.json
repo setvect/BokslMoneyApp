@@ -8,6 +8,9 @@
     "build": "electron-webpack && electron-builder -c.mac.identity=null",
     "postinstall": "electron-builder install-app-deps"
   },
+  "electronWebpack": {
+    "whiteListedModules": ["vue", "bootstrap-vue"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/setvect/BokslMoneyApp.git"
