@@ -15,7 +15,6 @@ import codeMainVo from "./model/codeMain-vo.js";
 import codeItemVo from "./model/codeItem-vo.js";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
-console.log("isDevelopment :", isDevelopment);
 
 // 0. 디렉토리 생성
 util.makeDir("./db");
@@ -30,11 +29,9 @@ userVo
     return userVo.findAll();
   })
   .then(users => {
-    console.log("users.length:", users.length);
     if (users.length !== 0) {
       return null;
     }
-    console.log("add User");
     const hash = util.encodeBcrypt("1234");
     // 기본 사용자 등록
     return userVo.create({
