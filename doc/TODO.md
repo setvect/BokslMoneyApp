@@ -3,6 +3,7 @@
 ### 메모
 
 ### 진행예정
+- PBM-20200404: [Vue warn]: $attrs is readonly 오류 해결. bootstrap-vue 문제로 판단됨.
 - NEW-20200331: sequelize 외래키
 - NEW-20200101: 로그인
 - NEW-20200101: 기본 화면 구성

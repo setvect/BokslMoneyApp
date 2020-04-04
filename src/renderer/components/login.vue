@@ -6,7 +6,7 @@
           <b-form>
             <h1>복슬 머니</h1>
             <div>
-              <b-form-input v-model="form.password" @keypress.13.prevent="loginProc" v-focus ref="password" type="password" placeholder="Password"></b-form-input>
+              <b-form-input v-model="form.password" @keypress.13.prevent="loginProc" v-focus type="password" placeholder="Password"></b-form-input>
             </div>
             <div style="padding-top: 20px;">
               <b-button @click.prevent="loginProc" variant="outline-secondary">Login</b-button>
