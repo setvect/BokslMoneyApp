@@ -3,6 +3,8 @@
 ### 메모
 
 ### 진행예정
+- NEW-20200405: eslint 셋팅, 사용.
+- PBM-20200405: Deprecation warning: value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(),  ... warning 해결
 - NEW-20200331: sequelize 외래키
 - NEW-20200101: 로그인
 - NEW-20200101: 기본 화면 구성
