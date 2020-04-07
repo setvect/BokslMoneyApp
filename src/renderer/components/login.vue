@@ -57,6 +57,8 @@ export default {
       }
       this.$router.push({ name: "transaction-calendar", })
     })
+    // TODO 로그인 페이지 통과. 향후 주석 해제
+    this.$router.push({ name: "transaction-calendar", })
   },
 }
 </script>

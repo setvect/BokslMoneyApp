@@ -1,8 +1,9 @@
 <template>
-  <div id="app">
+  <div>
     <div class="page-title">
       <div class="title_left">
         <h3>달력 입력</h3>
+        <button onclick="location.reload()">a222aa</button>
       </div>
     </div>
     <div class="clearfix"></div>

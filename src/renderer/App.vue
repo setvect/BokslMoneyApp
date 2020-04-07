@@ -7,6 +7,8 @@
 <script>
 export default {
   name: 'my-project',
+  mounted(){
+  }
 }
 </script>
 

@@ -18,6 +18,12 @@ export default {
         role: "Help",
         submenu: [
           {
+            label: "Reload",
+            click(item, focusedWindow) {
+              focusedWindow.reload();
+            }
+          },
+          {
             label: "Toggle DevTools",
             click(item, focusedWindow) {
               focusedWindow.toggleDevTools();
