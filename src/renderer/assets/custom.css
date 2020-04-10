@@ -431,7 +431,7 @@ a.user-profile {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.login {
+body {
   background: #F7F7F7 !important;
 }
 .login .fa-paw {

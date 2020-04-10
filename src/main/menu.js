@@ -19,6 +19,7 @@ export default {
         submenu: [
           {
             label: "Reload",
+            accelerator: 'F5',
             click(item, focusedWindow) {
               focusedWindow.reload();
             }

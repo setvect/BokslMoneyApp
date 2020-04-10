@@ -3,7 +3,6 @@
     <div class="page-title">
       <div class="title_left">
         <h3>달력 입력</h3>
-        <button onclick="location.reload()">a222aa</button>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -324,7 +323,6 @@ export default {
     },
   },
   mounted() {
-
     this.initCalendar()
     // 지출, 이체, 수입 버튼 클릭
     $("._input").click(event => {
