@@ -3,12 +3,10 @@
 ### 메모
 
 ### 진행예정
-- NEW-20200407: 새로고침 단축키 적용
 - NEW-20200405: eslint 셋팅, 사용.
 - PBM-20200405: Deprecation warning: value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(),  ... warning 해결
 - NEW-20200331: sequelize 외래키
 - NEW-20200101: 로그인
-- NEW-20200101: 기본 화면 구성
 - NEW-20200101: 가계부 쓰기 - 달력
 - NEW-20200101: 가계부 쓰기 - 표
 - NEW-20200101: 결산
@@ -18,6 +16,8 @@
 - NEW-20200101: 코드 관리
 
 ### 완료
+- NEW-20200101(20200411): 기본 화면 구성
+- NEW-20200407: 새로고침 단축키 적용
 - PBM-20200404: [Vue warn]: $attrs is readonly 오류 해결. bootstrap-vue 문제로 판단됨.
 - NEW-20200329(20200330): 간단한 DB 연동. sqlite3, sequelize
 - NEW-20200329(20200330): 필요없는 메뉴 제거
