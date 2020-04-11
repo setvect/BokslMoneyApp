@@ -1,0 +1,53 @@
+@charset "UTF-8";
+/* 기존 UI에서 추가된 CSS 선언 */
+.error {
+  color: red;
+}
+
+/* 말줄임 */
+.td-ell {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.no-padding {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+td.fc-event-container span {
+  line-height: 18px;
+}
+/* calendar */
+.fc-title i {
+  padding: 0 3px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+/* calendar cell background */
+.cal-select {
+  background: lightgreen;
+}
+td.fc-sun .fc-day-number,
+td.fc-sat .fc-day-number,
+td.fc-holiday .fc-day-number {
+  color: red;
+}
+
+body {
+  padding-right: 0 !important;
+}
+/* 거래 모달창에서 자동완성 레이어 표시되게 */
+.ui-autocomplete {
+  z-index: 9999 !important;
+}
+
+/* datatables 테이블 스타일 조정 */
+table.dataTable{
+  border-collapse: collapse !important;
+}

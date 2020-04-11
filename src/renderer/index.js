@@ -13,6 +13,7 @@ import ko from "vee-validate/dist/locale/ko";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "@/assets/custom.css";
+import "@/assets/app.css";
 
 if (!process.env.IS_WEB) {
   Vue.use(require("vue-electron"));
