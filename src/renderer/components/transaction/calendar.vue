@@ -10,10 +10,10 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div v-cloak>
-            <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-xl-6 col-lg-12">
               <div id="calendar"></div>
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-xl-6 col-lg-12">
               <div class="page-header">
                 <button type="button" data-type="SPENDING" class="btn btn-info _input">지출</button>
                 <button type="button" data-type="INCOME" class="btn btn-info _input">수입</button>
@@ -118,14 +118,15 @@ import $ from "jquery"
 import VueUtil from "../../common/vue-util.js"
 import CommonUtil from "../../common/common-util.js"
 import CalendarUtil from "../../common/calendar-util.js"
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js"
+import { TransactionMixin, AppUtil, PageMovieEvent, TYPE_VALUE } from "../../common/bokslmoney.js"
 import memoComponent from "./memo.vue"
 import itemAddComponent from "./transactionAdd.vue"
+import { ipcRenderer } from 'electron'
 import "../../common/vue-common.js"
 
 // vue 객체 생성
 export default {
-  mixins: [TransactionMixin],
+  mixins: [TransactionMixin, PageMovieEvent],
 
   data: function () {
     return {

@@ -2,7 +2,8 @@
   <div>
     <div class="login_wrapper">
       <div class="animate form login_form">
-        <section class="login_content">x
+        <section class="login_content">
+          x
           <b-form>
             <h1>복슬 머니</h1>
             <div>
@@ -19,8 +20,8 @@
   </div>
 </template>
 <script type="text/javascript">
-import {ipcRenderer} from 'electron'
-import {session} from 'electron'
+import { ipcRenderer } from 'electron'
+import { session } from 'electron'
 import "../common/vue-common.js"
 
 export default {
@@ -46,9 +47,8 @@ export default {
     },
   },
   mounted() {
-    console.log('session :', session)
     ipcRenderer.on('loginCheckResponse', (event, loginSuccess) => {
-      if(!loginSuccess){
+      if (!loginSuccess) {
         alert("비밀번호 틀렸다.")
         return
       }

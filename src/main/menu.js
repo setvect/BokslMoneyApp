@@ -1,5 +1,7 @@
 import { Menu } from "electron";
-const { dialog } = require("electron");
+import { dialog } from "electron";
+import { app, webContents } from "electron";
+const { ipcMain } = require("electron");
 
 export default {
   init() {
@@ -10,64 +12,51 @@ export default {
           {
             label: "가계부 쓰기(달력)",
             accelerator: "Ctrl+F1",
-            click() {
-              dialog.showMessageBox(null, { title: "가계부 쓰기(달력)" });
+            click(item, focusedWindow) {
+              focusedWindow.webContents.send('movePage', 'calendar')
             },
           },
           {
             label: "가계부 쓰기(표)",
             accelerator: "Ctrl+F2",
-            click() {
-              dialog.showMessageBox(null, { title: "가계부 쓰기(표)" });
+            click(item, focusedWindow) {
+              focusedWindow.webContents.send('movePage', 'grid')
             },
           },
           {
             label: "결산",
             accelerator: "Ctrl+F3",
-            click() {
-              dialog.showMessageBox(null, { title: "결산" });
-              3;
+            click(item, focusedWindow) {
+              focusedWindow.webContents.send('movePage', 'settlement')
             },
           },
           {
             label: "통계",
             accelerator: "Ctrl+F4",
-            click() {
-              dialog.showMessageBox(null, { title: "통계" });
-              4;
+            click(item, focusedWindow) {
+              focusedWindow.webContents.send('movePage', 'stat')
             },
           },
           {
             label: "분류 관리",
             accelerator: "Ctrl+F5",
-            click() {
-              dialog.showMessageBox(null, { title: "분류 관리" });
+            click(item, focusedWindow) {
+              focusedWindow.webContents.send('movePage', 'category')
             },
           },
           {
             label: "계좌 관리",
             accelerator: "Ctrl+F6",
-            click() {
-              dialog.showMessageBox(null, { title: "계좌 관리" });
+            click(item, focusedWindow) {
+              focusedWindow.webContents.send('movePage', 'account')
             },
           },
           {
             label: "코드 관리",
             accelerator: "Ctrl+F7",
-            click() {
-              dialog.showMessageBox(null, { title: "코드 관리" });
+            click(item, focusedWindow) {
+              focusedWindow.webContents.send('movePage', 'code')
             },
-          },
-        ],
-      },
-      {
-        role: "Window",
-        submenu: [
-          {
-            role: "minimize",
-          },
-          {
-            role: "close",
           },
         ],
       },
@@ -76,7 +65,7 @@ export default {
         submenu: [
           {
             label: "Reload",
-            accelerator: "F5",
+            accelerator: "Ctrl+Shift+R",
             click(item, focusedWindow) {
               focusedWindow.reload();
             },
