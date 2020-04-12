@@ -5,7 +5,6 @@
  */
 
 import "bootstrap";
-import jQuery from "jquery";
 
 var waitDialog =
   waitDialog ||

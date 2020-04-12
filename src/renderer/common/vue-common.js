@@ -1,6 +1,5 @@
 import Vue from "vue"
 import moment from "moment"
-import $ from "jquery"
 import { AppUtil } from "./bokslmoney.js"
 import CommonUtil from "./common-util.js"
 

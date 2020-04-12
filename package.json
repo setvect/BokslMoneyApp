@@ -12,7 +12,10 @@
     "whiteListedModules": [
       "vue",
       "bootstrap-vue"
-    ]
+    ],
+    "renderer": {
+      "webpackConfig": "webpack.config"
+    }
   },
   "repository": {
     "type": "git",
@@ -37,6 +40,7 @@
     "datatables.net-buttons": "^1.6.1",
     "daterangepicker": "^3.0.5",
     "fullcalendar": "^3.10.1",
+    "icheck": "^1.0.2",
     "jquery": "^3.4.1",
     "jquery-contextmenu": "^2.9.0",
     "jquery-ui": "^1.12.1",
@@ -47,7 +51,7 @@
     "sequelize": "^5.21.5",
     "source-map-support": "^0.5.16",
     "sqlite3": "^4.1.1",
-    "sweetalert2": "^9.10.9",
+    "sweetalert2": "^9.10.10",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",

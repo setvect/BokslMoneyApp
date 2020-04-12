@@ -1,7 +1,6 @@
 import Vue from "vue";
 import moment from "moment";
 import CommonUtil from "./common-util.js";
-import $ from "jquery";
 
 // 사용 안함.
 const TYPE_VALUE = {

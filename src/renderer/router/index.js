@@ -16,6 +16,11 @@ export default new Router({
       component: require('@/components/transaction/calendar.vue').default,
     },
     {
+      path: '/grid',
+      name: 'transaction-grid',
+      component: require('@/components/transaction/grid.vue').default,
+    },
+    {
       path: '*',
       redirect: '/',
     }
