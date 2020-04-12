@@ -156,10 +156,12 @@
 </template>
 <script type="text/javascript">
 import moment from "moment"
+
 import "datatables"
 import "datatables/media/css/jquery.dataTables.css"
 import "datatables.net-buttons"
-// import "datatables.net-buttons/common/buttons.html5.js"
+import "datatables.net-buttons/js/dataTables.buttons.js"
+import "datatables.net-buttons/js/buttons.html5.js"
 import "daterangepicker"
 import 'daterangepicker/daterangepicker.css'
 import "iCheck/icheck.js"
@@ -286,18 +288,18 @@ export default {
     },
     // 거래내역 조회
     loadTransaction() {
-      VueUtil.get(
-        "/transaction/listByRange.json",
-        this.condition,
-        result => {
-          this.destroyGrid()
-          this.transactionList = result.data
-          this.$nextTick(() => {
-            this.initGrid()
-          })
-        },
-        { paramParsing: true, }
-      )
+      // VueUtil.get(
+      //   "/transaction/listByRange.json",
+      //   this.condition,
+      //   result => {
+      //     this.destroyGrid()
+      //     this.transactionList = result.data
+      //     this.$nextTick(() => {
+      //       this.initGrid()
+      //     })
+      //   },
+      //   { paramParsing: true, }
+      // )
     },
     // 검색
     search() {
@@ -323,7 +325,6 @@ export default {
     // 계좌 목록
     loadAccount() {
       // TODO
-
       // VueUtil.get("/account/list.json", {}, result => {
       //   this.accountList = result.data
       // })
@@ -347,3 +348,7 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+/* .form-inline label {display: inline-block !important; } */
+</style>
