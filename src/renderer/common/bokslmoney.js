@@ -2,7 +2,6 @@ import Vue from "vue";
 import moment from "moment";
 import CommonUtil from "./common-util.js";
 import $ from "jquery";
-import { ipcRenderer } from "electron";
 
 // 사용 안함.
 const TYPE_VALUE = {
@@ -83,14 +82,6 @@ const TransactionMixin = {
   },
 };
 
-const PageMovieEvent = {
-  mounted() {
-    ipcRenderer.on("movePage", (event, message) => {
-      console.log(message);
-    });
-  },
-};
-
 /** 응용어플리케이션에 의존된 공통 기능 */
 let AppUtil = {};
 /**
@@ -113,4 +104,4 @@ Vue.filter("accountName", function (accountSeq) {
   return AppUtil.getAccountName(accountSeq);
 });
 
-export { TransactionMixin, AppUtil, PageMovieEvent, TYPE_VALUE };
+export { TransactionMixin, AppUtil, TYPE_VALUE };

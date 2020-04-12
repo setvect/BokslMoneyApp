@@ -118,7 +118,7 @@ import $ from "jquery"
 import VueUtil from "../../common/vue-util.js"
 import CommonUtil from "../../common/common-util.js"
 import CalendarUtil from "../../common/calendar-util.js"
-import { TransactionMixin, AppUtil, PageMovieEvent, TYPE_VALUE } from "../../common/bokslmoney.js"
+import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js"
 import memoComponent from "./memo.vue"
 import itemAddComponent from "./transactionAdd.vue"
 import { ipcRenderer } from 'electron'
@@ -126,7 +126,7 @@ import "../../common/vue-common.js"
 
 // vue 객체 생성
 export default {
-  mixins: [TransactionMixin, PageMovieEvent],
+  mixins: [TransactionMixin],
 
   data: function () {
     return {
