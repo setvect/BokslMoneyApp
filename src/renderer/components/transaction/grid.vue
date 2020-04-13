@@ -16,7 +16,7 @@
                   <label for="memo_field">메모:</label>
                   <input type="text" class="form-control" id="memo_field" v-model="condition.note" @keyup.13="search()" />
                 </div>
-                <div class="checkbox">
+                <div class="checkbox form-group" style="margin:0 10px">
                   <label>
                     <input type="checkbox" value="SPENDING" class="flat" v-model="condition.kindTypeSet" /> 지출
                   </label>
@@ -28,7 +28,7 @@
                   </label>
                 </div>
                 <button type="button" class="btn btn-info" style="margin: 0" @click="search();">검색</button>
-                <button type="button" class="btn btn-success" style="margin: 0;float: right" @click="exportExcel();">내보내기(엑셀)</button>
+                <button type="button" class="btn btn-success ml-auto" style="margin: 0" @click="exportExcel();">내보내기(엑셀)</button>
               </div>
 
               <table class="table table-striped jambo_table bulk_action table-bordered" id="grid">
@@ -76,6 +76,8 @@
                 <button type="button" data-type="TRANSFER" class="btn btn-info _input">이체</button>
               </div>
               <div>
+
+
                 <div class="form-horizontal">
                   <div class="form-group">
                     <label class="control-label col-sm-3" for="start_date">시작일:</label>
