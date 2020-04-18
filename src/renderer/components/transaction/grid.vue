@@ -70,7 +70,7 @@
               </table>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-12">
-              <div class="page-header">
+              <div class="pb-2 mt-4 mb-2 border-bottom">
                 <button type="button" data-type="SPENDING" class="btn btn-info _input">지출</button>
                 <button type="button" data-type="INCOME" class="btn btn-info _input">수입</button>
                 <button type="button" data-type="TRANSFER" class="btn btn-info _input">이체</button>
@@ -78,20 +78,20 @@
               <div>
 
 
-                <div class="form-horizontal">
-                  <div class="form-group">
+                <div>
+                  <div class="form-group row">
                     <label class="control-label col-sm-3" for="start_date">시작일:</label>
                     <div class="col-sm-9">
                       <input type="input" class="form-control _datepicker_from" readonly="readonly" placeholder="Enter start_date" name="start_date" />
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group row">
                     <label class="control-label col-sm-3" for="end_date">종료일:</label>
                     <div class="col-sm-9">
                       <input type="input" class="form-control _datepicker_to" readonly="readonly" placeholder="Enter end_date" name="end_date" />
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group row">
                     <label class="control-label col-sm-3" for="end_date">계좌:</label>
                     <div class="col-sm-9">
                       <select class="form-control" v-model="condition.accountSeq" name="account">
@@ -104,7 +104,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                  <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" style="margin: 10px 0">
                     <button type="button" class="btn btn-info btn-sm" @click="search();">조회</button>
                     <button type="button" class="btn btn-primary btn-sm" @click="moveMonth(-1)">이전달</button>
                     <button type="button" class="btn btn-primary btn-sm" @click="moveMonth(0)">이번달</button>
