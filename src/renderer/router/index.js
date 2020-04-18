@@ -21,6 +21,11 @@ export default new Router({
       component: require('@/components/transaction/grid.vue').default,
     },
     {
+      path: '/settlement',
+      name: 'settlement',
+      component: require('@/components/settlement/settlement.vue').default,
+    },
+    {
       path: '*',
       redirect: '/',
     }

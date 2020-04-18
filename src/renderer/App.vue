@@ -12,8 +12,10 @@ export default {
     const pageMapping = {
       calendar: "transaction-calendar",
       grid: "transaction-grid",
+      settlement: "settlement",
     };
     ipcRenderer.on("movePage", (event, page) => {
+      console.log('movePage :', page);
       let pageName = pageMapping[page];
       if (pageName != null && this.$route.name != pageName) {
         this.$router.push({ name: pageName });
