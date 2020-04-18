@@ -26,6 +26,11 @@ export default new Router({
       component: require('@/components/settlement/settlement.vue').default,
     },
     {
+      path: '/stat',
+      name: 'stat',
+      component: require('@/components/stat/stat.vue').default,
+    },
+    {
       path: '*',
       redirect: '/',
     }

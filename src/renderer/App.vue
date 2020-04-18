@@ -13,6 +13,7 @@ export default {
       calendar: "transaction-calendar",
       grid: "transaction-grid",
       settlement: "settlement",
+      stat: "stat",
     };
     ipcRenderer.on("movePage", (event, page) => {
       console.log('movePage :', page);
