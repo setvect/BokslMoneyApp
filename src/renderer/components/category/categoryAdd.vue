@@ -31,9 +31,9 @@ import VueUtil from "../../common/vue-util.js"
 export default {
   data() {
     return {
-      item: { name: "" },
+      item: { name: "", },
       afterEventCallback: null,
-      actionType: "add"
+      actionType: "add",
     };
   },
   methods: {
@@ -66,11 +66,11 @@ export default {
           this.item.name = "";
         });
       });
-    }
+    },
   },
   created() {
     this.$EventBus.$on("addFormEvent", this.addForm);
     this.$EventBus.$on("editFormEvent", this.editForm);
-  }
+  },
 };
 </script>

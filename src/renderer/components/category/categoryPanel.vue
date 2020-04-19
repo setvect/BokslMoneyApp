@@ -15,19 +15,19 @@ import listComponent from "./categoryList.vue";
 export default {
   data() {
     return {
-      mainItem: { categorySeq: -1 }
+      mainItem: { categorySeq: -1, },
     };
   },
   props: {
-    kind: String
+    kind: String,
   },
   components: {
-    list: listComponent
+    list: listComponent,
   },
   methods: {
     selectItem(item) {
       this.mainItem = item;
-    }
-  }
+    },
+  },
 };
 </script>

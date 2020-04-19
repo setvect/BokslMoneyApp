@@ -38,39 +38,38 @@ import VueUtil from "../../common/vue-util.js"
 export default {
   data() {
     return {
-      itemList: []
+      itemList: [],
     };
   },
   props: {
     kind: String,
     area: String,
-    parentSeq: Number
+    parentSeq: Number,
   },
   watch: {
     parentSeq: {
       handler(newVal, oldVal) {
         this.list();
-      }
-    }
+      },
+    },
   },
   methods: {
     // 리스트
     list() {
-      let param = { kind: this.kind, parent: this.parentSeq };
+      let param = { kind: this.kind, parent: this.parentSeq, };
       // VueUtil.get("/category/list.json", param, result => {
       //   this.itemList = result.data;
       // });
     },
     // 등록 폼
-    addForm() {
+    addForm(aa) {
       // 목록에서 최대 orderNo + 1 구하기
-      let maxOrder =
-        this.itemList.reduce((acc, item) => {
-          return Math.max(acc, item.orderNo);
-        }, 0) + 1;
+      let maxOrder = this.itemList.reduce((acc, item) => {
+        return Math.max(acc, item.orderNo);
+      }, 0) + 1;
       this.$EventBus.$emit(
         "addFormEvent",
-        { kind: this.kind, parentSeq: this.parentSeq, orderNo: maxOrder },
+        { kind: this.kind, parentSeq: this.parentSeq, orderNo: maxOrder, },
         this.list
       );
     },
@@ -82,7 +81,7 @@ export default {
     changeOrder(downCategorySeq, upCategorySeq) {
       let param = {
         downCategorySeq: downCategorySeq,
-        upCategorySeq: upCategorySeq
+        upCategorySeq: upCategorySeq,
       };
       // VueUtil.post("/category/changeOrder.do", param, result => {
       //   this.list();
@@ -93,7 +92,7 @@ export default {
       if (!confirm("삭제?")) {
         return;
       }
-      let param = { categorySeq: categorySeq };
+      let param = { categorySeq: categorySeq, };
       // VueUtil.post("/category/delete.do", param, result => {
       //   this.list();
       //   this.$emit("@select-item", { categorySeq: -1 });
@@ -113,10 +112,10 @@ export default {
     },
     selectItem(item) {
       this.$emit("@select-item", item);
-    }
+    },
   },
   mounted() {
     this.list();
-  }
+  },
 };
 </script>

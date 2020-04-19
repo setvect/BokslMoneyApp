@@ -78,11 +78,11 @@ export default {
       yearChoice: currentYear,
       spendingGroupSum: {},
       kindGroupSum: {},
-      gridTable: null
+      gridTable: null,
     };
   },
   components: {
-    recordList: recordListComponent
+    recordList: recordListComponent,
   },
   computed: {
     yearList() {
@@ -104,11 +104,11 @@ export default {
     // 유형 리스트
     kindList() {
       return [
-        { SPENDING: "지출합계" },
-        { INCOME: "수입합계" },
-        { TRANSFER: "이체합계" }
+        { SPENDING: "지출합계", },
+        { INCOME: "수입합계", },
+        { TRANSFER: "이체합계", }
       ];
-    }
+    },
   },
   methods: {
     initGrid() {
@@ -125,9 +125,9 @@ export default {
             customize: function (xlsx) {
               var sheet = xlsx.xl.worksheets["sheet1.xml"];
               $("row c", sheet).attr("s", "25");
-            }
+            },
           }
-        ]
+        ],
       });
       // 엑셀 다운로드 button 감추기
       $(".buttons-excel").hide();
@@ -200,11 +200,11 @@ export default {
     exportExcel() {
       // datatables에 있는 버튼 클릭
       $(".buttons-excel").trigger("click");
-    }
+    },
   },
   mounted() {
     this.listSpending();
     this.runSettlement();
-  }
+  },
 };
 </script>

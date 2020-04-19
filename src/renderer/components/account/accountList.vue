@@ -62,7 +62,7 @@ export default {
       itemList: [],
       gridTable: null,
       // 정렬 조건 유지하기 위함
-      order: [0, "asc"]
+      order: [0, "asc"],
     };
   },
   props: {},
@@ -87,7 +87,7 @@ export default {
         return acc;
       }, 0);
       return value;
-    }
+    },
   },
   methods: {
     // 리스트
@@ -141,14 +141,14 @@ export default {
     exportExcel() {
       // datatables에 있는 버튼 클릭
       $(".buttons-excel").trigger("click");
-    }
+    },
   },
   mounted() {
     this.list();
   },
   created() {
     this.$EventBus.$on("listEvent", this.list);
-  }
+  },
 };
 </script>
 

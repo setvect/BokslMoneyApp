@@ -1,4 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
 <template>
   <div>
     <div class="page-title">
@@ -42,6 +41,6 @@ export default {
   methods: {
   },
   mounted() {
-  }
+  },
 };
 </script>

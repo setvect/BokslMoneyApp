@@ -271,8 +271,8 @@ export default {
       // transactionSet
       let transactionGroupDate = _.chain(transactionSet)
         .groupBy("date")
-        .map((listGroupByDate, date) => {
-          var listGroupByDate = _.map(listGroupByDate, function (c) {
+        .map((listGroupByDate1, date) => {
+          var listGroupByDate = _.map(listGroupByDate1, function (c) {
             return _.omit(c, ["date"])
           })
           listGroupByDate = _.chain(listGroupByDate)

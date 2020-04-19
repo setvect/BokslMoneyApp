@@ -25,7 +25,7 @@ export default {
     return {
       fromYear: new Date().getFullYear() - 1,
       accumulateOfMonth: {},
-      chart: null
+      chart: null,
     };
   },
   computed: {
@@ -39,7 +39,7 @@ export default {
     },
     monthList() {
       return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    }
+    },
   },
   methods: {
     // 통계
@@ -69,7 +69,7 @@ export default {
 
       let data = $.map(this.accumulateOfMonth, (value, key) => value);
       let dataset = [
-        { label: "자산 변화", data: data, backgroundColor: "#ffa093" }
+        { label: "자산 변화", data: data, backgroundColor: "#ffa093", }
       ];
 
       let assetData = {
@@ -77,7 +77,7 @@ export default {
           let label = moment(parseInt(key)).format("YYYY년MM월");
           return label;
         }),
-        datasets: dataset
+        datasets: dataset,
       };
 
       let ctx = document.getElementById("assets_chart").getContext("2d");
@@ -88,12 +88,12 @@ export default {
           elements: {
             rectangle: {
               borderWidth: 2,
-              borderSkipped: "bottom"
-            }
+              borderSkipped: "bottom",
+            },
           },
           responsive: true,
           legend: {
-            position: "top"
+            position: "top",
           },
           // 콤마 표시
           tooltips: {
@@ -101,7 +101,7 @@ export default {
               label: function (tooltipItem, data) {
                 let value =
                   data.datasets[tooltipItem.datasetIndex].data[
-                  tooltipItem.index
+                    tooltipItem.index
                   ];
                 return (
                   value
@@ -109,8 +109,8 @@ export default {
                     .split(/(?=(?:...)*$)/)
                     .join(",") + "원"
                 );
-              }
-            }
+              },
+            },
           },
           scales: {
             yAxes: [
@@ -122,17 +122,17 @@ export default {
                       .toString()
                       .split(/(?=(?:...)*$)/)
                       .join(",");
-                  }
-                }
+                  },
+                },
               }
-            ]
-          }
-        }
+            ],
+          },
+        },
       });
-    }
+    },
   },
   mounted() {
     this.runStat();
-  }
+  },
 };
 </script>

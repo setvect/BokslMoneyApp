@@ -73,17 +73,17 @@ export default {
         from: moment(),
         to: moment(),
         categorySeq: 0,
-        note: ""
+        note: "",
       },
       kindType: "SPENDING",
-      gridTable: null
+      gridTable: null,
     };
   },
   computed: {
     sum() {
       let sum = _.sumBy(this.transactionList, t => t.money);
       return sum;
-    }
+    },
   },
   methods: {
     initGrid() {
@@ -96,16 +96,16 @@ export default {
           {
             extend: "excelHtml5",
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+              columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             },
             title:
               "복슬머니(" + this.condition.from + "_" + this.condition.to + ")",
             customize: function (xlsx) {
               var sheet = xlsx.xl.worksheets["sheet1.xml"];
               $("row c", sheet).attr("s", "25");
-            }
+            },
           }
-        ]
+        ],
       });
       // 엑셀 다운로드 button 감추기
       $(".buttons-excel").hide();
@@ -150,8 +150,8 @@ export default {
     exportExcel() {
       // datatables에 있는 버튼 클릭
       $(".buttons-excel").trigger("click");
-    }
+    },
   },
-  mounted() { }
+  mounted() { },
 };
 </script>

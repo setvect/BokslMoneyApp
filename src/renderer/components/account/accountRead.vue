@@ -68,7 +68,7 @@ import "../../common/vue-common.js";
 export default {
   data() {
     return {
-      item: {}
+      item: {},
     };
   },
   methods: {
@@ -85,16 +85,16 @@ export default {
       if (!confirm("삭제?")) {
         return;
       }
-      VueUtil.post("/account/delete.do", { accountSeq: itemSeq }, result => {
+      VueUtil.post("/account/delete.do", { accountSeq: itemSeq, }, result => {
         $("#readItem").modal("hide");
         this.$EventBus.$emit("listEvent");
       });
-    }
+    },
   },
   mounted() { },
   created() {
     this.$EventBus.$on("readFormEvent", this.readForm);
-  }
+  },
 };
 </script>
 

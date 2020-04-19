@@ -99,7 +99,7 @@ export default {
     return {
       item: {},
       actionType: "add",
-      kindCodeList: []
+      kindCodeList: [],
     };
   },
   methods: {
@@ -136,7 +136,7 @@ export default {
       // VueUtil.get("/code/list.json", { codeMainId: "KIND_CODE" }, result => {
       //   this.kindCodeList = result.data;
       // });
-    }
+    },
   },
   mounted() {
     this.listKindCode();
@@ -144,7 +144,7 @@ export default {
   created() {
     this.$EventBus.$on("addFormEvent", this.addForm);
     this.$EventBus.$on("editFormEvent", this.editForm);
-  }
+  },
 };
 </script>
 <style>

@@ -86,13 +86,13 @@ export default {
       itemList: [],
       actionType: "",
       codeMain: {},
-      formItem: {}
+      formItem: {},
     };
   },
   methods: {
     // 리스트
     list() {
-      let param = { codeMainId: this.codeMainId };
+      let param = { codeMainId: this.codeMainId, };
       // VueUtil.get("/code/list.json", param, result => {
       //   this.itemList = result.data;
       // });
@@ -105,7 +105,7 @@ export default {
         this.itemList.reduce((acc, item) => {
           return Math.max(acc, item.orderNo);
         }, 0) + 1;
-      this.openForm({ orderNo: orderNo });
+      this.openForm({ orderNo: orderNo, });
     },
     //수정 폼
     editForm(item) {
@@ -139,7 +139,7 @@ export default {
       let param = {
         codeMainId: this.codeMainId,
         downCodeItemSeq: downCodeItemSeq,
-        upCodeItemSeq: upCodeItemSeq
+        upCodeItemSeq: upCodeItemSeq,
       };
       VueUtil.post("/code/changeOrder.do", param, result => {
         this.list();
@@ -150,7 +150,7 @@ export default {
       if (!confirm("삭제?")) {
         return;
       }
-      let param = { codeMainId: this.codeMainId, codeItemSeq: codeItemSeq };
+      let param = { codeMainId: this.codeMainId, codeItemSeq: codeItemSeq, };
       VueUtil.post("/code/delete.do", param, result => {
         this.list();
       });
@@ -176,7 +176,7 @@ export default {
       //     this.codeMain = result.data;
       //   }
       // );
-    }
+    },
   },
   created() {
     let url = new URL(location.href);
@@ -185,6 +185,6 @@ export default {
   mounted() {
     this.list();
     this.loadCodeMain();
-  }
+  },
 };
 </script>

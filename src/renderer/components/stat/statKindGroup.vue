@@ -24,7 +24,7 @@ export default {
       year: new Date().getFullYear(),
       yearChoice: new Date().getFullYear(),
       kindGroupSum: {},
-      chart: null
+      chart: null,
     };
   },
   computed: {
@@ -35,7 +35,7 @@ export default {
         years.push(y);
       }
       return years.reverse();
-    }
+    },
   },
   methods: {
     // 통계
@@ -70,13 +70,13 @@ export default {
         let item = {
           label: value.title,
           backgroundColor: value.color,
-          data: data
+          data: data,
         };
         return item;
       });
       let barChartData = {
         labels: monthList.map(m => m + 1 + "월"),
-        datasets: dataset
+        datasets: dataset,
       };
 
       let ctx = document.getElementById("kind_group_chart").getContext("2d");
@@ -87,12 +87,12 @@ export default {
           elements: {
             rectangle: {
               borderWidth: 2,
-              borderSkipped: "bottom"
-            }
+              borderSkipped: "bottom",
+            },
           },
           responsive: true,
           legend: {
-            position: "top"
+            position: "top",
           },
           // 콤마 표시
           tooltips: {
@@ -100,7 +100,7 @@ export default {
               label: function (tooltipItem, data) {
                 let value =
                   data.datasets[tooltipItem.datasetIndex].data[
-                  tooltipItem.index
+                    tooltipItem.index
                   ];
                 return (
                   value
@@ -108,8 +108,8 @@ export default {
                     .split(/(?=(?:...)*$)/)
                     .join(",") + "원"
                 );
-              }
-            }
+              },
+            },
           },
           scales: {
             yAxes: [
@@ -121,17 +121,17 @@ export default {
                       .toString()
                       .split(/(?=(?:...)*$)/)
                       .join(",");
-                  }
-                }
+                  },
+                },
               }
-            ]
-          }
-        }
+            ],
+          },
+        },
       });
-    }
+    },
   },
   mounted() {
     this.runStat();
-  }
+  },
 };
 </script>
