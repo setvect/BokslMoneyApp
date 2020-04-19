@@ -9,20 +9,20 @@
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-          <div class role="tabpanel" data-example-id="togglable-tabs">
+          <div>
             <ul class="nav nav-tabs bar_tabs" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" href="#tab_content1" data-toggle="tab" aria-expanded="true">수입/지출/이체</a>
+                <a class="nav-link active" href="#tab_content1" data-toggle="tab">수입/지출/이체</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#tab_content2" data-toggle="tab" aria-expanded="true">자산 변동</a>
+                <a class="nav-link" href="#tab_content2" data-toggle="tab">자산 변동</a>
               </li>
             </ul>
             <div class="tab-content">
-              <div class="container tab-pane active" id="tab_content1" aria-labelledby="home-tab">
+              <div class="container tab-pane active" id="tab_content1">
                 <kind-group />
               </div>
-              <div class="container tab-pane fade" id="tab_content2" aria-labelledby="home-tab">
+              <div class="container tab-pane fade" id="tab_content2">
                 <stat-assets />
               </div>
             </div>

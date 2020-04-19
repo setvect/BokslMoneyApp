@@ -14,6 +14,9 @@ export default {
       grid: "transaction-grid",
       settlement: "settlement",
       stat: "stat",
+      category: "category",
+      account: "account",
+      code: "code",
     };
     ipcRenderer.on("movePage", (event, page) => {
       console.log('movePage :', page);

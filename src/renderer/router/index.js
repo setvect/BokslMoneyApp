@@ -31,6 +31,21 @@ export default new Router({
       component: require('@/components/stat/stat.vue').default,
     },
     {
+      path: '/category',
+      name: 'category',
+      component: require('@/components/category/category.vue').default,
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: require('@/components/account/account.vue').default,
+    },
+    {
+      path: '/code',
+      name: 'code',
+      component: require('@/components/code/code.vue').default,
+    },
+    {
       path: '*',
       redirect: '/',
     }
