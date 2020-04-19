@@ -23,7 +23,7 @@ const TYPE_VALUE = {
 
 // 거래 내역 mixin
 const TransactionMixin = {
-  data: function () {
+  data: function() {
     return {
       // 지출, 수입, 이체 내역
       transactionList: [],
@@ -86,7 +86,7 @@ let AppUtil = {};
 /**
  * 계좌 이름
  */
-AppUtil.getAccountName = function (accountSeq) {
+AppUtil.getAccountName = function(accountSeq) {
   if (AppUtil.accountMap == null) {
     var v = $.ajax({
       type: "GET",
@@ -99,7 +99,7 @@ AppUtil.getAccountName = function (accountSeq) {
 };
 
 // 계좌 이름
-Vue.filter("accountName", function (accountSeq) {
+Vue.filter("accountName", function(accountSeq) {
   return AppUtil.getAccountName(accountSeq);
 });
 

@@ -1,9 +1,9 @@
-import connSeque from './connSeque.js'
+import connSeque from "./connSeque.js";
 
-const { DataTypes, } = require('sequelize')
+const { DataTypes } = require("sequelize");
 
 const oftenUsedVo = connSeque.define(
-  'oftenUsed',
+  "oftenUsed",
   {
     oftenUsedId: {
       type: DataTypes.INTEGER,
@@ -63,11 +63,11 @@ const oftenUsedVo = connSeque.define(
   },
   {
     classMethods: {},
-    tableName: 'BC_OFTEN_USED',
+    tableName: "BC_OFTEN_USED",
     freezeTableName: true,
     underscored: true,
     timestamps: false,
   }
-)
+);
 
-export default oftenUsedVo
+export default oftenUsedVo;

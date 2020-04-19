@@ -1,11 +1,11 @@
-import connSeque from './connSeque.js'
-import oftenUsed from './oftenUsed-vo.js'
-import transaction from './transaction-vo.js'
+import connSeque from "./connSeque.js";
+import oftenUsed from "./oftenUsed-vo.js";
+import transaction from "./transaction-vo.js";
 
-const { DataTypes, } = require('sequelize')
+const { DataTypes } = require("sequelize");
 
 const categoryVo = connSeque.define(
-  'category',
+  "category",
   {
     categoryId: {
       type: DataTypes.INTEGER,
@@ -40,13 +40,13 @@ const categoryVo = connSeque.define(
   },
   {
     classMethods: {},
-    tableName: 'BB_CATEGORY',
+    tableName: "BB_CATEGORY",
     freezeTableName: true,
     underscored: true,
     timestamps: false,
   }
-)
-categoryVo.hasMany(oftenUsed, { foreignKey: 'category_seq', })
-categoryVo.hasMany(transaction, { foreignKey: 'category_seq', })
+);
+categoryVo.hasMany(oftenUsed, { foreignKey: "category_seq" });
+categoryVo.hasMany(transaction, { foreignKey: "category_seq" });
 
-export default categoryVo
+export default categoryVo;

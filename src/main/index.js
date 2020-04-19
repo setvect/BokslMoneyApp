@@ -28,7 +28,7 @@ userVo
   .then(() => {
     return userVo.findAll();
   })
-  .then(users => {
+  .then((users) => {
     if (users.length !== 0) {
       return null;
     }
@@ -38,7 +38,7 @@ userVo
       userId: "boksl",
       name: "복슬이",
       password: hash,
-      deleteF: false
+      deleteF: false,
     });
   })
   .catch(util.errorLog);
@@ -58,8 +58,8 @@ app.on("ready", () => {
     width: 1500,
     height: 1000,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
     // 개발자 도구를 엽니다.
   });
   if (isDevelopment) {
@@ -69,7 +69,7 @@ app.on("ready", () => {
       formatUrl({
         pathname: path.join(__dirname, "index.html"),
         protocol: "file",
-        slashes: true
+        slashes: true,
       })
     );
   }

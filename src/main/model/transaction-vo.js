@@ -1,8 +1,8 @@
-import connSeque from './connSeque.js'
-const { DataTypes, } = require('sequelize')
+import connSeque from "./connSeque.js";
+const { DataTypes } = require("sequelize");
 
 const transactionVo = connSeque.define(
-  'transaction',
+  "transaction",
   {
     transactionId: {
       type: DataTypes.INTEGER,
@@ -57,11 +57,11 @@ const transactionVo = connSeque.define(
   },
   {
     classMethods: {},
-    tableName: 'BE_TRANSACTION',
+    tableName: "BE_TRANSACTION",
     freezeTableName: true,
     underscored: true,
     timestamps: false,
   }
-)
+);
 
-export default transactionVo
+export default transactionVo;

@@ -1,8 +1,8 @@
-import connSeque from './connSeque.js'
-const { DataTypes, } = require('sequelize')
+import connSeque from "./connSeque.js";
+const { DataTypes } = require("sequelize");
 
 const codeItemVo = connSeque.define(
-  'codeItem',
+  "codeItem",
   {
     codeItemId: {
       type: DataTypes.STRING(20),
@@ -32,11 +32,11 @@ const codeItemVo = connSeque.define(
   },
   {
     classMethods: {},
-    tableName: 'CB_CODE_ITEM',
+    tableName: "CB_CODE_ITEM",
     freezeTableName: true,
     underscored: true,
     timestamps: false,
   }
-)
+);
 
-export default codeItemVo
+export default codeItemVo;

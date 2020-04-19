@@ -1,12 +1,12 @@
-
 // 프로그램 전역적으로 사용하는 공통 함수
 var CommonUtil = {};
 
 /**
  * 프로그램 오류로 인한 경고창
  */
-CommonUtil.popupError = function (err) {
-  const message = err.response == null ? err.message : err.response.data.message;
+CommonUtil.popupError = function(err) {
+  const message =
+    err.response == null ? err.message : err.response.data.message;
   if (err.message != null) {
     console.log("프로그램 에러", message);
     Swal.fire("에러다", message, "error");
@@ -18,7 +18,7 @@ CommonUtil.popupError = function (err) {
 /**
  * 메시지 창
  */
-CommonUtil.dialogInfo = function (title, message) {
+CommonUtil.dialogInfo = function(title, message) {
   $("#alert-dialog").attr("title", title);
   $("#alert-dialog ._message").html(message);
 
@@ -27,11 +27,11 @@ CommonUtil.dialogInfo = function (title, message) {
     height: "auto",
     width: 550,
     modal: true,
-    open: function () {
+    open: function() {
       $(".ui-dialog").css("z-index", 99999);
     },
     buttons: {
-      Close: function () {
+      Close: function() {
         $(this).dialog("close");
       },
     },
@@ -45,7 +45,7 @@ CommonUtil.dialogInfo = function (title, message) {
 /**
  * twbsPagination 페이징 처리 관련 옵션
  */
-CommonUtil.makePageOption = function (page, callback) {
+CommonUtil.makePageOption = function(page, callback) {
   return {
     initiateStartPageClick: false,
     totalPages: page.totalPage == 0 ? 1 : page.totalPage,
@@ -61,19 +61,19 @@ CommonUtil.makePageOption = function (page, callback) {
 };
 
 // 기존 페이징 객체 제거
-CommonUtil.destroyPage = function (selector) {
+CommonUtil.destroyPage = function(selector) {
   if ($(selector).data("twbs-pagination")) {
     $(selector).twbsPagination("destroy");
   }
 };
 
 // 콤마
-CommonUtil.toComma = function (value) {
+CommonUtil.toComma = function(value) {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 // 줄바꿈을 br 테그로 변경
-CommonUtil.toBr = function (text) {
+CommonUtil.toBr = function(text) {
   if (text === undefined || text == null) {
     return null;
   }
@@ -81,12 +81,12 @@ CommonUtil.toBr = function (text) {
 };
 
 // null 또는 빈 공백이면 true 반환
-CommonUtil.isEmpty = function (val) {
+CommonUtil.isEmpty = function(val) {
   return val === undefined || val == null || val.length <= 0 ? true : false;
 };
 
 // 공백제거
-CommonUtil.removeWhiteSpace = function (val) {
+CommonUtil.removeWhiteSpace = function(val) {
   if (CommonUtil.isEmpty(val)) {
     return "";
   } else {
@@ -95,16 +95,16 @@ CommonUtil.removeWhiteSpace = function (val) {
 };
 
 // context root path
-CommonUtil.getContextPath = function () {
+CommonUtil.getContextPath = function() {
   return $("meta[name='contextRoot']").attr("content");
 };
 
-CommonUtil.appendContextRoot = function (url) {
+CommonUtil.appendContextRoot = function(url) {
   return CommonUtil.getContextPath() + url;
 };
 
 // 정규표현식에서 사용하는 특수문자를 escape 처리함
-CommonUtil.escapeRegExp = function (str) {
+CommonUtil.escapeRegExp = function(str) {
   return str.replace(
     /[\\-\\[\]\\/\\{\\}\\(\\)\\*\\+\\?\\.\\\\\\^\\$\\|]/g,
     "\\$&"

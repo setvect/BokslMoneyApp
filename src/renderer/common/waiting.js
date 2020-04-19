@@ -8,7 +8,7 @@ import "bootstrap";
 
 var waitDialog =
   waitDialog ||
-  (function ($) {
+  (function($) {
     "use strict";
 
     // 두개 이상의 ajax 호출 시 close 되는 시점을 정확히 판단하기 위해 오픈 횟수를 저장
@@ -34,7 +34,7 @@ var waitDialog =
        * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
        * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
        */
-      show: function (message, options) {
+      show: function(message, options) {
         // Assigning defaults
         if (typeof options === "undefined") {
           options = {};
@@ -65,7 +65,7 @@ var waitDialog =
         $dialog.find("h3").text(message);
         // Adding callbacks
         if (typeof settings.onHide === "function") {
-          $dialog.off("hidden.bs.modal").on("hidden.bs.modal", function (e) {
+          $dialog.off("hidden.bs.modal").on("hidden.bs.modal", function(e) {
             settings.onHide.call($dialog);
           });
         }
@@ -75,13 +75,13 @@ var waitDialog =
         $dialog.modal();
       },
       // 메시지 변경
-      changeMessage: function (message) {
+      changeMessage: function(message) {
         $("._wait_message").text(message);
       },
       /**
        * Closes dialog
        */
-      hide: function () {
+      hide: function() {
         watingOpenCount--;
         if (watingOpenCount <= 0) {
           $dialog.modal("hide");

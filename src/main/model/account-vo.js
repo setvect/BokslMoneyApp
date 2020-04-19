@@ -1,8 +1,8 @@
-import connSeque from './connSeque.js'
-const { DataTypes, } = require('sequelize')
+import connSeque from "./connSeque.js";
+const { DataTypes } = require("sequelize");
 
 const accountVo = connSeque.define(
-  'account',
+  "account",
   {
     accountSeq: {
       type: DataTypes.INTEGER,
@@ -26,27 +26,27 @@ const accountVo = connSeque.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    interestRate:{
+    interestRate: {
       type: DataTypes.STRING(100),
       allowNull: true,
     },
-    term:{
+    term: {
       type: DataTypes.STRING(100),
       allowNull: true,
     },
-    expDate:{
+    expDate: {
       type: DataTypes.STRING(100),
       allowNull: true,
     },
-    monthlyPay:{
+    monthlyPay: {
       type: DataTypes.STRING(100),
       allowNull: true,
     },
-    transferDate:{
+    transferDate: {
       type: DataTypes.STRING(100),
       allowNull: true,
     },
-    note:{
+    note: {
       type: DataTypes.STRING(1000),
       allowNull: true,
     },
@@ -58,11 +58,11 @@ const accountVo = connSeque.define(
   },
   {
     classMethods: {},
-    tableName: 'BA_ACCOUNT',
+    tableName: "BA_ACCOUNT",
     freezeTableName: true,
     underscored: true,
     timestamps: false,
   }
-)
+);
 
-export default accountVo
+export default accountVo;
