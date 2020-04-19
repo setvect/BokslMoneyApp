@@ -2,7 +2,7 @@ import connSeque from "./connSeque.js";
 import oftenUsed from "./oftenUsed-vo.js";
 import transaction from "./transaction-vo.js";
 
-const { DataTypes } = require("sequelize");
+import { DataTypes } from "sequelize";
 
 const categoryVo = connSeque.define(
   "category",

@@ -1,6 +1,6 @@
 import connSeque from "./connSeque.js";
 
-const { DataTypes } = require("sequelize");
+import { DataTypes } from "sequelize";
 
 const oftenUsedVo = connSeque.define(
   "oftenUsed",

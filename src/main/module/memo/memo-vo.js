@@ -1,5 +1,5 @@
 import connSeque from "../../model/connSeque.js/index.js";
-const { DataTypes } = require("sequelize");
+import { DataTypes } from "sequelize";
 
 const memoVo = connSeque.define(
   "Memo",

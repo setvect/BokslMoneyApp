@@ -1,5 +1,5 @@
 import connSeque from "./connSeque.js";
-const { DataTypes } = require("sequelize");
+import { DataTypes } from "sequelize";
 
 const codeItemVo = connSeque.define(
   "codeItem",

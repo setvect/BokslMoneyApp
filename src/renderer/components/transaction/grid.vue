@@ -76,8 +76,6 @@
                 <button type="button" data-type="TRANSFER" class="btn btn-info _input">이체</button>
               </div>
               <div>
-
-
                 <div>
                   <div class="form-group row">
                     <label class="control-label col-sm-3" for="start_date">시작일:</label>

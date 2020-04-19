@@ -1,6 +1,6 @@
 import connSeque from "./connSeque.js";
 import codeItem from "./codeItem-vo";
-const { DataTypes } = require("sequelize");
+import { DataTypes } from "sequelize";
 
 const codeMainVo = connSeque.define(
   "codeMain",
