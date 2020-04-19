@@ -65,6 +65,7 @@ var waitDialog =
         $dialog.find("h3").text(message);
         // Adding callbacks
         if (typeof settings.onHide === "function") {
+          // eslint-disable-next-line no-unused-vars
           $dialog.off("hidden.bs.modal").on("hidden.bs.modal", function(e) {
             settings.onHide.call($dialog);
           });
@@ -89,6 +90,6 @@ var waitDialog =
         }
       },
     };
-  })(jQuery);
+  })($);
 
 export default waitDialog;

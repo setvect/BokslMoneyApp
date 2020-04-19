@@ -4,7 +4,6 @@
 
 ### 진행예정
 - NEW-20200412: vue파일에 포메팅 했을 때 세미콜론; 추가하도록함
-- NEW-20200405: eslint 셋팅, 사용.
 - PBM-20200405: Deprecation warning: value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(),  ... warning 해결
 - NEW-20200331: sequelize 외래키
 - NEW-20200101: 로그인
@@ -17,6 +16,7 @@
 - NEW-20200101: 코드 관리
 
 ### 완료
+- NEW-20200405(20200419): eslint 셋팅, 사용.
 - NEW-20200101(20200411): 기본 화면 구성
 - NEW-20200407: 새로고침 단축키 적용
 - PBM-20200404: [Vue warn]: $attrs is readonly 오류 해결. bootstrap-vue 문제로 판단됨.

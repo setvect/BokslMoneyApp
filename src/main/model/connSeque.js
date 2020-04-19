@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+import { Sequelize } from "sequelize";
 
 const connSeque = new Sequelize({
   dialect: "sqlite",

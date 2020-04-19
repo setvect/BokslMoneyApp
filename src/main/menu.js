@@ -1,7 +1,4 @@
 import { Menu } from "electron";
-import { dialog } from "electron";
-import { app, webContents } from "electron";
-const { ipcMain } = require("electron");
 
 export default {
   init() {
@@ -57,7 +54,7 @@ export default {
             click(item, focusedWindow) {
               focusedWindow.webContents.send("movePage", "code");
             },
-          },
+          }
         ],
       },
       {
@@ -83,9 +80,9 @@ export default {
                 "https://github.com/setvect/BokslMoneyApp"
               );
             },
-          },
+          }
         ],
-      },
+      }
     ];
 
     const menu = Menu.buildFromTemplate(template);

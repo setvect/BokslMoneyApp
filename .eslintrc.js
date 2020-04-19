@@ -1,36 +1,36 @@
 module.exports = {
   root: true,
   parserOptions: {
-    sourceType: 'module',
+    sourceType: "module",
   },
   env: {
     browser: true,
     es6: true,
     node: true,
   },
-  extends: ['eslint:recommended', 'plugin:vue/essential'],
+  extends: ["eslint:recommended"],
   globals: {
     __static: true,
     Swal: true,
+    $: true,
   },
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module',
+    sourceType: "module",
   },
-  plugins: ['html', 'vue'],
+  plugins: ["html", "vue"],
   rules: {
-    semi: ['error', 'never'], // 세미콜론 사용 안함.
-    indent: ['error', 2],
-    'comma-dangle': [
-      'error',
+    indent: ["error", 2],
+    "comma-dangle": [
+      "error",
       {
-        arrays: 'never',
-        objects: 'always',
-        imports: 'never',
-        exports: 'never',
-        functions: 'never',
+        arrays: "never",
+        objects: "always",
+        imports: "never",
+        exports: "never",
+        functions: "never",
       },
     ],
-    'no-unused-vars': 'warn', // off, error
+    "no-unused-vars": "warn", // off, error
   },
-}
+};

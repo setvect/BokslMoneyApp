@@ -23,7 +23,7 @@ const TYPE_VALUE = {
 
 // 거래 내역 mixin
 const TransactionMixin = {
-  data: function() {
+  data: function () {
     return {
       // 지출, 수입, 이체 내역
       transactionList: [],
@@ -44,6 +44,7 @@ const TransactionMixin = {
   methods: {
     // 거래내역 또는 메모 등록 폼
     addItemForm(type) {
+      console.log("aaaaaaaaaaaa");
       if (type == "MEMO") {
         let memo = this.getMemo(this.selectDate);
         // 해당 날짜에 등록된 메모가 있다면 수정으로 없다면 새롭게 등록
@@ -60,6 +61,7 @@ const TransactionMixin = {
       var d = $.extend(true, {}, item);
       this.$EventBus.$emit("editFormEvent", d);
     },
+    // eslint-disable-next-line no-unused-vars
     deleteAction(item) {
       if (!confirm("삭제하시겠습니까?")) {
         return;
@@ -86,7 +88,7 @@ let AppUtil = {};
 /**
  * 계좌 이름
  */
-AppUtil.getAccountName = function(accountSeq) {
+AppUtil.getAccountName = function (accountSeq) {
   if (AppUtil.accountMap == null) {
     var v = $.ajax({
       type: "GET",
@@ -99,7 +101,7 @@ AppUtil.getAccountName = function(accountSeq) {
 };
 
 // 계좌 이름
-Vue.filter("accountName", function(accountSeq) {
+Vue.filter("accountName", function (accountSeq) {
   return AppUtil.getAccountName(accountSeq);
 });
 

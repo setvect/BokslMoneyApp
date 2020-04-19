@@ -3,10 +3,12 @@
   "editor.tabSize": 2,
   "eslint.enable": true,
   "eslint.validate": [
-      "javascript",
-      "vue"
+    "javascript",
+    "vue"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true
 }

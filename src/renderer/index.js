@@ -30,10 +30,10 @@ Vue.use(VeeValidate, {
 });
 
 let EventBus = new Vue();
-Vue.prototype.$EventBus = EventBus
+Vue.prototype.$EventBus = EventBus;
 
 new Vue({
-  components: { App },
+  components: { App, },
   router,
   store,
   template: "<App/>",

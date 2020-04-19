@@ -41,9 +41,9 @@ VueUtil._ajaxCall = function(callType, url, _param, _callback, _option) {
     let paramParsing = option.paramParsing || false;
     if (paramParsing) {
       let searchParams = new URLSearchParams($.param(param, true));
-      sendParam = { params: searchParams };
+      sendParam = { params: searchParams, };
     } else {
-      sendParam = { params: param };
+      sendParam = { params: param, };
     }
   } else if (callType == "post") {
     axiosMethod = axios.post;
@@ -58,7 +58,7 @@ VueUtil._ajaxCall = function(callType, url, _param, _callback, _option) {
     };
 
   if (option.waitDialog != false) {
-    waitDialog.show(waitMsg, { dialogSize: "sm" });
+    waitDialog.show(waitMsg, { dialogSize: "sm", });
   }
 
   axiosMethod(CommonUtil.appendContextRoot(url), sendParam)
