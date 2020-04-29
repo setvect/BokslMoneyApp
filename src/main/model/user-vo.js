@@ -20,7 +20,6 @@ const userVo = connSeque.define(
     deleteF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
     },
   },
   {

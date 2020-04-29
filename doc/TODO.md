@@ -4,7 +4,6 @@
 
 ### 진행예정
 - NEW-20200412: vue파일에 포메팅 했을 때 세미콜론; 추가하도록함
-- PBM-20200405: Deprecation warning: value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(),  ... warning 해결
 - NEW-20200331: sequelize 외래키
 - NEW-20200101: 로그인
 - NEW-20200101: 가계부 쓰기 - 달력
@@ -16,6 +15,7 @@
 - NEW-20200101: 코드 관리
 
 ### 완료
+- PBM-20200405(20200429): Deprecation warning: value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(),  ... warning 해결
 - NEW-20200419: eslint *.vue 파일에도 작동할 수 있도록
 - NEW-20200405(20200419): eslint 셋팅, 사용.
 - NEW-20200101(20200411): 기본 화면 구성

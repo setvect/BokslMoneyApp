@@ -53,7 +53,6 @@ const accountVo = connSeque.define(
     deleteF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
     },
   },
   {

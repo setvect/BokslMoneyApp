@@ -12,17 +12,14 @@ const memoVo = connSeque.define(
     note: {
       type: DataTypes.STRING(1000),
       allowNull: false,
-      defaultValue: false,
     },
     memoDate: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: false,
     },
     deleteF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
     },
   },
   {

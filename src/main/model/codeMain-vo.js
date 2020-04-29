@@ -13,12 +13,10 @@ const codeMainVo = connSeque.define(
     name: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      defaultValue: false,
     },
     deleteF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
     },
   },
   {
