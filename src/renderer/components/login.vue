@@ -3,7 +3,6 @@
     <div class="login_wrapper">
       <div class="animate form login_form">
         <section class="login_content">
-          x
           <b-form>
             <h1>복슬 머니</h1>
             <div>

@@ -4,6 +4,7 @@ import { format as formatUrl } from "url";
 import menu from "./menu.js";
 
 import loginEvent from "./module/login/login-event.js";
+import codeEvent from "./module/code/codeService.js";
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
 import accountVo from "./model/account-vo.js";
@@ -57,7 +58,7 @@ codeMainVo
     if (codeMain.length !== 0) {
       return null;
     }
-    // 기본 사용자 등록
+    // 기본 코드
     return codeMainVo.bulkCreate([
       {
         codeMainId: "KIND_CODE",
@@ -84,7 +85,9 @@ codeMainVo
   .then(() => console.log("codeMain .."));
 codeItemVo.sync().then(() => console.log("codeItem .."));
 
+// event init
 loginEvent.init();
+codeEvent.init();
 
 app.on("ready", () => {
   let window = new BrowserWindow({

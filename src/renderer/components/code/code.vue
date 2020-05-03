@@ -4,7 +4,7 @@
       <div class="title_left">
         <h3>코드관리</h3>
         <select v-model="currentMainCode">
-          <option v-for="item in mainCodeList" :value="item.value" :key="item.value">{{item.name}}</option>
+          <option v-for="item in mainCodeList" :value="item.codeMainId" :key="item.codeMainId">{{item.name}}</option>
         </select>
       </div>
     </div>
@@ -79,6 +79,7 @@
 </template>
 <script type="text/javascript">
 import VueUtil from "../../common/vue-util.js"
+import { ipcRenderer } from 'electron'
 
 // vue 객체 생성
 export default {
@@ -90,12 +91,7 @@ export default {
       actionType: "",
       codeMain: {},
       formItem: {},
-      mainCodeList: [
-        { value: "KIND_CODE", name: "자산유형", },
-        { value: "ATTR_SPENDING", name: "지출항목", },
-        { value: "ATTR_TRANSFER", name: "이체항목", },
-        { value: "ATTR_INCOME", name: "수입항목", }
-      ],
+      mainCodeList: [],
     };
   },
   methods: {
@@ -178,13 +174,7 @@ export default {
     },
     // 메인코드
     loadCodeMain() {
-      // VueUtil.get(
-      //   "/code/getCodeMain.json",
-      //   { currentMainCode: this.currentMainCode },
-      //   result => {
-      //     this.codeMain = result.data;
-      //   }
-      // );
+      ipcRenderer.send('code/codeMainlistAll')
     },
   },
   created() {
@@ -195,6 +185,11 @@ export default {
     this.currentMainCode = this.$route.query.mainCode;
     this.list();
     this.loadCodeMain();
+
+    ipcRenderer.on('code/codeMainlistAll/response', (event, mainCodeList) => {
+      console.log('mainCodeList :>> ', mainCodeList);
+      this.mainCodeList = mainCodeList;
+    })
   },
 };
 </script>
