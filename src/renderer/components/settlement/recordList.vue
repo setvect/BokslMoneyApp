@@ -4,11 +4,11 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">
+          <h5 class="modal-title">
             {{condition.from}} ~ {{condition.to}} {{getKindAttr(kindType).title}} 내역 (총: {{sum |
             numberFormat}})
-          </h4>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body" style="max-height: 450px; overflow: auto;">
           <table class="table table-striped jambo_table bulk_action table-bordered" id="grid-pop">
