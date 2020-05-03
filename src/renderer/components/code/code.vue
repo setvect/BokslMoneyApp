@@ -2,7 +2,10 @@
   <div class id="app" v-cloak>
     <div class="page-title">
       <div class="title_left">
-        <h3>코드관리: {{codeMain.name}}</h3>
+        <h3>코드관리</h3>
+        <select v-model="currentMainCode">
+          <option v-for="item in mainCodeList" :value="item.value" :key="item.value">{{item.name}}</option>
+        </select>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -82,17 +85,23 @@ export default {
   data: function () {
     return {
       item: {},
-      codeMainId: "",
+      currentMainCode: "",
       itemList: [],
       actionType: "",
       codeMain: {},
       formItem: {},
+      mainCodeList: [
+        { value: "KIND_CODE", name: "자산유형", },
+        { value: "ATTR_SPENDING", name: "지출항목", },
+        { value: "ATTR_TRANSFER", name: "이체항목", },
+        { value: "ATTR_INCOME", name: "수입항목", }
+      ],
     };
   },
   methods: {
     // 리스트
     list() {
-      let param = { codeMainId: this.codeMainId, };
+      let param = { currentMainCode: this.currentMainCode, };
       // VueUtil.get("/code/list.json", param, result => {
       //   this.itemList = result.data;
       // });
@@ -122,7 +131,7 @@ export default {
         if (!result) {
           return;
         }
-        this.formItem.codeMainId = this.codeMainId;
+        this.formItem.currentMainCode = this.currentMainCode;
         if (this.formItem.codeItemKey != null) {
           this.formItem.codeItemSeq = this.formItem.codeItemKey.codeItemSeq;
         }
@@ -137,7 +146,7 @@ export default {
     // 정렬 순서 변경
     changeOrder(downCodeItemSeq, upCodeItemSeq) {
       let param = {
-        codeMainId: this.codeMainId,
+        currentMainCode: this.currentMainCode,
         downCodeItemSeq: downCodeItemSeq,
         upCodeItemSeq: upCodeItemSeq,
       };
@@ -150,7 +159,7 @@ export default {
       if (!confirm("삭제?")) {
         return;
       }
-      let param = { codeMainId: this.codeMainId, codeItemSeq: codeItemSeq, };
+      let param = { currentMainCode: this.currentMainCode, codeItemSeq: codeItemSeq, };
       VueUtil.post("/code/delete.do", param, result => {
         this.list();
       });
@@ -171,7 +180,7 @@ export default {
     loadCodeMain() {
       // VueUtil.get(
       //   "/code/getCodeMain.json",
-      //   { codeMainId: this.codeMainId },
+      //   { currentMainCode: this.currentMainCode },
       //   result => {
       //     this.codeMain = result.data;
       //   }
@@ -180,9 +189,10 @@ export default {
   },
   created() {
     let url = new URL(location.href);
-    this.codeMainId = url.searchParams.get("codeMainId");
+    this.currentMainCode = url.searchParams.get("currentMainCode");
   },
   mounted() {
+    this.currentMainCode = this.$route.query.mainCode;
     this.list();
     this.loadCodeMain();
   },
