@@ -18,11 +18,11 @@ export default {
       account: "account",
       code: "code",
     };
-    ipcRenderer.on("movePage", (event, page) => {
-      console.log('movePage :', page);
+    ipcRenderer.on("movePage", (event, page, query) => {
+      console.log('movePage :', page, query);
       let pageName = pageMapping[page];
       if (pageName != null && this.$route.name != pageName) {
-        this.$router.push({ name: pageName, });
+        this.$router.push({ name: pageName, query: query, });
       }
     });
   },
@@ -32,3 +32,4 @@ export default {
 <style>
   /* CSS */
 </style>
+

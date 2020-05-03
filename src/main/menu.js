@@ -52,7 +52,9 @@ export default {
             label: "코드 관리",
             accelerator: "Ctrl+F7",
             click(item, focusedWindow) {
-              focusedWindow.webContents.send("movePage", "code");
+              focusedWindow.webContents.send("movePage", "code", {
+                mainCode: "KIND_CODE",
+              });
             },
           }
         ],
