@@ -174,7 +174,10 @@ export default {
     },
     // 메인코드
     loadCodeMain() {
-      ipcRenderer.send('code/codeMainlistAll')
+      ipcRenderer.invoke('code/codeMainlistAll').then(mainCodeList => {
+        console.log('mainCodeList :>> ', mainCodeList);
+        this.mainCodeList = mainCodeList;
+      })
     },
   },
   created() {
@@ -185,11 +188,6 @@ export default {
     this.currentMainCode = this.$route.query.mainCode;
     this.list();
     this.loadCodeMain();
-
-    ipcRenderer.on('code/codeMainlistAll/response', (event, mainCodeList) => {
-      console.log('mainCodeList :>> ', mainCodeList);
-      this.mainCodeList = mainCodeList;
-    })
   },
 };
 </script>

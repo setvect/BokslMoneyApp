@@ -42,17 +42,16 @@ export default {
   },
   methods: {
     loginProc() {
-      ipcRenderer.send('loginCheck', this.form.password)
+      ipcRenderer.invoke('loginCheck', this.form.password).then(loginSuccess => {
+        if (!loginSuccess) {
+          alert("비밀번호 틀렸다.")
+          return
+        }
+        this.$router.push({ name: "transaction-calendar", })
+      });
     },
   },
   mounted() {
-    ipcRenderer.on('loginCheckResponse', (event, loginSuccess) => {
-      if (!loginSuccess) {
-        alert("비밀번호 틀렸다.")
-        return
-      }
-      this.$router.push({ name: "transaction-calendar", })
-    })
     // TODO 로그인 페이지 통과. 향후 주석 해제
     this.$router.push({ name: "code", query: { "mainCode": "KIND_CODE", }, })
   },

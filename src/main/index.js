@@ -3,8 +3,8 @@ import path from "path";
 import { format as formatUrl } from "url";
 import menu from "./menu.js";
 
-import loginEvent from "./module/login/login-event.js";
-import codeEvent from "./module/code/codeService.js";
+import loginService from "./module/login/loginService.js";
+import codeService from "./module/code/codeService.js";
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
 import accountVo from "./model/account-vo.js";
@@ -86,8 +86,8 @@ codeMainVo
 codeItemVo.sync().then(() => console.log("codeItem .."));
 
 // event init
-loginEvent.init();
-codeEvent.init();
+loginService.init();
+codeService.init();
 
 app.on("ready", () => {
   let window = new BrowserWindow({
