@@ -79,7 +79,7 @@
 </template>
 <script type="text/javascript">
 import VueUtil from "../../common/vue-util.js"
-import { ipcRenderer } from 'electron'
+import ElectronUtil from "../../common/electron-util"
 
 // vue 객체 생성
 export default {
@@ -97,15 +97,15 @@ export default {
   methods: {
     // 리스트
     list() {
-      ipcRenderer.invoke('code/listItem', this.currentMainCode).then(result => {
+      ElectronUtil.invoke('code/listItem', this.currentMainCode, result => {
         this.itemList = result;
-      });
+      })
     },
     // 메인코드
     loadCodeMain() {
-      ipcRenderer.invoke('code/listMain').then(result => {
+      ElectronUtil.invoke('code/listMain', null, result => {
         this.mainCodeList = result;
-      });
+      })
     },
     // 등록 폼
     addForm() {
@@ -133,10 +133,10 @@ export default {
         }
         this.formItem.codeMainId = this.currentMainCode;
         if (this.actionType == "add") {
-          ipcRenderer.invoke('code/addItem', this.formItem).then(result => {
+          ElectronUtil.invoke('code/addItem', this.formItem, result => {
             $("#addItem").modal("hide");
             this.list();
-          });
+          })
         } else {
           console.log("aaaaaaaaaa");
         }

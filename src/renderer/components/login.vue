@@ -19,8 +19,7 @@
   </div>
 </template>
 <script type="text/javascript">
-import { ipcRenderer } from 'electron'
-import { session } from 'electron'
+import ElectronUtil from "../../common/electron-util"
 import "../common/vue-common.js"
 
 export default {
@@ -42,13 +41,14 @@ export default {
   },
   methods: {
     loginProc() {
-      ipcRenderer.invoke('checkLogin', this.form.password).then(loginSuccess => {
+
+      ElectronUtil.invoke('checkLogin', this.form.password, loginSuccess => {
         if (!loginSuccess) {
           alert("비밀번호 틀렸다.")
           return
         }
         this.$router.push({ name: "transaction-calendar", })
-      });
+      })
     },
   },
   mounted() {
