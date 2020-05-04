@@ -26,6 +26,7 @@ export default {
           deleteF: false,
           codeMainId: code,
         },
+        order: ['orderNo'],
         raw: true,
       });
 
@@ -35,8 +36,6 @@ export default {
     // ================ 등록 ================
     // 메인코드에 대한 코드 항목 목록
     ipcMain.handle("code/addItem", async (event, item) => {
-      console.log("item :>> ", item);
-      console.log("item.codeMainId :>> ", item.codeMainId);
       const records = await connSeque.query(
         "select ifnull(max(c.CODE_ITEM_SEQ), 0) + 1 as cnt from CB_CODE_ITEM c where c.CODE_MAIN_ID = $codeMainId",
         {
@@ -44,16 +43,37 @@ export default {
           type: QueryTypes.SELECT,
         }
       );
-      console.log("records :>> ", records);
 
       item.codeItemSeq = records[0].cnt;
       item.deleteF = false;
       const instance = await codeItem.create(item);
-      console.log("instance :>> ", instance);
       return instance;
     });
 
-    // ================ 변경 ================
+    // ================ 수정 ================
+    // 정렬 변경
+    ipcMain.handle("code/changeOrder", async (event, param) => {
+      const downItem = await codeItem.findOne({
+        where: {
+          codeMainId: param.codeMainId,
+          codeItemSeq: param.downCodeItemSeq,
+        },
+      });
+      const upItem = await codeItem.findOne({
+        where: {
+          codeMainId: param.codeMainId,
+          codeItemSeq: param.upCodeItemSeq,
+        },
+      });
+
+      console.log("downItem :>> ", downItem.name, downItem.orderNo);
+      console.log("upItem :>> ", upItem.name, upItem.orderNo);
+      const temp = downItem.orderNo;
+      downItem.orderNo = upItem.orderNo;
+      upItem.orderNo = temp;
+      downItem.save();
+      upItem.save();
+    });
 
     // ================ 삭제 ================
   },

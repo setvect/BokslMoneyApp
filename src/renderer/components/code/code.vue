@@ -145,13 +145,14 @@ export default {
     // 정렬 순서 변경
     changeOrder(downCodeItemSeq, upCodeItemSeq) {
       let param = {
-        currentMainCode: this.currentMainCode,
+        codeMainId: this.currentMainCode,
         downCodeItemSeq: downCodeItemSeq,
         upCodeItemSeq: upCodeItemSeq,
       };
-      VueUtil.post("/code/changeOrder.do", param, result => {
+
+      ElectronUtil.invoke('code/changeOrder', param, () => {
         this.list();
-      });
+      })
     },
     // 삭제
     deleteAction(codeItemSeq) {
