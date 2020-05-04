@@ -12,6 +12,7 @@ import ko from "vee-validate/dist/locale/ko";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "font-awesome/css/font-awesome.min.css";
 import "@/assets/custom.css";
 import "@/assets/app.css";
 
