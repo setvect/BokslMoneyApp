@@ -27,6 +27,6 @@ const codeMainVo = connSeque.define(
     timestamps: false,
   }
 );
-codeMainVo.hasMany(codeItem, { foreignKey: "code_main_id", });
+codeMainVo.hasMany(codeItem, { foreignKey: "codeMainId", });
 
 export default codeMainVo;

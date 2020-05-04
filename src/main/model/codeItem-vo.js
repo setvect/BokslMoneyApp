@@ -4,7 +4,7 @@ import { DataTypes } from "sequelize";
 const codeItemVo = connSeque.define(
   "codeItem",
   {
-    codeItemId: {
+    codeMainId: {
       type: DataTypes.STRING(20),
       allowNull: false,
       primaryKey: true,

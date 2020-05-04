@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     loginProc() {
-      ipcRenderer.invoke('loginCheck', this.form.password).then(loginSuccess => {
+      ipcRenderer.invoke('checkLogin', this.form.password).then(loginSuccess => {
         if (!loginSuccess) {
           alert("비밀번호 틀렸다.")
           return

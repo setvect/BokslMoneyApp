@@ -22,13 +22,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in itemList" :key="item.codeItemKey.codeItemSeq">
+                <tr v-for="(item, index) in itemList" :key="item.codeItemSeq">
                   <td>{{item.name}}</td>
                   <td>
-                    <a href="javascript:" @click="changeOrder(itemList[index - 1].codeItemKey.codeItemSeq, item.codeItemKey.codeItemSeq)" :style="{visibility: isUpable(index) ? '' : 'hidden'}">
+                    <a href="javascript:" @click="changeOrder(itemList[index - 1].codeItemSeq, item.codeItemSeq)" :style="{visibility: isUpable(index) ? '' : 'hidden'}">
                       <i class="fa fa-arrow-up"></i>
                     </a>
-                    <a href="javascript:" @click="changeOrder(item.codeItemKey.codeItemSeq, itemList[index + 1].codeItemKey.codeItemSeq)" :style="{visibility: isDownable(index) ? '' : 'hidden'}">
+                    <a href="javascript:" @click="changeOrder(item.codeItemSeq, itemList[index + 1].codeItemSeq)" :style="{visibility: isDownable(index) ? '' : 'hidden'}">
                       <i class="fa fa-arrow-down"></i>
                     </a>
                   </td>
@@ -36,7 +36,7 @@
                     <a href="javascript:void(0);" @click="editForm(item)">
                       <i class="fa fa-edit"></i>
                     </a>
-                    <a href="javascript:" @click="deleteAction(item.codeItemKey.codeItemSeq)">
+                    <a href="javascript:" @click="deleteAction(item.codeItemSeq)">
                       <i class="fa fa-remove"></i>
                     </a>
                   </td>
@@ -97,19 +97,23 @@ export default {
   methods: {
     // 리스트
     list() {
-      let param = { currentMainCode: this.currentMainCode, };
-      // VueUtil.get("/code/list.json", param, result => {
-      //   this.itemList = result.data;
-      // });
+      ipcRenderer.invoke('code/listItem', this.currentMainCode).then(result => {
+        this.itemList = result;
+      });
+    },
+    // 메인코드
+    loadCodeMain() {
+      ipcRenderer.invoke('code/listMain').then(result => {
+        this.mainCodeList = result;
+      });
     },
     // 등록 폼
     addForm() {
       this.actionType = "add";
       // 목록에서 최대 orderNo + 1 구하기
-      let orderNo =
-        this.itemList.reduce((acc, item) => {
-          return Math.max(acc, item.orderNo);
-        }, 0) + 1;
+      let orderNo = this.itemList.reduce((acc, item) => {
+        return Math.max(acc, item.orderNo);
+      }, 0) + 1;
       this.openForm({ orderNo: orderNo, });
     },
     //수정 폼
@@ -127,16 +131,15 @@ export default {
         if (!result) {
           return;
         }
-        this.formItem.currentMainCode = this.currentMainCode;
-        if (this.formItem.codeItemKey != null) {
-          this.formItem.codeItemSeq = this.formItem.codeItemKey.codeItemSeq;
+        this.formItem.codeMainId = this.currentMainCode;
+        if (this.actionType == "add") {
+          ipcRenderer.invoke('code/addItem', this.formItem).then(result => {
+            $("#addItem").modal("hide");
+            this.list();
+          });
+        } else {
+          console.log("aaaaaaaaaa");
         }
-        delete this.formItem.codeItemKey;
-        let url = this.actionType == "add" ? "/code/add.do" : "/code/edit.do";
-        VueUtil.post(url, this.formItem, result => {
-          $("#addItem").modal("hide");
-          this.list();
-        });
       });
     },
     // 정렬 순서 변경
@@ -157,6 +160,7 @@ export default {
       }
       let param = { currentMainCode: this.currentMainCode, codeItemSeq: codeItemSeq, };
       VueUtil.post("/code/delete.do", param, result => {
+        $("#addItem").modal("hide");
         this.list();
       });
     },
@@ -172,13 +176,6 @@ export default {
       }
       return index + 1 !== this.itemList.length;
     },
-    // 메인코드
-    loadCodeMain() {
-      ipcRenderer.invoke('code/codeMainlistAll').then(mainCodeList => {
-        console.log('mainCodeList :>> ', mainCodeList);
-        this.mainCodeList = mainCodeList;
-      })
-    },
   },
   created() {
     let url = new URL(location.href);
@@ -186,8 +183,8 @@ export default {
   },
   mounted() {
     this.currentMainCode = this.$route.query.mainCode;
-    this.list();
     this.loadCodeMain();
+    this.list();
   },
 };
 </script>
