@@ -12,9 +12,9 @@
 - NEW-20200101: 통계
 - NEW-20200101: 분류 관리
 - NEW-20200101: 계좌 관리
-- NEW-20200101: 코드 관리
 
 ### 완료
+- NEW-20200101(20200504): 코드 관리
 - PBM-20200405(20200429): Deprecation warning: value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(),  ... warning 해결
 - NEW-20200419: eslint *.vue 파일에도 작동할 수 있도록
 - NEW-20200405(20200419): eslint 셋팅, 사용.

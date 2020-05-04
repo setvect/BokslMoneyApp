@@ -133,12 +133,15 @@ export default {
         }
         this.formItem.codeMainId = this.currentMainCode;
         if (this.actionType == "add") {
-          ElectronUtil.invoke('code/addItem', this.formItem, result => {
+          ElectronUtil.invoke('code/addItem', this.formItem, () => {
             $("#addItem").modal("hide");
             this.list();
-          })
+          });
         } else {
-          console.log("aaaaaaaaaa");
+          ElectronUtil.invoke('code/editItem', this.formItem, () => {
+            $("#addItem").modal("hide");
+            this.list();
+          });
         }
       });
     },
@@ -159,9 +162,8 @@ export default {
       if (!confirm("삭제?")) {
         return;
       }
-      let param = { currentMainCode: this.currentMainCode, codeItemSeq: codeItemSeq, };
-      VueUtil.post("/code/delete.do", param, result => {
-        $("#addItem").modal("hide");
+      let param = { codeMainId: this.currentMainCode, codeItemSeq: codeItemSeq, };
+      ElectronUtil.invoke('code/deleteItem', param, () => {
         this.list();
       });
     },

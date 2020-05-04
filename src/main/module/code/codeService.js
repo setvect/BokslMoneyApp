@@ -26,7 +26,7 @@ export default {
           deleteF: false,
           codeMainId: code,
         },
-        order: ['orderNo'],
+        order: ["orderNo"],
         raw: true,
       });
 
@@ -51,6 +51,18 @@ export default {
     });
 
     // ================ 수정 ================
+    // 정보 수정
+    ipcMain.handle("code/editItem", async (event, item) => {
+      const saveItem = await codeItem.findOne({
+        where: {
+          codeMainId: item.codeMainId,
+          codeItemSeq: item.codeItemSeq,
+        },
+      });
+      saveItem.name = item.name;
+      saveItem.save();
+    });
+
     // 정렬 변경
     ipcMain.handle("code/changeOrder", async (event, param) => {
       const downItem = await codeItem.findOne({
@@ -66,8 +78,6 @@ export default {
         },
       });
 
-      console.log("downItem :>> ", downItem.name, downItem.orderNo);
-      console.log("upItem :>> ", upItem.name, upItem.orderNo);
       const temp = downItem.orderNo;
       downItem.orderNo = upItem.orderNo;
       upItem.orderNo = temp;
@@ -76,5 +86,15 @@ export default {
     });
 
     // ================ 삭제 ================
+    ipcMain.handle("code/deleteItem", async (event, item) => {
+      const saveItem = await codeItem.findOne({
+        where: {
+          codeMainId: item.codeMainId,
+          codeItemSeq: item.codeItemSeq,
+        },
+      });
+      saveItem.deleteF = true;
+      saveItem.save();
+    });
   },
 };
