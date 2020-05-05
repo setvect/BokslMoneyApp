@@ -21,16 +21,7 @@ export default {
 
     // 메인코드에 대한 코드 항목 목록
     ipcMain.handle("code/listItem", async (event, code) => {
-      const result = await codeItem.findAll({
-        where: {
-          deleteF: false,
-          codeMainId: code,
-        },
-        order: ["orderNo"],
-        raw: true,
-      });
-
-      return result;
+      return await this.listCodeItem(code);
     });
 
     // ================ 등록 ================
@@ -96,5 +87,26 @@ export default {
       saveItem.deleteF = true;
       saveItem.save();
     });
+  },
+  async listCodeItem(mainCode) {
+    const result = await codeItem.findAll({
+      where: {
+        deleteF: false,
+        codeMainId: mainCode,
+      },
+      order: ["orderNo"],
+      raw: true,
+    });
+    return result;
+  },
+  // {코드 일련번호: 코드 정보}
+  async getMappingCode(mainCode) {
+    // 자산 종류 코드
+    const codeList = await this.listCodeItem(mainCode);
+    const idByMap = codeList.reduce((result, item, index, array) => {
+      result[item.codeItemSeq] = item;
+      return result;
+    }, {});
+    return idByMap;
   },
 };

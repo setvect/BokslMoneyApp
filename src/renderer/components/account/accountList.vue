@@ -40,7 +40,7 @@
         </tr>
       </tbody>
     </table>
-    <div>
+    <div style="margin-top:10px;">
       <button type="button" class="btn btn-success" @click="addForm()">추가</button>
       <button type="button" class="btn btn-success" style="margin: 0;float: right" @click="exportExcel();">내보내기(엑셀)</button>
     </div>
@@ -53,7 +53,7 @@ import "datatables.net-buttons";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables/media/css/jquery.dataTables.css";
 
-import VueUtil from "../../common/vue-util.js"
+import ElectronUtil from "../../common/electron-util"
 import "../../common/vue-common.js";
 
 export default {
@@ -92,41 +92,41 @@ export default {
   methods: {
     // 리스트
     list() {
-      // vueUtil.get("/account/list.json", {}, result => {
-      //   if (this.gridTable != null) {
-      //     this.gridTable.destroy();
-      //   }
-      //   this.itemList = result.data;
-      //   this.$nextTick(() => {
-      //     this.gridTable = $("#grid").DataTable({
-      //       paging: false,
-      //       bInfo: false,
-      //       searching: false,
-      //       dom: "Bfrtip",
-      //       buttons: [
-      //         {
-      //           extend: "excelHtml5",
-      //           title: "복슬머니 계좌목록",
-      //           customize: function (xlsx) {
-      //             var sheet = xlsx.xl.worksheets["sheet1.xml"];
-      //             $("row c", sheet).attr("s", "25");
-      //           }
-      //         }
-      //       ]
-      //     });
+      ElectronUtil.invoke('account/listItem', this.currentMainCode, result => {
+        if (this.gridTable != null) {
+          this.gridTable.destroy();
+        }
+        this.itemList = result;
+        this.$nextTick(() => {
+          this.gridTable = $("#grid").DataTable({
+            paging: false,
+            bInfo: false,
+            searching: false,
+            dom: "Bfrtip",
+            buttons: [
+              {
+                extend: "excelHtml5",
+                title: "복슬머니 계좌목록",
+                customize: function (xlsx) {
+                  var sheet = xlsx.xl.worksheets["sheet1.xml"];
+                  $("row c", sheet).attr("s", "25");
+                },
+              }
+            ],
+          });
 
-      //     this.gridTable.order(this.order).draw();
-      //     $("#grid").on("order.dt", () => {
-      //       if (this.gridTable.order().length == 0) {
-      //         return;
-      //       }
-      //       this.order = this.gridTable.order()[0];
-      //     });
+          this.gridTable.order(this.order).draw();
+          $("#grid").on("order.dt", () => {
+            if (this.gridTable.order().length == 0) {
+              return;
+            }
+            this.order = this.gridTable.order()[0];
+          });
 
-      //     // 엑셀 다운로드 button 감추기
-      //     $(".buttons-excel").hide();
-      //   });
-      // });
+          // 엑셀 다운로드 button 감추기
+          $(".buttons-excel").hide();
+        });
+      });
     },
     readForm(item) {
       this.$EventBus.$emit("readFormEvent", item);

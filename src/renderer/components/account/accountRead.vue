@@ -62,7 +62,7 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js"
+import ElectronUtil from "../../common/electron-util"
 import "../../common/vue-common.js";
 
 export default {
@@ -78,14 +78,14 @@ export default {
     },
     editForm(item) {
       $("#readItem").modal("hide");
-      this.$EventBus.$emit("addFormEvent", item);
+      this.$EventBus.$emit("editFormEvent", item);
     },
     // 삭제
     deleteAction(itemSeq) {
       if (!confirm("삭제?")) {
         return;
       }
-      VueUtil.post("/account/delete.do", { accountSeq: itemSeq, }, result => {
+      ElectronUtil.invoke("account/deleteItem", itemSeq, () => {
         $("#readItem").modal("hide");
         this.$EventBus.$emit("listEvent");
       });

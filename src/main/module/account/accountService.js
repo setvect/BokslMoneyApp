@@ -1,17 +1,23 @@
 import { ipcMain } from "electron";
 import account from "../../model/account-vo";
+import codeService from "../code/codeService";
 
 export default {
   init() {
     // ================ 조회 ================
     // 계좌 목록
-    ipcMain.handle("account/listMain", async (event) => {
+    ipcMain.handle("account/listItem", async () => {
       const result = await account.findAll({
-        where: {
-          deleteF: false,
-        },
+        where: { deleteF: false, },
         raw: true,
       });
+
+      const codeMap = await codeService.getMappingCode("KIND_CODE");
+
+      result.forEach((item) => {
+        item.kindName = codeMap[item.kindCode].name;
+      });
+
       return result;
     });
 
@@ -27,6 +33,7 @@ export default {
     // 정보 수정
     ipcMain.handle("account/editItem", async (event, item) => {
       const saveItem = await account.findByPk(item.accountSeq);
+      console.log('saveItem :>> ', saveItem);
       await saveItem.update(item);
     });
 

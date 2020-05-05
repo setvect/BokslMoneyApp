@@ -109,32 +109,32 @@ export default {
 
 
 // renderer process
-
 import ElectronUtil from "../../common/electron-util"
+
 ElectronUtil.invoke('code/listItem', this.currentMainCode, result => {
   this.itemList = result;
 })
 
-    // 등록 또는 수정
-    addAction() {
-      this.$validator.validateAll().then(result => {
-        if (!result) {
-          return;
-        }
-        this.formItem.codeMainId = this.currentMainCode;
-        if (this.actionType == "add") {
-          ElectronUtil.invoke('code/addItem', this.formItem, () => {
-            $("#addItem").modal("hide");
-            this.list();
-          });
-        } else {
-          ElectronUtil.invoke('code/editItem', this.formItem, () => {
-            $("#addItem").modal("hide");
-            this.list();
-          });
-        }
+// 등록 또는 수정
+addAction() {
+  this.$validator.validateAll().then(result => {
+    if (!result) {
+      return;
+    }
+    this.formItem.codeMainId = this.currentMainCode;
+    if (this.actionType == "add") {
+      ElectronUtil.invoke('code/addItem', this.formItem, () => {
+        $("#addItem").modal("hide");
+        this.list();
       });
-    },
+    } else {
+      ElectronUtil.invoke('code/editItem', this.formItem, () => {
+        $("#addItem").modal("hide");
+        this.list();
+      });
+    }
+  });
+},
 
 
 
