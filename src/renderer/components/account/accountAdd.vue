@@ -1,3 +1,9 @@
+<style scoped>
+  .form-control{
+    margin: 3px 0 !important;
+  }
+</style>
+
 <template>
   <div id="addItem" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -19,16 +25,17 @@
             <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">계좌(카드)번호:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <input type="text" class="form-control" name="accountNumber" v-model="item.accountNumber" v-validate="'max:30'" data-vv-as="계좌(카드)번호 " />
+                <input type="text" class="form-control" name="accountNumber" v-model="item.accountNumber" v-validate="'required|max:30'" data-vv-as="계좌(카드)번호 " />
                 <span class="error" v-if="errors.has('accountNumber')">{{errors.first('accountNumber')}}</span>
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">자산종류:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <select class="form-control" v-model="item.kindCode">
-                  <option v-for="kindCode in kindCodeList" v-bind:value="kindCode.codeItemKey.codeItemSeq" :key="kindCode.name">{{ kindCode.name }}</option>
+                <select class="form-control" name="kindCode" v-model="item.kindCode" v-validate="'required'" data-vv-as="자산종류 ">
+                  <option v-for="kindCode in kindCodeList" v-bind:value="kindCode.codeItemSeq" :key="kindCode.name">{{ kindCode.name }}</option>
                 </select>
+                <span class="error" v-if="errors.has('kindCode')">{{errors.first('kindCode')}}</span>
               </div>
             </div>
             <div class="form-group">
@@ -93,6 +100,7 @@
 
 <script type="text/javascript">
 import VueUtil from "../../common/vue-util.js"
+import ElectronUtil from "../../common/electron-util"
 
 export default {
   data() {
@@ -123,19 +131,24 @@ export default {
         if (!result) {
           return;
         }
-        let url =
-          this.actionType == "add" ? "/account/add.do" : "/account/edit.do";
-        VueUtil.post(url, this.item, result => {
-          $("#addItem").modal("hide");
-          this.$EventBus.$emit("listEvent");
-        });
+        if (this.actionType == "add") {
+          ElectronUtil.invoke('account/addItem', this.item, () => {
+            $("#addItem").modal("hide");
+            this.$EventBus.$emit("listEvent");
+          });
+        } else {
+          ElectronUtil.invoke('account/editItem', this.item, () => {
+            $("#addItem").modal("hide");
+            this.$EventBus.$emit("listEvent");
+          });
+        }
       });
     },
     // 자산 코드 읽어 오기
     listKindCode() {
-      // VueUtil.get("/code/list.json", { codeMainId: "KIND_CODE" }, result => {
-      //   this.kindCodeList = result.data;
-      // });
+      ElectronUtil.invoke('code/listItem', "KIND_CODE", result => {
+        this.kindCodeList = result;
+      });
     },
   },
   mounted() {
@@ -147,5 +160,3 @@ export default {
   },
 };
 </script>
-<style>
-</style>

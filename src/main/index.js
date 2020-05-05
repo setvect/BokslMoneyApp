@@ -5,6 +5,7 @@ import menu from "./menu.js";
 
 import loginService from "./module/login/loginService.js";
 import codeService from "./module/code/codeService.js";
+import accountService from "./module/account/accountService.js";
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
 import accountVo from "./model/account-vo.js";
@@ -88,11 +89,12 @@ codeItemVo.sync().then(() => console.log("codeItem .."));
 // event init
 loginService.init();
 codeService.init();
+accountService.init();
 
 app.on("ready", () => {
   let window = new BrowserWindow({
     width: 1500,
-    height: 1000,
+    height: 1200,
     webPreferences: {
       nodeIntegration: true,
     },
