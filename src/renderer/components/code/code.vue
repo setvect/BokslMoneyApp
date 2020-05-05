@@ -3,7 +3,7 @@
     <div class="page-title">
       <div class="title_left">
         <h3>코드관리</h3>
-        <select v-model="currentMainCode">
+        <select v-model="currentMainCode" @change="list()">
           <option v-for="item in mainCodeList" :value="item.codeMainId" :key="item.codeMainId">{{item.name}}</option>
         </select>
       </div>
@@ -78,7 +78,6 @@
   </div>
 </template>
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js"
 import ElectronUtil from "../../common/electron-util"
 
 // vue 객체 생성
