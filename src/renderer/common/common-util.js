@@ -4,7 +4,7 @@ var CommonUtil = {};
 /**
  * 프로그램 오류로 인한 경고창
  */
-CommonUtil.popupError = function(err) {
+CommonUtil.popupError = function (err) {
   const message =
     err.response == null ? err.message : err.response.data.message;
   if (err.message != null) {
@@ -18,7 +18,7 @@ CommonUtil.popupError = function(err) {
 /**
  * 메시지 창
  */
-CommonUtil.dialogInfo = function(title, message) {
+CommonUtil.dialogInfo = function (title, message) {
   $("#alert-dialog").attr("title", title);
   $("#alert-dialog ._message").html(message);
 
@@ -27,11 +27,11 @@ CommonUtil.dialogInfo = function(title, message) {
     height: "auto",
     width: 550,
     modal: true,
-    open: function() {
+    open: function () {
       $(".ui-dialog").css("z-index", 99999);
     },
     buttons: {
-      Close: function() {
+      Close: function () {
         $(this).dialog("close");
       },
     },
@@ -45,7 +45,7 @@ CommonUtil.dialogInfo = function(title, message) {
 /**
  * twbsPagination 페이징 처리 관련 옵션
  */
-CommonUtil.makePageOption = function(page, callback) {
+CommonUtil.makePageOption = function (page, callback) {
   return {
     initiateStartPageClick: false,
     totalPages: page.totalPage == 0 ? 1 : page.totalPage,
@@ -61,19 +61,19 @@ CommonUtil.makePageOption = function(page, callback) {
 };
 
 // 기존 페이징 객체 제거
-CommonUtil.destroyPage = function(selector) {
+CommonUtil.destroyPage = function (selector) {
   if ($(selector).data("twbs-pagination")) {
     $(selector).twbsPagination("destroy");
   }
 };
 
 // 콤마
-CommonUtil.toComma = function(value) {
+CommonUtil.toComma = function (value) {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 // 줄바꿈을 br 테그로 변경
-CommonUtil.toBr = function(text) {
+CommonUtil.toBr = function (text) {
   if (text === undefined || text == null) {
     return null;
   }
@@ -81,12 +81,12 @@ CommonUtil.toBr = function(text) {
 };
 
 // null 또는 빈 공백이면 true 반환
-CommonUtil.isEmpty = function(val) {
+CommonUtil.isEmpty = function (val) {
   return val === undefined || val == null || val.length <= 0 ? true : false;
 };
 
 // 공백제거
-CommonUtil.removeWhiteSpace = function(val) {
+CommonUtil.removeWhiteSpace = function (val) {
   if (CommonUtil.isEmpty(val)) {
     return "";
   } else {
@@ -95,20 +95,68 @@ CommonUtil.removeWhiteSpace = function(val) {
 };
 
 // context root path
-CommonUtil.getContextPath = function() {
+CommonUtil.getContextPath = function () {
   return $("meta[name='contextRoot']").attr("content");
 };
 
-CommonUtil.appendContextRoot = function(url) {
+CommonUtil.appendContextRoot = function (url) {
   return CommonUtil.getContextPath() + url;
 };
 
 // 정규표현식에서 사용하는 특수문자를 escape 처리함
-CommonUtil.escapeRegExp = function(str) {
+CommonUtil.escapeRegExp = function (str) {
   return str.replace(
     /[\\-\\[\]\\/\\{\\}\\(\\)\\*\\+\\?\\.\\\\\\^\\$\\|]/g,
     "\\$&"
   );
+};
+
+// content 내용을 다운로드
+// 호출 예: CommonUtil.download(csvContent, 'dowload.csv', 'text/csv;encoding:utf-8');
+CommonUtil.download = function (content, fileName, mimeType) {
+  let a = document.createElement("a");
+  mimeType = mimeType || "application/octet-stream";
+
+  if (navigator.msSaveBlob) {
+    // IE10
+    navigator.msSaveBlob(
+      new Blob([content], {
+        type: mimeType,
+      }),
+      fileName
+    );
+  } else if (URL && "download" in a) {
+    // html5 A[download]
+    a.href = URL.createObjectURL(
+      new Blob([content], {
+        type: mimeType,
+      })
+    );
+    a.setAttribute("download", fileName);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    // only this mime type is supported
+    location.href =
+      "data:application/octet-stream," + encodeURIComponent(content);
+  }
+};
+
+// 이차원 배열 값을 csv 포맷으로 변경
+// data: 이차원 문자열 배열
+CommonUtil.convertCsv = function (data) {
+  const csvContent = data
+    .map((arr) => {
+      return arr
+        .map((item) => {
+          let t = item || "";
+          return '"' + t.replace('"', '""') + '"';
+        })
+        .join(",");
+    })
+    .join("\n");
+  return csvContent;
 };
 
 export default CommonUtil;
