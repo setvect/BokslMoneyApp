@@ -53,7 +53,8 @@ import "datatables.net-buttons";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables/media/css/jquery.dataTables.css";
 
-import ElectronUtil from "../../common/electron-util"
+import ElectronUtil from "../../common/electron-util.js"
+import CommonUtil from "../../common/common-util.js";
 import "../../common/vue-common.js";
 
 export default {
@@ -139,8 +140,23 @@ export default {
     editForm(item) { },
     // 엑셀 다운로드
     exportExcel() {
-      // datatables에 있는 버튼 클릭
-      $(".buttons-excel").trigger("click");
+      const csvData = [];
+      csvData.push(["자산종류", "이름", "잔고", "이률", "계좌(카드)번호", "월 납입액", "만기일", "메모"]);
+      this.itemList.forEach(item => {
+        const record = [];
+        record.push(item.kindName);
+        record.push(item.name);
+        record.push(item.balance.toString());
+        record.push(item.interestRate);
+        record.push(item.accountNumber);
+        record.push(item.monthlyPay);
+        record.push(item.expDate);
+        record.push(item.note);
+        csvData.push(record);
+      });
+
+      const csvString = CommonUtil.convertCsv(csvData);
+      CommonUtil.download(csvString, "계좌목록.csv", "text/csv;encoding:euc-kr");
     },
   },
   mounted() {
