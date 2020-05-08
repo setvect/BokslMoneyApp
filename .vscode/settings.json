@@ -9,6 +9,30 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  "editor.formatOnSave": false,
   "javascript.format.enable": false,
-  "prettier.eslintIntegration": true
+  "formattingToggle.affects": [
+    "formatOnPaste",
+    "formatOnSave",
+    "formatOnType"
+  ],
+  "editor.wordWrap": "on",
+  "prettier.eslintIntegration": true,
+  "vetur.format.defaultFormatterOptions": {
+    "prettyhtml": {
+      "printWidth": 200,
+    }
+  },
+  "[javascript]": {
+    // prettier 쓰지 말자
+    // "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
 }

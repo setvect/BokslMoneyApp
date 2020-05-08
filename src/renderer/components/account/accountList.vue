@@ -72,7 +72,7 @@ export default {
       return this.asset + this.debt;
     },
     asset() {
-      let value = this.itemList.reduce(function (acc, item) {
+      let value = this.itemList.reduce(function(acc, item) {
         if (item.balance > 0) {
           return acc + item.balance;
         }
@@ -81,7 +81,7 @@ export default {
       return value;
     },
     debt() {
-      let value = this.itemList.reduce(function (acc, item) {
+      let value = this.itemList.reduce(function(acc, item) {
         if (item.balance < 0) {
           return acc + item.balance;
         }
@@ -108,7 +108,7 @@ export default {
               {
                 extend: "excelHtml5",
                 title: "복슬머니 계좌목록",
-                customize: function (xlsx) {
+                customize: function(xlsx) {
                   var sheet = xlsx.xl.worksheets["sheet1.xml"];
                   $("row c", sheet).attr("s", "25");
                 },

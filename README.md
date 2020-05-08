@@ -4,7 +4,7 @@
 
 #### Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
@@ -23,3 +23,9 @@ npm run build
 ```
 
 ---
+
+## 문제 해결에 도움이 된 사이트
+
+### Vscode 관련
+
+1. Prettier 설정(포맷팅 등) [https://ux.stories.pe.kr/150](https://ux.stories.pe.kr/150)

@@ -8,7 +8,7 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: ["eslint:recommended", 'plugin:vue/essential'],
+  extends: ["eslint:recommended", "plugin:vue/essential"],
   globals: {
     __static: true,
     Swal: true,
@@ -32,5 +32,7 @@ module.exports = {
       },
     ],
     "no-unused-vars": "warn", // off, error
+    "space-before-function-paren": ["error", "never"],
+    "semi": ["error", "always"],
   },
 };
