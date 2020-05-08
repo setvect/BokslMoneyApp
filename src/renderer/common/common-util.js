@@ -105,12 +105,14 @@ CommonUtil.escapeRegExp = function(str) {
   return str.replace(/[\\-\\[\]\\/\\{\\}\\(\\)\\*\\+\\?\\.\\\\\\^\\$\\|]/g, "\\$&");
 };
 
-CommonUtil.escapeHtml = function() {
-  return this.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\"/g, "&quot;");
+CommonUtil.escapeHtml = function(str) {
+  str = str || "" ;
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\"/g, "&quot;");
 };
 
-CommonUtil.unescapeHtml = function() {
-  return this.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"');
+CommonUtil.unescapeHtml = function(str) {
+  str = str || "";
+  return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"');
 };
 
 // content 내용을 다운로드
@@ -158,13 +160,13 @@ CommonUtil.convertCsv = function(data) {
 
 // 이차원 배열 값을 html table 형태로 변경(xls파일로 다운로드 받아 엑셀에서 열수 있게 하기 위함)
 CommonUtil.convertHtmlTable = function(data) {
-  const csvContent = data.map((arr) => {
-    let t = arr.map((item) => {
-      return "<td>" + CommonUtil.escapeHtml(item) + "</td>";
+  const rows = data.map((arr) => {
+    let fields = arr.map((item) => {
+      return `<td>${CommonUtil.escapeHtml(item)}</td>`;
     }).join("");
-    return t;
+    return `<tr>${fields}</tr>`;
   }).join("\n");
-  return csvContent;
+  return `<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><table border="1">${rows}</table>`;
 };
 
 export default CommonUtil;
