@@ -8,7 +8,7 @@ export default {
   init() {
     // ================ 조회 ================
     // 메인 코드 목록
-    ipcMain.handle("code/listMain", async (event) => {
+    ipcMain.handle("code/listMain", async(event) => {
       const result = await codeMain.findAll({
         where: {
           deleteF: false,
@@ -20,13 +20,13 @@ export default {
     });
 
     // 메인코드에 대한 코드 항목 목록
-    ipcMain.handle("code/listItem", async (event, code) => {
+    ipcMain.handle("code/listItem", async(event, code) => {
       return await this.listCodeItem(code);
     });
 
     // ================ 등록 ================
     // 메인코드에 대한 코드 항목 목록
-    ipcMain.handle("code/addItem", async (event, item) => {
+    ipcMain.handle("code/addItem", async(event, item) => {
       const records = await connSeque.query(
         "select ifnull(max(c.CODE_ITEM_SEQ), 0) + 1 as cnt from CB_CODE_ITEM c where c.CODE_MAIN_ID = $codeMainId",
         {
@@ -43,7 +43,7 @@ export default {
 
     // ================ 수정 ================
     // 정보 수정
-    ipcMain.handle("code/editItem", async (event, item) => {
+    ipcMain.handle("code/editItem", async(event, item) => {
       const saveItem = await codeItem.findOne({
         where: {
           codeMainId: item.codeMainId,
@@ -55,7 +55,7 @@ export default {
     });
 
     // 정렬 변경
-    ipcMain.handle("code/changeOrder", async (event, param) => {
+    ipcMain.handle("code/changeOrder", async(event, param) => {
       const downItem = await codeItem.findOne({
         where: {
           codeMainId: param.codeMainId,
@@ -77,7 +77,7 @@ export default {
     });
 
     // ================ 삭제 ================
-    ipcMain.handle("code/deleteItem", async (event, item) => {
+    ipcMain.handle("code/deleteItem", async(event, item) => {
       const saveItem = await codeItem.findOne({
         where: {
           codeMainId: item.codeMainId,
