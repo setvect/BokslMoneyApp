@@ -11,13 +11,6 @@
   },
   "editor.formatOnSave": false,
   "javascript.format.enable": false,
-  "formattingToggle.affects": [
-    "formatOnPaste",
-    "formatOnSave",
-    "formatOnType"
-  ],
-  "editor.wordWrap": "on",
-  "prettier.eslintIntegration": true,
   "vetur.format.defaultFormatterOptions": {
     "prettyhtml": {
       "printWidth": 200,
