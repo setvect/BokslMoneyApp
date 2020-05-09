@@ -82,20 +82,18 @@ export default {
         downCategorySeq: downCategorySeq,
         upCategorySeq: upCategorySeq,
       };
-      // VueUtil.post("/category/changeOrder.do", param, result => {
-      //   this.list();
-      // });
+      ElectronUtil.invoke('category/changeOrder', param, () => {
+        this.list();
+      });
     },
     // 삭제
-    deleteAction(categorySeq, callBack) {
+    deleteAction(categorySeq) {
       if (!confirm("삭제?")) {
         return;
       }
-      let param = { categorySeq: categorySeq, };
-      // VueUtil.post("/category/delete.do", param, result => {
-      //   this.list();
-      //   this.$emit("@select-item", { categorySeq: -1 });
-      // });
+      ElectronUtil.invoke('category/deleteItem', categorySeq, () => {
+        this.list();
+      });
     },
     isUpable(index) {
       if (this.itemList.length <= 1) {

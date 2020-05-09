@@ -100,8 +100,19 @@ export default {
       const temp = downItem.orderNo;
       downItem.orderNo = upItem.orderNo;
       upItem.orderNo = temp;
-      downItem.save();
-      upItem.save();
+      await downItem.save();
+      await upItem.save();
+    });
+    ipcMain.handle("category/changeOrder", async(event, param) => {
+      console.log('param :>> ', param);
+      const downItem = await category.findByPk(param.downCategorySeq);
+      const upItem = await category.findByPk(param.upCategorySeq);
+
+      const temp = downItem.orderNo;
+      downItem.orderNo = upItem.orderNo;
+      upItem.orderNo = temp;
+      await downItem.save();
+      await upItem.save();
     });
 
     // ================ 삭제 ================

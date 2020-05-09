@@ -8,14 +8,12 @@ export default {
     ipcMain.handle("category/list", async(event, param) => {
       const defaultCondition = { deleteF: false, };
       const where = { ...defaultCondition, ...param, };
-      console.log('where :>> ', where);
-      const result = await category.findAll({ where, raw: true, });
+      const result = await category.findAll({ where, order: ["orderNo"], raw: true, });
       return result;
     });
     // ================ 등록 ================
     ipcMain.handle("category/addItem", async(event, item) => {
       item.deleteF = false;
-      console.log('item :>> ', item);
       const instance = await category.create(item);
       return instance;
     });
@@ -25,6 +23,25 @@ export default {
       const saveItem = await category.findByPk(item.categorySeq);
       await saveItem.update(item);
     });
+
+    // 정렬 변경
+    ipcMain.handle("category/changeOrder", async(event, param) => {
+      const downItem = await category.findByPk(param.downCategorySeq);
+      const upItem = await category.findByPk(param.upCategorySeq);
+
+      const temp = downItem.orderNo;
+      downItem.orderNo = upItem.orderNo;
+      upItem.orderNo = temp;
+      await downItem.save();
+      await upItem.save();
+    });
+
+    ipcMain.handle("category/deleteItem", async(event, categorySeq) => {
+      const saveItem = await category.findByPk(categorySeq);
+      saveItem.deleteF = true;
+      saveItem.save();
+    });
+
 
     // ================ 삭제 ================
   },

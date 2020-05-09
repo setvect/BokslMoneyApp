@@ -44,6 +44,7 @@ module.exports = {
     "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }],
     "block-spacing": "error",
     "object-curly-spacing": ["error", "always"],
+    "no-console": "warn",
     // 'no-whitespace-before-property': "error",
   },
 };
