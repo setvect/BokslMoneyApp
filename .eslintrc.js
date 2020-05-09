@@ -34,6 +34,14 @@ module.exports = {
     "no-unused-vars": "warn", // off, error
     "space-before-function-paren": ["error", "never"],
     "semi": ["error", "always"],
-    "comma-spacing": ["error", { "before": false, "after": true }]
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "space-in-parens": ["error", "never"],
+    "no-multi-spaces": "error",
+    "no-trailing-spaces": "error",
+    "no-whitespace-before-property": "error",
+    "space-before-blocks": "error",
+    "space-infix-ops": ["error", { "int32Hint": false }],
+    "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }]
+    // 'no-whitespace-before-property': "error",
   },
 };
