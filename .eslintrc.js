@@ -34,5 +34,6 @@ module.exports = {
     "no-unused-vars": "warn", // off, error
     "space-before-function-paren": ["error", "never"],
     "semi": ["error", "always"],
+    "comma-spacing": ["error", { "before": false, "after": true }]
   },
 };

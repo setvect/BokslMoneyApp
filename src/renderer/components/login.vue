@@ -19,8 +19,8 @@
   </div>
 </template>
 <script type="text/javascript">
-import ElectronUtil from "../common/electron-util"
-import "../common/vue-common.js"
+import ElectronUtil from "../common/electron-util";
+import "../common/vue-common.js";
 
 export default {
   data() {
@@ -29,12 +29,12 @@ export default {
         password: '',
       },
       redirect: undefined,
-    }
+    };
   },
   watch: {
     $route: {
       handler(route) {
-        this.redirect = route.query && route.query.redirect
+        this.redirect = route.query && route.query.redirect;
       },
       immediate: true,
     },
@@ -44,16 +44,16 @@ export default {
 
       ElectronUtil.invoke('checkLogin', this.form.password, loginSuccess => {
         if (!loginSuccess) {
-          alert("비밀번호 틀렸다.")
-          return
+          alert("비밀번호 틀렸다.");
+          return;
         }
-        this.$router.push({ name: "transaction-calendar", })
-      })
+        this.$router.push({ name: "transaction-calendar", });
+      });
     },
   },
   mounted() {
     // TODO 로그인 페이지 통과. 향후 주석 해제
-    this.$router.push({ name: "account",})
+    this.$router.push({ name: "category", });
   },
-}
+};
 </script>

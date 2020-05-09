@@ -58,9 +58,9 @@ export default {
     // 리스트
     list() {
       let param = { kind: this.kind, parent: this.parentSeq, };
-      // VueUtil.get("/category/list.json", param, result => {
-      //   this.itemList = result.data;
-      // });
+      ElectronUtil.invoke('category/list', param, result => {
+        this.itemList = result;
+      });
     },
     // 등록 폼
     addForm(aa) {
