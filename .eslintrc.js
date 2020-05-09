@@ -41,7 +41,9 @@ module.exports = {
     "no-whitespace-before-property": "error",
     "space-before-blocks": "error",
     "space-infix-ops": ["error", { "int32Hint": false }],
-    "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }]
+    "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }],
+    "block-spacing": "error",
+    "object-curly-spacing": ["error", "always"],
     // 'no-whitespace-before-property': "error",
   },
 };
