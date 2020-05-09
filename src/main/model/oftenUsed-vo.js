@@ -5,9 +5,10 @@ import { DataTypes } from "sequelize";
 const oftenUsedVo = connSeque.define(
   "oftenUsed",
   {
-    oftenUsedId: {
+    oftenUsedSeq: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
     },
     categorySeq: {

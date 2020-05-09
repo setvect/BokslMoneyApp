@@ -53,7 +53,7 @@ export default {
   },
   mounted() {
     // TODO 로그인 페이지 통과. 향후 주석 해제
-    this.$router.push({ name: "category", });
+    this.$router.push({ name: "transaction-calendar", });
   },
 };
 </script>

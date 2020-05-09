@@ -4,9 +4,10 @@ import { DataTypes } from "sequelize";
 const memoVo = connSeque.define(
   "memo",
   {
-    memoId: {
+    memoSeq: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
     },
     note: {

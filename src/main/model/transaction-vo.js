@@ -4,9 +4,10 @@ import { DataTypes } from "sequelize";
 const transactionVo = connSeque.define(
   "transaction",
   {
-    transactionId: {
+    transactionSeq: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
     },
     categorySeq: {
