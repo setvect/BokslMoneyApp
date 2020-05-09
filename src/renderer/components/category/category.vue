@@ -22,15 +22,15 @@
               </li>
             </ul>
             <div id="myTabContent" class="tab-content">
-              <div role="tabpanel" class="container tab-pane active" id="tab_content1">
+              <div role="tabpanel" class="tab-pane active" id="tab_content1">
                 <panel kind="SPENDING" />
               </div>
 
-              <div role="tabpane2" class="container tab-pane fade" id="tab_content2">
+              <div role="tabpane2" class="tab-pane fade" id="tab_content2">
                 <panel kind="INCOME" />
               </div>
 
-              <div role="tabpane3" class="container tab-pane fade" id="tab_content3">
+              <div role="tabpane3" class="tab-pane fade" id="tab_content3">
                 <panel kind="TRANSFER" />
               </div>
             </div>

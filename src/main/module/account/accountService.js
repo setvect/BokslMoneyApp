@@ -33,7 +33,6 @@ export default {
     // 정보 수정
     ipcMain.handle("account/editItem", async(event, item) => {
       const saveItem = await account.findByPk(item.accountSeq);
-      console.log('saveItem :>> ', saveItem);
       await saveItem.update(item);
     });
 

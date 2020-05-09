@@ -33,7 +33,6 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js";
 import ElectronUtil from "../../common/electron-util";
 
 export default {
@@ -57,19 +56,18 @@ export default {
   methods: {
     // 리스트
     list() {
-      let param = { kind: this.kind, parent: this.parentSeq, };
+      let param = { kind: this.kind, parentSeq: this.parentSeq, };
       ElectronUtil.invoke('category/list', param, result => {
         this.itemList = result;
       });
     },
     // 등록 폼
-    addForm(aa) {
+    addForm() {
       // 목록에서 최대 orderNo + 1 구하기
       let maxOrder = this.itemList.reduce((acc, item) => {
         return Math.max(acc, item.orderNo);
       }, 0) + 1;
-      this.$EventBus.$emit(
-        "addFormEvent",
+      this.$EventBus.$emit("addFormEvent",
         { kind: this.kind, parentSeq: this.parentSeq, orderNo: maxOrder, },
         this.list
       );

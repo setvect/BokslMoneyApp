@@ -7,8 +7,9 @@ import { DataTypes } from "sequelize";
 const categoryVo = connSeque.define(
   "category",
   {
-    categoryId: {
+    categorySeq: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
@@ -41,7 +42,7 @@ const categoryVo = connSeque.define(
     timestamps: false,
   }
 );
-categoryVo.hasMany(oftenUsed, { foreignKey: "category_seq" ,});
+categoryVo.hasMany(oftenUsed, { foreignKey: "category_seq", });
 categoryVo.hasMany(transaction, { foreignKey: "category_seq", });
 
 export default categoryVo;

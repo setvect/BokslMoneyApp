@@ -115,7 +115,7 @@ export default {
       this.actionType = "add";
       this.openForm(item);
     },
-    //수정 폼
+    // 수정 폼
     editForm(item) {
       this.actionType = "edit";
       this.openForm(item);

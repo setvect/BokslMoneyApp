@@ -29,3 +29,4 @@ npm run build
 ### Vscode 관련
 
 1. Prettier 설정(포맷팅 등) [https://ux.stories.pe.kr/150](https://ux.stories.pe.kr/150)
+1. ESLient 설정 [https://eslint.org/docs/rules/](https://eslint.org/docs/rules/)

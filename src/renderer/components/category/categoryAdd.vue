@@ -26,7 +26,8 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js"
+import VueUtil from "../../common/vue-util.js";
+import ElectronUtil from "../../common/electron-util";
 
 export default {
   data() {
@@ -42,7 +43,7 @@ export default {
       this.actionType = "add";
       this.openForm(item, afterEventCallback);
     },
-    //수정 폼
+    // 수정 폼
     editForm(item, afterEventCallback) {
       this.actionType = "edit";
       this.openForm(item, afterEventCallback);
@@ -58,13 +59,19 @@ export default {
         if (!result) {
           return;
         }
-        let url =
-          this.actionType == "add" ? "/category/add.do" : "/category/edit.do";
-        VueUtil.post(url, this.item, result => {
-          $("#addItem").modal("hide");
-          this.afterEventCallback();
-          this.item.name = "";
-        });
+        if (this.actionType == "add") {
+          ElectronUtil.invoke('category/addItem', this.item, () => {
+            $("#addItem").modal("hide");
+            this.afterEventCallback();
+            this.item.name = "";
+          });
+        } else {
+          ElectronUtil.invoke('category/editItem', this.item, () => {
+            $("#addItem").modal("hide");
+            this.afterEventCallback();
+            this.item.name = "";
+          });
+        }
       });
     },
   },

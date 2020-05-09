@@ -57,6 +57,12 @@ export default {
       return instance;
     });
 
+    ipcMain.handle("account/addItem", async(event, item) => {
+      item.deleteF = false;
+      const instance = await account.create(item);
+      return instance;
+    });
+
     // ================ 수정 ================
     // 정보 수정
     ipcMain.handle("code/editItem", async (event, item) => {
@@ -68,6 +74,12 @@ export default {
       });
       saveItem.name = item.name;
       await saveItem.save();
+    });
+
+    ipcMain.handle("account/editItem", async(event, item) => {
+      const saveItem = await account.findByPk(item.accountSeq);
+      console.log('saveItem :>> ', saveItem);
+      await saveItem.update(item);
     });
 
     // 정렬 변경
