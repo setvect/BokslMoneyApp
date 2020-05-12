@@ -1,6 +1,4 @@
 {
-  "vetur.format.options.useTabs": false,
-  "editor.tabSize": 2,
   "eslint.enable": true,
   "eslint.validate": [
     "javascript",
