@@ -8,31 +8,28 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal">
+          <form>
             <div class="col-md-7 col-sm-7 col-xs-7">
-              <div class="form-group">
-                <label class="control-label col-md-2 col-sm-2 col-xs-2">날짜:</label>
+              <div class="form-group row">
+                <label class="col-form-label col-md-2">날짜:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <div class="col-md-8 col-sm-8 col-xs-8" style="padding:0;">
+                  <div class="col-sm-8" style="padding:0;">
                     <input type="text" class="form-control has-feedback-left _datepicker" placeholder="First Name" readonly="readonly" v-model="item.transactionDate" v-once />
-                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true" style="display: block; left: 3px;"></span>
+                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                   </div>
-                  <div class="col-md-4 col-sm-4 col-xs-4" style="padding:0;">
-                    <div class="btn-group" style="float:right;">
-                      <button type="button" class="btn btn-default" @click="addDate(-1)">전날</button>
-                      <button type="button" class="btn btn-default" @click="addDate(1)">다음날</button>
-                    </div>
+                  <div class="col-sm-4" style="padding-left:4px;">
+                    <button type="button" class="btn btn-dark" style="margin-right: 0px;" @click="addDate(-1)">전날</button>
+                    <button type="button" class="btn btn-dark" style="margin-right: -3px;"  @click="addDate(1)">다음날</button>
                   </div>
                 </div>
               </div>
-
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">항목:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <div class="input-group no-padding">
                     <input type="text" class="form-control" readonly="readonly" name="item" v-model="itemPath" v-validate="'required'" data-vv-as="항목 " />
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" @click="openCategoryList(item.kind)">선택</button>
+                      <button class="btn btn-dark" type="button" @click="openCategoryList(item.kind)">선택</button>
                     </span>
                   </div>
                   <div v-if="errors.has('item')">
@@ -40,7 +37,8 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
+
+              <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">메모:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <input type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'required'" data-vv-as="메모 " />
@@ -48,7 +46,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">금액:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <my-currency-input v-model="item.money" class="form-control" name="money" maxlength="10" v-validate="'required'" data-vv-as="금액 " @press-enter="addAction(true)"></my-currency-input>
@@ -56,7 +54,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">지출계좌:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <select class="form-control" v-model="item.payAccount" name="payAccount" v-validate="validatePay" data-vv-as="지출계좌 " :disabled="disablePay">
@@ -70,7 +68,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">수입계좌:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <select class="form-control" v-model="item.receiveAccount" name="receiveAccount" v-validate="validateReceive" data-vv-as="수입계좌 " :disabled="disableReceive">
@@ -84,7 +82,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">속성:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <select class="form-control" v-model="item.attribute" name="attribute" v-validate="'required'" data-vv-as="속성 ">
@@ -94,7 +92,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">수수료:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <my-currency-input v-model="item.fee" class="form-control" name="money" maxlength="5" :disabled="disableFee"></my-currency-input>
@@ -162,17 +160,17 @@
   </div>
 </template>
 <script type="text/javascript">
-import moment from "moment"
-import "daterangepicker"
-import 'daterangepicker/daterangepicker.css'
-import 'jquery-ui/ui/core'
-import 'jquery-ui/ui/widgets/autocomplete.js'
-import 'jquery-ui/themes/base/all.css'
+import moment from "moment";
+import "daterangepicker";
+import 'daterangepicker/daterangepicker.css';
+import 'jquery-ui/ui/core';
+import 'jquery-ui/ui/widgets/autocomplete.js';
+import 'jquery-ui/themes/base/all.css';
 
-import categoryComponent from './transactionCategory.vue'
-import oftenComponent from './transactionOften.vue'
-import VueUtil from "../../common/vue-util.js"
-import { debug } from 'util'
+import categoryComponent from './transactionCategory.vue';
+import oftenComponent from './transactionOften.vue';
+import VueUtil from "../../common/vue-util.js";
+import { debug } from 'util';
 
 export default {
   data() {
@@ -191,7 +189,7 @@ export default {
       closeReload: false,
       // 추천 카테고리
       recommendCategories: [],
-    }
+    };
   },
   components: {
     'category': categoryComponent,
@@ -199,78 +197,78 @@ export default {
   },
   computed: {
     itemLabel() {
-      const ITEM_TYPE_LABEL = { INCOME: '수입', SPENDING: '지출', TRANSFER: '이체', }
-      return ITEM_TYPE_LABEL[this.item.kind]
+      const ITEM_TYPE_LABEL = { INCOME: '수입', SPENDING: '지출', TRANSFER: '이체', };
+      return ITEM_TYPE_LABEL[this.item.kind];
     },
     // 출금계좌 선택 박스 비활성
     disablePay() {
-      return this.item.kind == "INCOME"
+      return this.item.kind == "INCOME";
     },
     // 수입계좌 선택 박스 비활성
     disableReceive() {
-      return this.item.kind == "SPENDING"
+      return this.item.kind == "SPENDING";
     },
     // 수수료 비활성
     disableFee() {
-      return this.item.kind == "INCOME" || this.item.kind == "SPENDING"
+      return this.item.kind == "INCOME" || this.item.kind == "SPENDING";
     },
     validatePay() {
-      return this.disablePay ? "" : "required"
+      return this.disablePay ? "" : "required";
     },
     validateReceive() {
       if (this.item.kind == "SPENDING") {
-        return ""
+        return "";
       }
       // 이체에서는 지출계좌와 수입 계좌가 같으면 안됨.
       if (this.item.kind == "TRANSFER") {
-        return { required: true, notEquals: this.item.payAccount, }
+        return { required: true, notEquals: this.item.payAccount, };
       }
-      return "required"
+      return "required";
     },
   },
   methods: {
     // 등록 폼
     addForm(kind, date) {
-      this.actionType = 'add'
-      this.selectDate = date
+      this.actionType = 'add';
+      this.selectDate = date;
       if (this.beforeTransaction[kind]) {
-        this.item = this.beforeTransaction[kind]
+        this.item = this.beforeTransaction[kind];
       } else {
-        this.item = { money: 0, fee: 0, kind: null, }
+        this.item = { money: 0, fee: 0, kind: null, };
       }
-      this.insertCategory(this.item.parentCategory, this.item.category)
-      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD")
-      this.item.kind = kind
-      delete this.item.transactionSeq
-      this.openForm(this.item.kind)
+      this.insertCategory(this.item.parentCategory, this.item.category);
+      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
+      this.item.kind = kind;
+      delete this.item.transactionSeq;
+      this.openForm(this.item.kind);
     },
-    //수정 폼
+    // 수정 폼
     editForm(transaction) {
-      this.actionType = 'edit'
-      this.selectDate = moment(transaction.transactionDate)
-      this.item = transaction
-      console.log('this.item :', this.item)
-      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD")
-      this.insertCategory(transaction.parentCategory, transaction.category)
-      this.openForm(this.item.kind)
+      this.actionType = 'edit';
+      this.selectDate = moment(transaction.transactionDate);
+      this.item = transaction;
+      console.log('this.item :', this.item);
+      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
+      this.insertCategory(transaction.parentCategory, transaction.category);
+      this.openForm(this.item.kind);
     },
     // datepicker
     updateDate(d) {
-      this.item.transactionDate = d
+      this.item.transactionDate = d;
     },
     // 현재 날짜 조정
     addDate(diff) {
-      this.selectDate.add(diff, "days")
-      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD")
-      $('._datepicker').data('daterangepicker').setStartDate(this.selectDate.format("YYYY-MM-DD"))
+      this.selectDate.add(diff, "days");
+      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
+      $('._datepicker').data('daterangepicker').setStartDate(this.selectDate.format("YYYY-MM-DD"));
     },
     // 계좌 입력 팝업창.
     openForm(kind) {
-      this.item.kind = kind
-      const ITEM_TYPE_ATTR = { INCOME: 'ATTR_INCOME', SPENDING: 'ATTR_SPENDING', TRANSFER: 'ATTR_TRANSFER', }
-      this.loadAttribute(ITEM_TYPE_ATTR[this.item.kind])
-      this.loadOftenUsed()
-      this.closeReload = false
+      this.item.kind = kind;
+      const ITEM_TYPE_ATTR = { INCOME: 'ATTR_INCOME', SPENDING: 'ATTR_SPENDING', TRANSFER: 'ATTR_TRANSFER', };
+      this.loadAttribute(ITEM_TYPE_ATTR[this.item.kind]);
+      this.loadOftenUsed();
+      this.closeReload = false;
 
       $('._datepicker').daterangepicker({
         singleDatePicker: true,
@@ -278,71 +276,71 @@ export default {
         showDropdowns: true,
         startDate: this.selectDate.format("YYYY-MM-DD"),
       }, (start) => {
-        console.log('start.format("YYYY-MM-DD") :', start.format("YYYY-MM-DD"))
-        this.item.transactionDate = start.format("YYYY-MM-DD")
-      })
-      this.$validator.reset()
+        console.log('start.format("YYYY-MM-DD") :', start.format("YYYY-MM-DD"));
+        this.item.transactionDate = start.format("YYYY-MM-DD");
+      });
+      this.$validator.reset();
 
       $('#addItem').off().on('shown.bs.modal', () => {
-        $("._note").focus()
-      })
+        $("._note").focus();
+      });
       $('#addItem').off().on('hidden.bs.modal', () => {
         if (this.closeReload) {
-          this.$EventBus.$emit('reloadEvent')
+          this.$EventBus.$emit('reloadEvent');
         }
-      })
+      });
 
-      $("#addItem").modal()
+      $("#addItem").modal();
 
       // 메모 입력시 관련 카테고리 추천
       $("._note").autocomplete({
         source: (request, response) => {
-          let note = request.term
+          let note = request.term;
           VueUtil.get("/category/listRecommend.json", { note: note, kind: this.item.kind, }, (result) => {
-            response(result.data)
-          }, { waitDialog: false, })
+            response(result.data);
+          }, { waitDialog: false, });
         },
         focus: () => false,
         select: (event, ui) => {
-          this.insertCategory(ui.item.parentCategory, ui.item)
-          return false
+          this.insertCategory(ui.item.parentCategory, ui.item);
+          return false;
         },
-      }).data("ui-autocomplete")._renderItem = function (ul, item) {
+      }).data("ui-autocomplete")._renderItem = function(ul, item) {
         return $("<li>")
           .append("<div>" + item.parentCategory.name + " > " + item.name + "</div>")
-          .appendTo(ul)
-      }
+          .appendTo(ul);
+      };
     },
     // 등록 또는 수정
     // cont. true: 연속입력, false: 입력후 모달 닫기
     addAction(cont) {
       this.$validator.validateAll().then((result) => {
         if (!result) {
-          return
+          return;
         }
-        this.beforeTransaction[this.item.kind] = $.extend(true, {}, this.item)
+        this.beforeTransaction[this.item.kind] = $.extend(true, {}, this.item);
 
-        delete this.item.category
-        delete this.item.parentCategory
+        delete this.item.category;
+        delete this.item.parentCategory;
 
-        let url = this.actionType == 'add' ? '/transaction/add.do' : '/transaction/edit.do'
+        let url = this.actionType == 'add' ? '/transaction/add.do' : '/transaction/edit.do';
         VueUtil.post(url, this.item, (result) => {
-          this.closeReload = true
+          this.closeReload = true;
           if (cont && this.actionType == "add") {
-            this.item.note = ""
-            this.item.money = ""
+            this.item.note = "";
+            this.item.money = "";
             // 포커스가 제대로 안되서 timeout 적용. $nextTick 안됨.
             setTimeout(() => {
-              $("._note").focus()
-            }, 100)
+              $("._note").focus();
+            }, 100);
           } else {
-            $("#addItem").modal('hide')
+            $("#addItem").modal('hide');
           }
-        })
-      })
+        });
+      });
     },
     close() {
-      $("#addItem").modal('hide')
+      $("#addItem").modal('hide');
     },
     // 계좌 목록
     loadAccount() {
@@ -373,96 +371,113 @@ export default {
     },
     // 항목 선택 팝업.
     openCategoryList(kind) {
-      this.$EventBus.$emit('openCategoryListEvent', kind, 'add')
+      this.$EventBus.$emit('openCategoryListEvent', kind, 'add');
     },
     // 항목 팝업에서 선택한 값 입력
     insertCategory(mainItem, subItem) {
-      this.itemPath = ""
+      this.itemPath = "";
       if (mainItem) {
-        this.item.categorySeq = subItem.categorySeq
-        this.itemPath = mainItem.name + " > " + subItem.name
+        this.item.categorySeq = subItem.categorySeq;
+        this.itemPath = mainItem.name + " > " + subItem.name;
       }
     },
     // 자주쓰는 거래 선택
     selectOftenUsed(often) {
-      this.item = Object.assign(this.item, $.extend(true, {}, often))
+      this.item = Object.assign(this.item, $.extend(true, {}, often));
       if (this.item.money == 0) {
-        this.item.money = ""
+        this.item.money = "";
       }
-      this.insertCategory(often.parentCategory, often.category)
+      this.insertCategory(often.parentCategory, often.category);
       // $('#payAccountList,#receiveAccountList').inputpicker('destroy');
     },
     // 자주쓰는 거래 팝업 열기
     // actionType: add, edit
     // often: 거래 내역항목
     openOften(actionType, often) {
-      this.$EventBus.$emit('openOftenEvent', actionType, $.extend(true, {}, often))
+      this.$EventBus.$emit('openOftenEvent', actionType, $.extend(true, {}, often));
     },
     // 자주 쓰는 거래 신규 등록
     // 현재 입력한 값을 전달
     openOftenAdd() {
-      let copyItem = $.extend(true, {}, this.item)
+      let copyItem = $.extend(true, {}, this.item);
       if (!copyItem.categorySeq) {
-        this.openOften('add', copyItem)
-        return
+        this.openOften('add', copyItem);
+        return;
       }
       VueUtil.get("/category/getCategory.json", { categorySeq: this.item.categorySeq, }, (result) => {
         if (result.data) {
-          copyItem.category = result.data
-          copyItem.parentCategory = result.data.parentCategory
+          copyItem.category = result.data;
+          copyItem.parentCategory = result.data.parentCategory;
         }
-        delete copyItem.oftenUsedSeq
-        this.openOften('add', copyItem)
-      })
+        delete copyItem.oftenUsedSeq;
+        this.openOften('add', copyItem);
+      });
     },
     // 정렬 순서 변경
     changeOrder(downOftenUsedSeq, upOftenUsedSeq) {
-      let param = { downOftenUsedSeq: downOftenUsedSeq, upOftenUsedSeq: upOftenUsedSeq, }
+      let param = { downOftenUsedSeq: downOftenUsedSeq, upOftenUsedSeq: upOftenUsedSeq, };
       VueUtil.post('/oftenUsed/changeOrder.do', param, (result) => {
-        this.loadOftenUsed()
-      })
+        this.loadOftenUsed();
+      });
     },
     // 자주 쓰는 거래 삭제
     deleteOftenForm(oftenUsedSeq) {
       if (!confirm("삭제할거야?")) {
-        return
+        return;
       }
-      let param = { oftenUsedSeq: oftenUsedSeq, }
+      let param = { oftenUsedSeq: oftenUsedSeq, };
       VueUtil.post('/oftenUsed/delete.do', param, (result) => {
-        this.loadOftenUsed()
-      })
+        this.loadOftenUsed();
+      });
     },
     isUpable(index) {
       if (this.oftenUsedList <= 1) {
-        return false
+        return false;
       }
-      return index !== 0
+      return index !== 0;
     },
     isDownable(index) {
       if (this.oftenUsedList.length <= 1) {
-        return false
+        return false;
       }
-      return index + 1 !== this.oftenUsedList.length
+      return index + 1 !== this.oftenUsedList.length;
     },
   },
   mounted() {
-    this.loadAccount()
+    this.loadAccount();
   },
   created() {
-    this.$EventBus.$on('addFormEvent', this.addForm)
-    this.$EventBus.$on('editFormEvent', this.editForm)
-    this.$EventBus.$on('insertCategoryEvent', this.insertCategory)
-    this.$EventBus.$on('listOftenUsedEvent', this.loadOftenUsed)
+    this.$EventBus.$on('addFormEvent', this.addForm);
+    this.$EventBus.$on('editFormEvent', this.editForm);
+    this.$EventBus.$on('insertCategoryEvent', this.insertCategory);
+    this.$EventBus.$on('listOftenUsedEvent', this.loadOftenUsed);
 
     // 커스텀 validation
     this.$validator.extend('notEquals', {
-      getMessage: function (field, args) {
-        return '같은 계좌를 지정할 수 없습니다.'
+      getMessage: function(field, args) {
+        return '같은 계좌를 지정할 수 없습니다.';
       },
-      validate: function (value, args) {
-        return value != args[0]
+      validate: function(value, args) {
+        return value != args[0];
       },
-    })
+    });
   },
-}
+};
 </script>
+
+<style scoped>
+.form-control-feedback {
+  position: absolute;
+  top: -2px;
+  z-index: 2;
+  display: block;
+  text-align: left;
+  pointer-events: none;
+}
+.form-control-feedback.left {
+  padding-right: 8px;
+}
+.modal-lg{
+  max-width: 900px;
+}
+</style>

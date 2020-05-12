@@ -1,9 +1,3 @@
-<style scoped>
-  .form-control{
-    margin: 3px 0 !important;
-  }
-</style>
-
 <template>
   <div id="addItem" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -159,3 +153,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .form-control{
+    margin: 3px 0 !important;
+  }
+</style>
