@@ -1,4 +1,5 @@
 {
+  "vetur.format.options.useTabs": false,
   "eslint.enable": true,
   "eslint.validate": [
     "javascript",
