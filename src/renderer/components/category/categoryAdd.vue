@@ -39,12 +39,12 @@ export default {
   },
   methods: {
     // 등록 폼
-    addForm(item, afterEventCallback) {
+    openAddForm(item, afterEventCallback) {
       this.actionType = "add";
       this.openForm(item, afterEventCallback);
     },
     // 수정 폼
-    editForm(item, afterEventCallback) {
+    openEditForm(item, afterEventCallback) {
       this.actionType = "edit";
       this.openForm(item, afterEventCallback);
     },
@@ -74,10 +74,6 @@ export default {
         }
       });
     },
-  },
-  created() {
-    this.$EventBus.$on("addFormEvent", this.addForm);
-    this.$EventBus.$on("editFormEvent", this.editForm);
   },
 };
 </script>

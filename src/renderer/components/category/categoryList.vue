@@ -67,14 +67,11 @@ export default {
       let maxOrder = this.itemList.reduce((acc, item) => {
         return Math.max(acc, item.orderNo);
       }, 0) + 1;
-      this.$EventBus.$emit("addFormEvent",
-        { kind: this.kind, parentSeq: this.parentSeq, orderNo: maxOrder, },
-        this.list
-      );
+      this.$parent.$parent.$refs.popupAdd.openAddForm({ kind: this.kind, parentSeq: this.parentSeq, orderNo: maxOrder, }, this.list);
     },
     // 수정폼
     editForm(item) {
-      this.$EventBus.$emit("editFormEvent", item, this.list);
+      this.$parent.$parent.$refs.popupAdd.openEditForm(item, this.list);
     },
     // 정렬 순서 변경
     changeOrder(downCategorySeq, upCategorySeq) {

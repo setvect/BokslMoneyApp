@@ -35,7 +35,7 @@
               </div>
             </div>
           </div>
-          <add />
+          <add ref="popupAdd"/>
         </div>
       </div>
     </div>
