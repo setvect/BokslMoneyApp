@@ -1,7 +1,6 @@
 import Vue from "vue";
 import moment from "moment";
 import CommonUtil from "./common-util.js";
-
 // 사용 안함.
 const TYPE_VALUE = {
   SPENDING: {
@@ -44,7 +43,6 @@ const TransactionMixin = {
   methods: {
     // 거래내역 또는 메모 등록 폼
     addItemForm(type) {
-      console.log("aaaaaaaaaaaa");
       if (type == "MEMO") {
         let memo = this.getMemo(this.selectDate);
         // 해당 날짜에 등록된 메모가 있다면 수정으로 없다면 새롭게 등록

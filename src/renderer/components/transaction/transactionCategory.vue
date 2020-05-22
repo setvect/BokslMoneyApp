@@ -33,7 +33,8 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js";
+import ElectronUtil from "../../common/electron-util";
+import _ from "lodash";
 
 export default {
   data() {
@@ -61,11 +62,13 @@ export default {
     },
     // 항목 조회
     loadItemAllList() {
-      // TODO
-
-      // VueUtil.get("/category/listAll.json", {}, result => {
-      //   this.itemListMap = result.data
-      // })
+      let param = { };
+      ElectronUtil.invoke("category/list", param, result => {
+        const grouping = _.chain(result).groupBy("kind").map((val)=>{
+          return _.filter(val, (i) => i.parentSeq == 0);
+        }).value();
+        console.log("grouping :>> ", grouping);
+      });
     },
     close() {
       $("#itemAllList").modal("hide");

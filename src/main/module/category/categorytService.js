@@ -4,13 +4,14 @@ import category from "../../model/category-vo";
 export default {
   init() {
     // ================ 조회 ================
-    // 메인 코드 목록
+    // 메인 분류 목록
     ipcMain.handle("category/list", async(event, param) => {
       const defaultCondition = { deleteF: false, };
       const where = { ...defaultCondition, ...param, };
       const result = await category.findAll({ where, order: ["orderNo"], raw: true, });
       return result;
     });
+
     // ================ 등록 ================
     ipcMain.handle("category/addItem", async(event, item) => {
       item.deleteF = false;
