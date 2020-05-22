@@ -130,7 +130,7 @@ export default {
       });
     },
     readForm(item) {
-      this.$EventBus.$emit("readFormEvent", item);
+      this.$parent.$refs.popupRead.openReadForm(item);
     },
     // 등록 폼
     addForm() {

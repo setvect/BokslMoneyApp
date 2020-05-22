@@ -52,7 +52,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" @click="editForm(item)">수정</button>
+          <button type="button" class="btn btn-info" @click="openEditForm(item)">수정</button>
           <button type="button" class="btn btn-info" @click="deleteAction(item.accountSeq)">삭제</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
         </div>
@@ -72,11 +72,11 @@ export default {
     };
   },
   methods: {
-    readForm(item) {
+    openReadForm(item) {
       this.item = $.extend(true, {}, item);
       $("#readItem").modal();
     },
-    editForm(item) {
+    openEditForm(item) {
       $("#readItem").modal("hide");
       this.$parent.$refs.popupAdd.openEditForm(item);
     },
@@ -87,14 +87,11 @@ export default {
       }
       ElectronUtil.invoke("account/deleteItem", itemSeq, () => {
         $("#readItem").modal("hide");
-        this.$EventBus.$emit("listEvent");
+        this.$parent.$refs.pageList.list();
       });
     },
   },
   mounted() { },
-  created() {
-    this.$EventBus.$on("readFormEvent", this.readForm);
-  },
 };
 </script>
 
