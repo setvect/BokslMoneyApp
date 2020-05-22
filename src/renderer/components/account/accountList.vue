@@ -134,10 +134,8 @@ export default {
     },
     // 등록 폼
     addForm() {
-      this.$EventBus.$emit("addFormEvent", {});
+      this.$parent.$refs.popupAdd.openAddForm({});
     },
-    // 수정폼
-    editForm(item) { },
     // 엑셀 다운로드
     exportExcel() {
       const csvData = [];
@@ -161,9 +159,6 @@ export default {
   },
   mounted() {
     this.list();
-  },
-  created() {
-    this.$EventBus.$on("listEvent", this.list);
   },
 };
 </script>

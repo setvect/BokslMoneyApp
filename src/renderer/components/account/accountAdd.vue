@@ -105,12 +105,12 @@ export default {
   },
   methods: {
     // 등록 폼
-    addForm(item) {
+    openAddForm(item) {
       this.actionType = "add";
       this.openForm(item);
     },
     // 수정 폼
-    editForm(item) {
+    openEditForm(item) {
       this.actionType = "edit";
       this.openForm(item);
     },
@@ -127,12 +127,12 @@ export default {
         if (this.actionType == "add") {
           ElectronUtil.invoke("account/addItem", this.item, () => {
             $("#addItem").modal("hide");
-            this.$EventBus.$emit("listEvent");
+            this.$parent.$refs.pageList.list();
           });
         } else {
           ElectronUtil.invoke("account/editItem", this.item, () => {
             $("#addItem").modal("hide");
-            this.$EventBus.$emit("listEvent");
+            this.$parent.$refs.pageList.list();
           });
         }
       });

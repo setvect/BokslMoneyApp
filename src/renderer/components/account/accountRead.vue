@@ -78,7 +78,7 @@ export default {
     },
     editForm(item) {
       $("#readItem").modal("hide");
-      this.$EventBus.$emit("editFormEvent", item);
+      this.$parent.$refs.popupAdd.openEditForm(item);
     },
     // 삭제
     deleteAction(itemSeq) {

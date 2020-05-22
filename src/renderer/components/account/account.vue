@@ -10,13 +10,13 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div>
-            <list />
+            <list ref="pageList"/>
           </div>
           <div>
-            <add ref="addLayer" />
+            <add ref="popupAdd" />
           </div>
           <div>
-            <read />
+            <read ref="popupRead"/>
           </div>
         </div>
       </div>
