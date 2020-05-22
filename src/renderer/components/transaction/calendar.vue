@@ -98,10 +98,10 @@
       </div>
     </div>
     <div>
-      <add />
+      <add ref="popupAdd"/>
     </div>
     <div>
-      <memo />
+      <memo ref="popupMemo"/>
     </div>
   </div>
 </template>
@@ -329,7 +329,6 @@ export default {
       let type = $(event.target).attr("data-type");
       this.addItemForm(type);
     });
-    this.$EventBus.$on("reloadEvent", this.reload);
   },
 };
 </script>

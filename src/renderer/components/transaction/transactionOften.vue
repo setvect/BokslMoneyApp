@@ -159,7 +159,7 @@ export default {
     },
     // 항목 선택 팝업.
     openCategoryList(kind) {
-      this.$EventBus.$emit("openCategoryListEvent", kind, "often");
+      this.$parent.$refs.popupCategory.openCategoryList(kind, "often");
     },
     // 항목 팝업에서 선택한 값 입력
     insertCategory(mainItem, subItem) {
@@ -172,7 +172,7 @@ export default {
         let url = this.actionType == "add" ? "/oftenUsed/add.do" : "/oftenUsed/edit.do";
         VueUtil.post(url, this.item, (result) => {
           $("#addOftenItem").modal("hide");
-          this.$EventBus.$emit("listOftenUsedEvent");
+          this.$parent.loadOftenUsed();
         });
       });
     },
@@ -195,10 +195,6 @@ export default {
   },
   mounted() {
     this.loadAccount();
-  },
-  created() {
-    this.$EventBus.$on("openOftenEvent", this.openForm);
-    this.$EventBus.$on("insertCategoryOftenEvent", this.insertCategory);
   },
 };
 </script>

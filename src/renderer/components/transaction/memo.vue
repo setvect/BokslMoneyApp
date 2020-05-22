@@ -46,14 +46,14 @@ export default {
   computed: {},
   methods: {
     // 등록 폼
-    addForm(date) {
+    openAddForm(date) {
       this.item = {};
       this.actionType = "add";
       this.item.memoDate = date.format("YYYY-MM-DD");
       this.openForm();
     },
     // 수정 폼
-    editForm(memo) {
+    openEditForm(memo) {
       this.actionType = "edit";
       this.item = memo;
       this.openForm();
@@ -73,7 +73,7 @@ export default {
         let url = this.actionType == "add" ? "/memo/add.do" : "/memo/edit.do";
         VueUtil.post(url, this.item, result => {
           $("#addMemo").modal("hide");
-          this.$EventBus.$emit("reloadEvent");
+          this.$parent.reload();
         });
       });
     },
@@ -84,14 +84,12 @@ export default {
       }
       VueUtil.post("/memo/delete.do", { memoSeq: memoSeq, }, result => {
         $("#addMemo").modal("hide");
-        this.$EventBus.$emit("reloadEvent");
+        this.$parent.reload();
       });
     },
   },
   mounted() { },
   created() {
-    this.$EventBus.$on("addMemoFormEvent", this.addForm);
-    this.$EventBus.$on("editMemoFormEvent", this.editForm);
   },
 };
 </script>

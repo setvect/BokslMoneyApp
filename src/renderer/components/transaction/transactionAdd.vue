@@ -152,10 +152,10 @@
       </div>
     </div>
     <div>
-      <often />
+      <often ref="popupOften"/>
     </div>
     <div>
-      <category />
+      <category ref="popupCategory"/>
     </div>
   </div>
 </template>
@@ -228,7 +228,7 @@ export default {
   },
   methods: {
     // 등록 폼
-    addForm(kind, date) {
+    openAddForm(kind, date) {
       this.actionType = "add";
       this.selectDate = date;
       if (this.beforeTransaction[kind]) {
@@ -243,7 +243,7 @@ export default {
       this.openForm(this.item.kind);
     },
     // 수정 폼
-    editForm(transaction) {
+    openEditForm(transaction) {
       this.actionType = "edit";
       this.selectDate = moment(transaction.transactionDate);
       this.item = transaction;
@@ -286,7 +286,7 @@ export default {
       });
       $("#addItem").off().on("hidden.bs.modal", () => {
         if (this.closeReload) {
-          this.$EventBus.$emit("reloadEvent");
+          this.$parent.reload();
         }
       });
 
@@ -371,7 +371,7 @@ export default {
     },
     // 항목 선택 팝업.
     openCategoryList(kind) {
-      this.$EventBus.$emit("openCategoryListEvent", kind, "add");
+      this.$refs.popupCategory.openCategoryList(kind, "add");
     },
     // 항목 팝업에서 선택한 값 입력
     insertCategory(mainItem, subItem) {
@@ -394,7 +394,7 @@ export default {
     // actionType: add, edit
     // often: 거래 내역항목
     openOften(actionType, often) {
-      this.$EventBus.$emit("openOftenEvent", actionType, $.extend(true, {}, often));
+      this.$refs.popupOften.openForm(actionType, $.extend(true, {}, often));
     },
     // 자주 쓰는 거래 신규 등록
     // 현재 입력한 값을 전달
@@ -447,11 +447,6 @@ export default {
     this.loadAccount();
   },
   created() {
-    this.$EventBus.$on("addFormEvent", this.addForm);
-    this.$EventBus.$on("editFormEvent", this.editForm);
-    this.$EventBus.$on("insertCategoryEvent", this.insertCategory);
-    this.$EventBus.$on("listOftenUsedEvent", this.loadOftenUsed);
-
     // 커스텀 validation
     this.$validator.extend("notEquals", {
       getMessage: function(field, args) {

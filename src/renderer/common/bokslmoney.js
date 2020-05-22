@@ -49,17 +49,17 @@ const TransactionMixin = {
         let memo = this.getMemo(this.selectDate);
         // 해당 날짜에 등록된 메모가 있다면 수정으로 없다면 새롭게 등록
         if (memo) {
-          this.$EventBus.$emit("editMemoFormEvent", memo);
+          this.$refs.popupMemo.openEditForm(memo);
         } else {
-          this.$EventBus.$emit("addMemoFormEvent", this.selectDate);
+          this.$refs.popupMemo.openAddForm(this.selectDate);
         }
       } else {
-        this.$EventBus.$emit("addFormEvent", type, this.selectDate);
+        this.$refs.popupAdd.openAddForm(type, this.selectDate);
       }
     },
     editForm(item) {
       var d = $.extend(true, {}, item);
-      this.$EventBus.$emit("editFormEvent", d);
+      this.$refs.popupAdd.openEditForm(d);
     },
     // eslint-disable-next-line no-unused-vars
     deleteAction(item) {

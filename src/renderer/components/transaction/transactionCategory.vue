@@ -53,17 +53,9 @@ export default {
         return;
       }
       if (this.openParent == "add") {
-        this.$EventBus.$emit(
-          "insertCategoryEvent",
-          this.selectMainItem.data,
-          this.selectSubItem.data
-        );
+        this.$parent.$refs.insertCategory(this.selectMainItem.data, this.selectSubItem.data);
       } else {
-        this.$EventBus.$emit(
-          "insertCategoryOftenEvent",
-          this.selectMainItem.data,
-          this.selectSubItem.data
-        );
+        this.$parent.$refs.loadOftenUsed(this.selectMainItem.data, this.selectSubItem.data);
       }
       this.close();
     },
@@ -102,9 +94,6 @@ export default {
   },
   mounted() {
     this.loadItemAllList();
-  },
-  created() {
-    this.$EventBus.$on("openCategoryListEvent", this.openCategoryList);
   },
 };
 </script>

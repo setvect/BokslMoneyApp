@@ -344,7 +344,6 @@ export default {
       let type = $(event.target).attr("data-type");
       this.addItemForm(type);
     });
-    this.$EventBus.$on("reloadEvent", this.search);
   },
 };
 </script>
