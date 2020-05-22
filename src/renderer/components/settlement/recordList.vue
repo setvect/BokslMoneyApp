@@ -53,19 +53,19 @@
 
 <script type="text/javascript">
 import moment from "moment";
-import _ from 'lodash';
+import _ from "lodash";
 import "datatables";
 import "datatables.net-buttons";
 import "datatables.net-buttons/js/buttons.html5.js";
 
 import VueUtil from "../../common/vue-util.js";
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js"
-import "../../common/vue-common.js"
+import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
+import "../../common/vue-common.js";
 
 // vue 객체 생성
 export default {
   mixins: [TransactionMixin],
-  data: function () {
+  data: function() {
     return {
       // 검색 조건
       condition: {
@@ -100,7 +100,7 @@ export default {
             },
             title:
               "복슬머니(" + this.condition.from + "_" + this.condition.to + ")",
-            customize: function (xlsx) {
+            customize: function(xlsx) {
               var sheet = xlsx.xl.worksheets["sheet1.xml"];
               $("row c", sheet).attr("s", "25");
             },

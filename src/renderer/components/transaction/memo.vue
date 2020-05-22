@@ -33,7 +33,7 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js"
+import VueUtil from "../../common/vue-util.js";
 
 export default {
   data() {
@@ -41,57 +41,57 @@ export default {
       item: { note: "", },
       actionType: "add",
       selectDate: null,
-    }
+    };
   },
   computed: {},
   methods: {
     // 등록 폼
     addForm(date) {
-      this.item = {}
-      this.actionType = "add"
-      this.item.memoDate = date.format("YYYY-MM-DD")
-      this.openForm()
+      this.item = {};
+      this.actionType = "add";
+      this.item.memoDate = date.format("YYYY-MM-DD");
+      this.openForm();
     },
-    //수정 폼
+    // 수정 폼
     editForm(memo) {
-      this.actionType = "edit"
-      this.item = memo
-      this.openForm()
+      this.actionType = "edit";
+      this.item = memo;
+      this.openForm();
     },
     // 자주 쓰는 계좌
     openForm(actionType, item) {
-      $("#addMemo").modal()
+      $("#addMemo").modal();
     },
     close() {
-      $("#addMemo").modal("hide")
+      $("#addMemo").modal("hide");
     },
     addAction() {
       this.$validator.validateAll().then(result => {
         if (!result) {
-          return
+          return;
         }
-        let url = this.actionType == "add" ? "/memo/add.do" : "/memo/edit.do"
+        let url = this.actionType == "add" ? "/memo/add.do" : "/memo/edit.do";
         VueUtil.post(url, this.item, result => {
-          $("#addMemo").modal("hide")
-          this.$EventBus.$emit("reloadEvent")
-        })
-      })
+          $("#addMemo").modal("hide");
+          this.$EventBus.$emit("reloadEvent");
+        });
+      });
     },
     // 삭제
     deleteAction(memoSeq) {
       if (!confirm("삭제?")) {
-        return
+        return;
       }
       VueUtil.post("/memo/delete.do", { memoSeq: memoSeq, }, result => {
-        $("#addMemo").modal("hide")
-        this.$EventBus.$emit("reloadEvent")
-      })
+        $("#addMemo").modal("hide");
+        this.$EventBus.$emit("reloadEvent");
+      });
     },
   },
   mounted() { },
   created() {
-    this.$EventBus.$on("addMemoFormEvent", this.addForm)
-    this.$EventBus.$on("editMemoFormEvent", this.editForm)
+    this.$EventBus.$on("addMemoFormEvent", this.addForm);
+    this.$EventBus.$on("editMemoFormEvent", this.editForm);
   },
-}
+};
 </script>

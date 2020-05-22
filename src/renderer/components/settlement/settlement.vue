@@ -62,16 +62,16 @@
 <script type="text/javascript">
 import moment from "moment";
 
-import VueUtil from "../../common/vue-util.js"
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js"
-import "../../common/vue-common.js"
+import VueUtil from "../../common/vue-util.js";
+import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
+import "../../common/vue-common.js";
 import recordListComponent from "./recordList.vue";
 
 const currentYear = new Date().getFullYear();
 
 // vue 객체 생성
 export default {
-  data: function () {
+  data: function() {
     return {
       spendingList: [],
       year: currentYear,
@@ -122,7 +122,7 @@ export default {
           {
             extend: "excelHtml5",
             title: "복슬머니 결산(" + this.yearChoice + ")",
-            customize: function (xlsx) {
+            customize: function(xlsx) {
               var sheet = xlsx.xl.worksheets["sheet1.xml"];
               $("row c", sheet).attr("s", "25");
             },

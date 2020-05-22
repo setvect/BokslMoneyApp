@@ -57,7 +57,7 @@ export default {
     // 리스트
     list() {
       let param = { kind: this.kind, parentSeq: this.parentSeq, };
-      ElectronUtil.invoke('category/list', param, result => {
+      ElectronUtil.invoke("category/list", param, result => {
         this.itemList = result;
       });
     },
@@ -82,7 +82,7 @@ export default {
         downCategorySeq: downCategorySeq,
         upCategorySeq: upCategorySeq,
       };
-      ElectronUtil.invoke('category/changeOrder', param, () => {
+      ElectronUtil.invoke("category/changeOrder", param, () => {
         this.list();
       });
     },
@@ -91,7 +91,7 @@ export default {
       if (!confirm("삭제?")) {
         return;
       }
-      ElectronUtil.invoke('category/deleteItem', categorySeq, () => {
+      ElectronUtil.invoke("category/deleteItem", categorySeq, () => {
         this.list();
       });
     },

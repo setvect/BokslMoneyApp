@@ -16,9 +16,9 @@
 
 <script type="text/javascript">
 import moment from "moment";
-import Chart from "chart.js"
+import Chart from "chart.js";
 
-import VueUtil from "../../common/vue-util.js"
+import VueUtil from "../../common/vue-util.js";
 
 export default {
   data() {
@@ -98,7 +98,7 @@ export default {
           // 콤마 표시
           tooltips: {
             callbacks: {
-              label: function (tooltipItem, data) {
+              label: function(tooltipItem, data) {
                 let value =
                   data.datasets[tooltipItem.datasetIndex].data[
                     tooltipItem.index
@@ -117,7 +117,7 @@ export default {
               {
                 ticks: {
                   beginAtZero: true,
-                  userCallback: function (value, index, values) {
+                  userCallback: function(value, index, values) {
                     return value
                       .toString()
                       .split(/(?=(?:...)*$)/)

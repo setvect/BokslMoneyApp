@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       form: {
-        password: '',
+        password: "",
       },
       redirect: undefined,
     };
@@ -42,7 +42,7 @@ export default {
   methods: {
     loginProc() {
 
-      ElectronUtil.invoke('checkLogin', this.form.password, loginSuccess => {
+      ElectronUtil.invoke("checkLogin", this.form.password, loginSuccess => {
         if (!loginSuccess) {
           alert("비밀번호 틀렸다.");
           return;

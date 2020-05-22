@@ -155,30 +155,30 @@
   </div>
 </template>
 <script type="text/javascript">
-import moment from "moment"
+import moment from "moment";
 
-import "datatables"
-import "datatables/media/css/jquery.dataTables.css"
-import "datatables.net-buttons"
-import "datatables.net-buttons/js/dataTables.buttons.js"
-import "datatables.net-buttons/js/buttons.html5.js"
-import "daterangepicker"
-import 'daterangepicker/daterangepicker.css'
-import "iCheck/icheck.js"
-import "iCheck/skins/all.css"
+import "datatables";
+import "datatables/media/css/jquery.dataTables.css";
+import "datatables.net-buttons";
+import "datatables.net-buttons/js/dataTables.buttons.js";
+import "datatables.net-buttons/js/buttons.html5.js";
+import "daterangepicker";
+import "daterangepicker/daterangepicker.css";
+import "iCheck/icheck.js";
+import "iCheck/skins/all.css";
 
-import VueUtil from "../../common/vue-util.js"
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js"
-import itemAddComponent from "./transactionAdd.vue"
-import "../../common/vue-common.js"
+import VueUtil from "../../common/vue-util.js";
+import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
+import itemAddComponent from "./transactionAdd.vue";
+import "../../common/vue-common.js";
 
-const NOW_DATE = new Date()
-moment.locale('ko')
+const NOW_DATE = new Date();
+moment.locale("ko");
 
 // vue 객체 생성
 export default {
   mixins: [TransactionMixin],
-  data: function () {
+  data: function() {
     return {
       // 검색 조건
       condition: {
@@ -194,7 +194,7 @@ export default {
       gridTable: null,
       // 정렬 조건 유지하기 위함
       order: [0, "asc"],
-    }
+    };
   },
   components: {
     add: itemAddComponent,
@@ -203,21 +203,21 @@ export default {
   methods: {
     // UI 객체 초기화
     initUi() {
-      let self = this
+      let self = this;
 
       $("input.flat").iCheck({
         checkboxClass: "icheckbox_flat-green",
-      })
+      });
 
-      let kind = self.condition.kindTypeSet
-      $("input.flat").on("ifChecked", function (e) {
-        kind.push($(this).val())
-      })
-      $("input.flat").on("ifUnchecked", function (e) {
-        kind.splice(kind.indexOf($(this).val()), 1)
-      })
+      let kind = self.condition.kindTypeSet;
+      $("input.flat").on("ifChecked", function(e) {
+        kind.push($(this).val());
+      });
+      $("input.flat").on("ifUnchecked", function(e) {
+        kind.splice(kind.indexOf($(this).val()), 1);
+      });
 
-      this.initDatepicker()
+      this.initDatepicker();
     },
     // datepicker 선택
     initDatepicker() {
@@ -229,9 +229,9 @@ export default {
           startDate: this.condition.from,
         },
         from => {
-          this.condition.from = from.format("YYYY-MM-DD")
+          this.condition.from = from.format("YYYY-MM-DD");
         }
-      )
+      );
 
       $("._datepicker_to").daterangepicker(
         {
@@ -241,9 +241,9 @@ export default {
           startDate: this.condition.to,
         },
         to => {
-          this.condition.to = to.format("YYYY-MM-DD")
+          this.condition.to = to.format("YYYY-MM-DD");
         }
-      )
+      );
     },
     initGrid() {
       this.gridTable = $("#grid").DataTable({
@@ -259,32 +259,32 @@ export default {
             },
             title:
               "복슬머니(" + this.condition.from + "_" + this.condition.to + ")",
-            customize: function (xlsx) {
-              var sheet = xlsx.xl.worksheets["sheet1.xml"]
-              $("row c", sheet).attr("s", "25")
+            customize: function(xlsx) {
+              var sheet = xlsx.xl.worksheets["sheet1.xml"];
+              $("row c", sheet).attr("s", "25");
             },
           }
         ],
-      })
-      this.gridTable.order(this.order).draw()
+      });
+      this.gridTable.order(this.order).draw();
       $("#grid").on("order.dt", () => {
         if (this.gridTable.order().length == 0) {
-          return
+          return;
         }
-        this.order = this.gridTable.order()[0]
-      })
+        this.order = this.gridTable.order()[0];
+      });
 
       // 엑셀 다운로드 button 감추기
-      $(".buttons-excel").hide()
+      $(".buttons-excel").hide();
     },
     destroyGrid() {
       if (this.gridTable != null) {
-        this.gridTable.destroy()
+        this.gridTable.destroy();
       }
     },
     //  거래 내역 다시 조회
     reload() {
-      this.search()
+      this.search();
     },
     // 거래내역 조회
     loadTransaction() {
@@ -303,24 +303,24 @@ export default {
     },
     // 검색
     search() {
-      this.loadTransaction()
+      this.loadTransaction();
     },
     // 달 이동
     moveMonth(diff) {
-      let fromDate = moment(this.condition.from, "YYYY-MM-DD")
-      fromDate.add(diff, "months")
+      let fromDate = moment(this.condition.from, "YYYY-MM-DD");
+      fromDate.add(diff, "months");
       if (diff == 0) {
-        fromDate = moment()
+        fromDate = moment();
       }
 
-      fromDate.date(1)
-      let toDate = fromDate.clone()
-      toDate.add(1, "months").add(-1, "Days")
+      fromDate.date(1);
+      let toDate = fromDate.clone();
+      toDate.add(1, "months").add(-1, "Days");
 
-      this.condition.from = fromDate.format("YYYY-MM-DD")
-      this.condition.to = toDate.format("YYYY-MM-DD")
-      this.initDatepicker()
-      this.search()
+      this.condition.from = fromDate.format("YYYY-MM-DD");
+      this.condition.to = toDate.format("YYYY-MM-DD");
+      this.initDatepicker();
+      this.search();
     },
     // 계좌 목록
     loadAccount() {
@@ -332,21 +332,21 @@ export default {
     // 엑셀 다운로드
     exportExcel() {
       // datatables에 있는 버튼 클릭
-      $(".buttons-excel").trigger("click")
+      $(".buttons-excel").trigger("click");
     },
   },
   mounted() {
-    this.initUi()
-    this.loadTransaction()
-    this.loadAccount()
+    this.initUi();
+    this.loadTransaction();
+    this.loadAccount();
     // 지출, 이체, 수입 버튼 클릭
     $("._input").click(event => {
-      let type = $(event.target).attr("data-type")
-      this.addItemForm(type)
-    })
-    this.$EventBus.$on("reloadEvent", this.search)
+      let type = $(event.target).attr("data-type");
+      this.addItemForm(type);
+    });
+    this.$EventBus.$on("reloadEvent", this.search);
   },
-}
+};
 </script>
 
 <style scoped>

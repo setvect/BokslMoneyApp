@@ -95,7 +95,7 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js"
+import VueUtil from "../../common/vue-util.js";
 
 export default {
   data() {
@@ -104,77 +104,77 @@ export default {
       accountList: [],
       itemPath: null,
       attributeList: [],
-      actionType: 'null',
-    }
+      actionType: "null",
+    };
   },
   computed: {
     // 출금계좌 선택 박스 비활성
     disablePay() {
-      return this.item.kind == "INCOME"
+      return this.item.kind == "INCOME";
     },
     // 수입계좌 선택 박스 비활성
     disableReceive() {
-      return this.item.kind == "SPENDING"
+      return this.item.kind == "SPENDING";
     },
     validatePay() {
-      return this.disablePay ? "" : "required"
+      return this.disablePay ? "" : "required";
     },
     validateReceive() {
       if (this.item.kind == "SPENDING") {
-        return ""
+        return "";
       }
       // 이체에서는 지출계좌와 수입 계좌가 같으면 안됨.
       if (this.item.kind == "TRANSFER") {
-        return { required: true, notEquals: this.item.payAccount, }
+        return { required: true, notEquals: this.item.payAccount, };
       }
-      return "required"
+      return "required";
     },
   },
   methods: {
     // 자주 쓰는 계좌
     openForm(actionType, item) {
-      this.actionType = actionType
-      this.item = item
+      this.actionType = actionType;
+      this.item = item;
       if (actionType == "add") {
-        this.item.title = ""
+        this.item.title = "";
       }
-      const ITEM_TYPE_ATTR = { INCOME: 'ATTR_INCOME', SPENDING: 'ATTR_SPENDING', TRANSFER: 'ATTR_TRANSFER', }
-      this.loadAttribute(ITEM_TYPE_ATTR[this.item.kind])
+      const ITEM_TYPE_ATTR = { INCOME: "ATTR_INCOME", SPENDING: "ATTR_SPENDING", TRANSFER: "ATTR_TRANSFER", };
+      this.loadAttribute(ITEM_TYPE_ATTR[this.item.kind]);
 
       if (item.parentCategory && item.category) {
-        this.insertCategory(item.parentCategory, item.category)
-        delete item.category
-        delete item.parentCategory
+        this.insertCategory(item.parentCategory, item.category);
+        delete item.category;
+        delete item.parentCategory;
       }
-      $('#addOftenItem').on('shown.bs.modal', () => {
+      $("#addOftenItem").on("shown.bs.modal", () => {
         // timeout를 줘야 포커싱이 된다.
         setTimeout(() => {
-          $("._title").focus()
-        }, 100)
-      })
-      $("#addOftenItem").modal()
+          $("._title").focus();
+        }, 100);
+      });
+      $("#addOftenItem").modal();
     },
     close() {
-      $("#addOftenItem").modal("hide")
+      $("#addOftenItem").modal("hide");
     },
     // 항목 선택 팝업.
     openCategoryList(kind) {
-      this.$EventBus.$emit('openCategoryListEvent', kind, 'often')
+      this.$EventBus.$emit("openCategoryListEvent", kind, "often");
     },
     // 항목 팝업에서 선택한 값 입력
     insertCategory(mainItem, subItem) {
-      this.item.categorySeq = subItem.categorySeq
-      this.itemPath = mainItem.name + " > " + subItem.name
+      this.item.categorySeq = subItem.categorySeq;
+      this.itemPath = mainItem.name + " > " + subItem.name;
     },
     // 등록 또는 수정
     addAction() {
       this.$validator.validateAll().then((result) => {
-        let url = this.actionType == 'add' ? '/oftenUsed/add.do' : '/oftenUsed/edit.do'
+        let url = this.actionType == "add" ? "/oftenUsed/add.do" : "/oftenUsed/edit.do";
         VueUtil.post(url, this.item, (result) => {
-          $("#addOftenItem").modal('hide')
-          this.$EventBus.$emit('listOftenUsedEvent')
-        })
-      })
+          $("#addOftenItem").modal("hide");
+          this.$EventBus.$emit("listOftenUsedEvent");
+        });
+      });
     },
     // 계좌 목록
     loadAccount() {
@@ -194,11 +194,11 @@ export default {
     },
   },
   mounted() {
-    this.loadAccount()
+    this.loadAccount();
   },
   created() {
-    this.$EventBus.$on('openOftenEvent', this.openForm)
-    this.$EventBus.$on('insertCategoryOftenEvent', this.insertCategory)
+    this.$EventBus.$on("openOftenEvent", this.openForm);
+    this.$EventBus.$on("insertCategoryOftenEvent", this.insertCategory);
   },
-}
+};
 </script>

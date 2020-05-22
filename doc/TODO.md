@@ -3,6 +3,8 @@
 ### 메모
 
 ### 진행예정
+- NEW-20200522: 글로벌 이벤트 버스 사용하지 않기
+- NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8
 - NEW-20200512: 페이지 전체 최소 넓이 지정
 - NEW-20200512: bootstrap3으로 되어 있는 스타일을 bootstrap4로 변경(대규모 작업)
 - NEW-20200509: 마이그레이션

@@ -162,22 +162,22 @@
 <script type="text/javascript">
 import moment from "moment";
 import "daterangepicker";
-import 'daterangepicker/daterangepicker.css';
-import 'jquery-ui/ui/core';
-import 'jquery-ui/ui/widgets/autocomplete.js';
-import 'jquery-ui/themes/base/all.css';
+import "daterangepicker/daterangepicker.css";
+import "jquery-ui/ui/core";
+import "jquery-ui/ui/widgets/autocomplete.js";
+import "jquery-ui/themes/base/all.css";
 
-import categoryComponent from './transactionCategory.vue';
-import oftenComponent from './transactionOften.vue';
+import categoryComponent from "./transactionCategory.vue";
+import oftenComponent from "./transactionOften.vue";
 import VueUtil from "../../common/vue-util.js";
-import { debug } from 'util';
+import { debug } from "util";
 
 export default {
   data() {
     return {
       item: { money: 0, fee: 0, kind: null, },
       accountList: [],
-      actionType: 'add',
+      actionType: "add",
       attributeList: [],
       itemPath: null,
       selectDate: null,
@@ -192,12 +192,12 @@ export default {
     };
   },
   components: {
-    'category': categoryComponent,
-    'often': oftenComponent,
+    "category": categoryComponent,
+    "often": oftenComponent,
   },
   computed: {
     itemLabel() {
-      const ITEM_TYPE_LABEL = { INCOME: '수입', SPENDING: '지출', TRANSFER: '이체', };
+      const ITEM_TYPE_LABEL = { INCOME: "수입", SPENDING: "지출", TRANSFER: "이체", };
       return ITEM_TYPE_LABEL[this.item.kind];
     },
     // 출금계좌 선택 박스 비활성
@@ -229,7 +229,7 @@ export default {
   methods: {
     // 등록 폼
     addForm(kind, date) {
-      this.actionType = 'add';
+      this.actionType = "add";
       this.selectDate = date;
       if (this.beforeTransaction[kind]) {
         this.item = this.beforeTransaction[kind];
@@ -244,10 +244,10 @@ export default {
     },
     // 수정 폼
     editForm(transaction) {
-      this.actionType = 'edit';
+      this.actionType = "edit";
       this.selectDate = moment(transaction.transactionDate);
       this.item = transaction;
-      console.log('this.item :', this.item);
+      console.log("this.item :", this.item);
       this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
       this.insertCategory(transaction.parentCategory, transaction.category);
       this.openForm(this.item.kind);
@@ -260,33 +260,33 @@ export default {
     addDate(diff) {
       this.selectDate.add(diff, "days");
       this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
-      $('._datepicker').data('daterangepicker').setStartDate(this.selectDate.format("YYYY-MM-DD"));
+      $("._datepicker").data("daterangepicker").setStartDate(this.selectDate.format("YYYY-MM-DD"));
     },
     // 계좌 입력 팝업창.
     openForm(kind) {
       this.item.kind = kind;
-      const ITEM_TYPE_ATTR = { INCOME: 'ATTR_INCOME', SPENDING: 'ATTR_SPENDING', TRANSFER: 'ATTR_TRANSFER', };
+      const ITEM_TYPE_ATTR = { INCOME: "ATTR_INCOME", SPENDING: "ATTR_SPENDING", TRANSFER: "ATTR_TRANSFER", };
       this.loadAttribute(ITEM_TYPE_ATTR[this.item.kind]);
       this.loadOftenUsed();
       this.closeReload = false;
 
-      $('._datepicker').daterangepicker({
+      $("._datepicker").daterangepicker({
         singleDatePicker: true,
         singleClasses: "",
         showDropdowns: true,
         startDate: this.selectDate.format("YYYY-MM-DD"),
       }, (start) => {
-        console.log('start.format("YYYY-MM-DD") :', start.format("YYYY-MM-DD"));
+        console.log("start.format(\"YYYY-MM-DD\") :", start.format("YYYY-MM-DD"));
         this.item.transactionDate = start.format("YYYY-MM-DD");
       });
       this.$validator.reset();
 
-      $('#addItem').off().on('shown.bs.modal', () => {
+      $("#addItem").off().on("shown.bs.modal", () => {
         $("._note").focus();
       });
-      $('#addItem').off().on('hidden.bs.modal', () => {
+      $("#addItem").off().on("hidden.bs.modal", () => {
         if (this.closeReload) {
-          this.$EventBus.$emit('reloadEvent');
+          this.$EventBus.$emit("reloadEvent");
         }
       });
 
@@ -323,7 +323,7 @@ export default {
         delete this.item.category;
         delete this.item.parentCategory;
 
-        let url = this.actionType == 'add' ? '/transaction/add.do' : '/transaction/edit.do';
+        let url = this.actionType == "add" ? "/transaction/add.do" : "/transaction/edit.do";
         VueUtil.post(url, this.item, (result) => {
           this.closeReload = true;
           if (cont && this.actionType == "add") {
@@ -334,13 +334,13 @@ export default {
               $("._note").focus();
             }, 100);
           } else {
-            $("#addItem").modal('hide');
+            $("#addItem").modal("hide");
           }
         });
       });
     },
     close() {
-      $("#addItem").modal('hide');
+      $("#addItem").modal("hide");
     },
     // 계좌 목록
     loadAccount() {
@@ -371,7 +371,7 @@ export default {
     },
     // 항목 선택 팝업.
     openCategoryList(kind) {
-      this.$EventBus.$emit('openCategoryListEvent', kind, 'add');
+      this.$EventBus.$emit("openCategoryListEvent", kind, "add");
     },
     // 항목 팝업에서 선택한 값 입력
     insertCategory(mainItem, subItem) {
@@ -394,14 +394,14 @@ export default {
     // actionType: add, edit
     // often: 거래 내역항목
     openOften(actionType, often) {
-      this.$EventBus.$emit('openOftenEvent', actionType, $.extend(true, {}, often));
+      this.$EventBus.$emit("openOftenEvent", actionType, $.extend(true, {}, often));
     },
     // 자주 쓰는 거래 신규 등록
     // 현재 입력한 값을 전달
     openOftenAdd() {
       let copyItem = $.extend(true, {}, this.item);
       if (!copyItem.categorySeq) {
-        this.openOften('add', copyItem);
+        this.openOften("add", copyItem);
         return;
       }
       VueUtil.get("/category/getCategory.json", { categorySeq: this.item.categorySeq, }, (result) => {
@@ -410,13 +410,13 @@ export default {
           copyItem.parentCategory = result.data.parentCategory;
         }
         delete copyItem.oftenUsedSeq;
-        this.openOften('add', copyItem);
+        this.openOften("add", copyItem);
       });
     },
     // 정렬 순서 변경
     changeOrder(downOftenUsedSeq, upOftenUsedSeq) {
       let param = { downOftenUsedSeq: downOftenUsedSeq, upOftenUsedSeq: upOftenUsedSeq, };
-      VueUtil.post('/oftenUsed/changeOrder.do', param, (result) => {
+      VueUtil.post("/oftenUsed/changeOrder.do", param, (result) => {
         this.loadOftenUsed();
       });
     },
@@ -426,7 +426,7 @@ export default {
         return;
       }
       let param = { oftenUsedSeq: oftenUsedSeq, };
-      VueUtil.post('/oftenUsed/delete.do', param, (result) => {
+      VueUtil.post("/oftenUsed/delete.do", param, (result) => {
         this.loadOftenUsed();
       });
     },
@@ -447,15 +447,15 @@ export default {
     this.loadAccount();
   },
   created() {
-    this.$EventBus.$on('addFormEvent', this.addForm);
-    this.$EventBus.$on('editFormEvent', this.editForm);
-    this.$EventBus.$on('insertCategoryEvent', this.insertCategory);
-    this.$EventBus.$on('listOftenUsedEvent', this.loadOftenUsed);
+    this.$EventBus.$on("addFormEvent", this.addForm);
+    this.$EventBus.$on("editFormEvent", this.editForm);
+    this.$EventBus.$on("insertCategoryEvent", this.insertCategory);
+    this.$EventBus.$on("listOftenUsedEvent", this.loadOftenUsed);
 
     // 커스텀 validation
-    this.$validator.extend('notEquals', {
+    this.$validator.extend("notEquals", {
       getMessage: function(field, args) {
-        return '같은 계좌를 지정할 수 없습니다.';
+        return "같은 계좌를 지정할 수 없습니다.";
       },
       validate: function(value, args) {
         return value != args[0];

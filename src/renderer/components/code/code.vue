@@ -78,11 +78,11 @@
   </div>
 </template>
 <script type="text/javascript">
-import ElectronUtil from "../../common/electron-util"
+import ElectronUtil from "../../common/electron-util";
 
 // vue 객체 생성
 export default {
-  data: function () {
+  data: function() {
     return {
       item: {},
       currentMainCode: "",
@@ -96,15 +96,15 @@ export default {
   methods: {
     // 리스트
     list() {
-      ElectronUtil.invoke('code/listItem', this.currentMainCode, result => {
+      ElectronUtil.invoke("code/listItem", this.currentMainCode, result => {
         this.itemList = result;
-      })
+      });
     },
     // 메인코드
     loadCodeMain() {
-      ElectronUtil.invoke('code/listMain', null, result => {
+      ElectronUtil.invoke("code/listMain", null, result => {
         this.mainCodeList = result;
-      })
+      });
     },
     // 등록 폼
     addForm() {
@@ -115,7 +115,7 @@ export default {
       }, 0) + 1;
       this.openForm({ orderNo: orderNo, });
     },
-    //수정 폼
+    // 수정 폼
     editForm(item) {
       this.actionType = "edit";
       this.openForm(item);
@@ -132,12 +132,12 @@ export default {
         }
         this.formItem.codeMainId = this.currentMainCode;
         if (this.actionType == "add") {
-          ElectronUtil.invoke('code/addItem', this.formItem, () => {
+          ElectronUtil.invoke("code/addItem", this.formItem, () => {
             $("#addItem").modal("hide");
             this.list();
           });
         } else {
-          ElectronUtil.invoke('code/editItem', this.formItem, () => {
+          ElectronUtil.invoke("code/editItem", this.formItem, () => {
             $("#addItem").modal("hide");
             this.list();
           });
@@ -152,9 +152,9 @@ export default {
         upCodeItemSeq: upCodeItemSeq,
       };
 
-      ElectronUtil.invoke('code/changeOrder', param, () => {
+      ElectronUtil.invoke("code/changeOrder", param, () => {
         this.list();
-      })
+      });
     },
     // 삭제
     deleteAction(codeItemSeq) {
@@ -162,7 +162,7 @@ export default {
         return;
       }
       let param = { codeMainId: this.currentMainCode, codeItemSeq: codeItemSeq, };
-      ElectronUtil.invoke('code/deleteItem', param, () => {
+      ElectronUtil.invoke("code/deleteItem", param, () => {
         this.list();
       });
     },

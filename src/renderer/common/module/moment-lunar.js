@@ -6,7 +6,7 @@
 
 "use strict";
 
-(function () {
+(function() {
   var moment;
   moment = require("moment");
 
@@ -466,11 +466,11 @@
     0x107e48
   ];
 
-  var getBitInt = function (data, length, shift) {
+  var getBitInt = function(data, length, shift) {
     return (data & (((1 << length) - 1) << shift)) >> shift;
   };
 
-  var solarToInt = function (y, m, d) {
+  var solarToInt = function(y, m, d) {
     m = (m + 9) % 12;
     y = parseInt(y) - parseInt(m / 10);
     return (
@@ -483,7 +483,7 @@
     );
   };
 
-  moment.fn.solar = function (isLeanMonth) {
+  moment.fn.solar = function(isLeanMonth) {
     isLeanMonth = isLeanMonth === true;
     var days = lunarMonthday[this.year() - lunarMonthday[0]];
     var leap = getBitInt(days, 4, 13);
@@ -529,7 +529,7 @@
       .date(dd);
   };
 
-  moment.fn.lunar = function () {
+  moment.fn.lunar = function() {
     var index = this.year() - solarYear[0];
     var data = (this.year() << 9) | ((this.month() + 1) << 5) | this.date();
     if (solarYear[index] > data) {
@@ -563,7 +563,7 @@
     if (leap != 0 && lunarM + 1 > leap) {
       lunarM--;
       if (lunarM + 1 == leap) {
-        this.isLeanMonth = function () {
+        this.isLeanMonth = function() {
           return true;
         };
       }
@@ -572,7 +572,7 @@
     return this.year(lunarY).month(lunarM).date(lunarD);
   };
 
-  moment.fn.isLeanMonth = function () {
+  moment.fn.isLeanMonth = function() {
     return false;
   };
 }.call(this));

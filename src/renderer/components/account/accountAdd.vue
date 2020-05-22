@@ -125,12 +125,12 @@ export default {
           return;
         }
         if (this.actionType == "add") {
-          ElectronUtil.invoke('account/addItem', this.item, () => {
+          ElectronUtil.invoke("account/addItem", this.item, () => {
             $("#addItem").modal("hide");
             this.$EventBus.$emit("listEvent");
           });
         } else {
-          ElectronUtil.invoke('account/editItem', this.item, () => {
+          ElectronUtil.invoke("account/editItem", this.item, () => {
             $("#addItem").modal("hide");
             this.$EventBus.$emit("listEvent");
           });
@@ -139,17 +139,13 @@ export default {
     },
     // 자산 코드 읽어 오기
     listKindCode() {
-      ElectronUtil.invoke('code/listItem', "KIND_CODE", result => {
+      ElectronUtil.invoke("code/listItem", "KIND_CODE", result => {
         this.kindCodeList = result;
       });
     },
   },
   mounted() {
     this.listKindCode();
-  },
-  created() {
-    this.$EventBus.$on("addFormEvent", this.addForm);
-    this.$EventBus.$on("editFormEvent", this.editForm);
   },
 };
 </script>

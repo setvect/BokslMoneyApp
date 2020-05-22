@@ -14,9 +14,9 @@
   </div>
 </template>
 <script type="text/javascript">
-import Chart from "chart.js"
-import VueUtil from "../../common/vue-util.js"
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js"
+import Chart from "chart.js";
+import VueUtil from "../../common/vue-util.js";
+import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
 
 export default {
   data() {
@@ -97,7 +97,7 @@ export default {
           // 콤마 표시
           tooltips: {
             callbacks: {
-              label: function (tooltipItem, data) {
+              label: function(tooltipItem, data) {
                 let value =
                   data.datasets[tooltipItem.datasetIndex].data[
                     tooltipItem.index
@@ -116,7 +116,7 @@ export default {
               {
                 ticks: {
                   beginAtZero: true,
-                  userCallback: function (value, index, values) {
+                  userCallback: function(value, index, values) {
                     return value
                       .toString()
                       .split(/(?=(?:...)*$)/)

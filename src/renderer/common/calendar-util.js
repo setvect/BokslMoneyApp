@@ -4,7 +4,7 @@ import "./module/moment-lunar";
 var CalendarUtil = {};
 
 // 해당 년 주요 기념일 반환
-CalendarUtil.getAnniversary = function (year) {
+CalendarUtil.getAnniversary = function(year) {
   const lunarDay = [
     { yearDiff: -1, month: 12, date: 30, name: "설날(연휴)", },
     { yearDiff: 0, month: 1, date: 1, name: "설날", },

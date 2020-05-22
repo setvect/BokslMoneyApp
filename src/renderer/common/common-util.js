@@ -107,12 +107,12 @@ CommonUtil.escapeRegExp = function(str) {
 
 CommonUtil.escapeHtml = function(str) {
   str = str || "" ;
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\"/g, "&quot;");
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\\"/g, "&quot;");
 };
 
 CommonUtil.unescapeHtml = function(str) {
   str = str || "";
-  return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"');
+  return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"");
 };
 
 // content 내용을 다운로드
@@ -152,7 +152,7 @@ CommonUtil.convertCsv = function(data) {
   const csvContent = data.map((arr) => {
     return arr.map((item) => {
       let t = item || "";
-      return '"' + t.replace('"', '""') + '"';
+      return "\"" + t.replace("\"", "\"\"") + "\"";
     }).join(",");
   }).join("\n");
   return csvContent;

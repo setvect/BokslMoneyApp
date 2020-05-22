@@ -93,7 +93,7 @@ export default {
   methods: {
     // 리스트
     list() {
-      ElectronUtil.invoke('account/listItem', this.currentMainCode, result => {
+      ElectronUtil.invoke("account/listItem", this.currentMainCode, result => {
         if (this.gridTable != null) {
           this.gridTable.destroy();
         }

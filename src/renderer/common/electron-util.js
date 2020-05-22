@@ -14,7 +14,7 @@ export default {
 
     let errorCall =
       option.errorCall ||
-      function (err) {
+      function(err) {
         CommonUtil.popupError(err);
       };
 

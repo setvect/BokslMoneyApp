@@ -60,13 +60,13 @@ export default {
           return;
         }
         if (this.actionType == "add") {
-          ElectronUtil.invoke('category/addItem', this.item, () => {
+          ElectronUtil.invoke("category/addItem", this.item, () => {
             $("#addItem").modal("hide");
             this.afterEventCallback();
             this.item.name = "";
           });
         } else {
-          ElectronUtil.invoke('category/editItem', this.item, () => {
+          ElectronUtil.invoke("category/editItem", this.item, () => {
             $("#addItem").modal("hide");
             this.afterEventCallback();
             this.item.name = "";

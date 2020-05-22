@@ -33,7 +33,7 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js"
+import VueUtil from "../../common/vue-util.js";
 
 export default {
   data() {
@@ -43,29 +43,29 @@ export default {
       selectMainItem: {},
       selectSubItem: null,
       openParent: null,
-    }
+    };
   },
   methods: {
     // 확인
     confirm() {
       if (!this.selectSubItem) {
-        alert("소분류 항목 선택해 주세요.")
-        return
+        alert("소분류 항목 선택해 주세요.");
+        return;
       }
       if (this.openParent == "add") {
         this.$EventBus.$emit(
           "insertCategoryEvent",
           this.selectMainItem.data,
           this.selectSubItem.data
-        )
+        );
       } else {
         this.$EventBus.$emit(
           "insertCategoryOftenEvent",
           this.selectMainItem.data,
           this.selectSubItem.data
-        )
+        );
       }
-      this.close()
+      this.close();
     },
     // 항목 조회
     loadItemAllList() {
@@ -76,35 +76,35 @@ export default {
       // })
     },
     close() {
-      $("#itemAllList").modal("hide")
+      $("#itemAllList").modal("hide");
     },
     reset() {
-      this.selectSubItem = null
-      $("._subItemSelect option:eq(0)").prop("selected", true)
-      this.selectSubItem = this.selectMainItem.children[0]
+      this.selectSubItem = null;
+      $("._subItemSelect option:eq(0)").prop("selected", true);
+      this.selectSubItem = this.selectMainItem.children[0];
     },
     // item: 유형(이체, 지출, 수입)
     // openParent: 부모 모달 종류(add, often)
     openCategoryList(itemType, openParent) {
-      this.mainList = this.itemListMap[itemType]
-      this.openParent = openParent
-      $("#itemAllList").modal()
+      this.mainList = this.itemListMap[itemType];
+      this.openParent = openParent;
+      $("#itemAllList").modal();
       // DOM 갱신 이후 발생한 이벤트
       this.$nextTick(() => {
-        let selectIdx = $("._mainItemSelect").prop("selectedIndex")
+        let selectIdx = $("._mainItemSelect").prop("selectedIndex");
         if (selectIdx == -1) {
-          $("._mainItemSelect option:eq(0)").prop("selected", true)
-          this.selectMainItem = this.mainList[0]
-          this.reset()
+          $("._mainItemSelect option:eq(0)").prop("selected", true);
+          this.selectMainItem = this.mainList[0];
+          this.reset();
         }
-      })
+      });
     },
   },
   mounted() {
-    this.loadItemAllList()
+    this.loadItemAllList();
   },
   created() {
-    this.$EventBus.$on("openCategoryListEvent", this.openCategoryList)
+    this.$EventBus.$on("openCategoryListEvent", this.openCategoryList);
   },
-}
+};
 </script>
