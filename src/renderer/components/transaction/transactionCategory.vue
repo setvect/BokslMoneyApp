@@ -12,13 +12,13 @@
             <div class="col-md-6 col-sm-6 col-xs-6">
               <p>대분류</p>
               <select class="form-control _mainItemSelect" size="10" v-model="selectMainItem" @change="reset()">
-                <option v-for="(item) in mainList" :value="item" :key="item.categorySeq">{{item.data.name}}</option>
+                <option v-for="(item) in mainList" :value="item" :key="item.categorySeq">{{item.name}}</option>
               </select>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
               <p>소분류</p>
               <select class="form-control _subItemSelect" size="10" v-model="selectSubItem">
-                <option v-for="(item) in selectMainItem.children" :value="item" :key="item.categorySeq">{{item.data.name}}</option>
+                <option v-for="(item) in selectMainItem.children" :value="item" :key="item.categorySeq">{{item.name}}</option>
               </select>
             </div>
           </form>
@@ -54,20 +54,23 @@ export default {
         return;
       }
       if (this.openParent == "add") {
-        this.$parent.$refs.insertCategory(this.selectMainItem.data, this.selectSubItem.data);
+        this.$parent.insertCategory(this.selectMainItem, this.selectSubItem);
       } else {
-        this.$parent.$refs.loadOftenUsed(this.selectMainItem.data, this.selectSubItem.data);
+        this.$parent.loadOftenUsed(this.selectMainItem, this.selectSubItem);
       }
       this.close();
     },
     // 항목 조회
     loadItemAllList() {
       let param = { };
+      // 전체 데이터 불러와 계층적으로 구성
       ElectronUtil.invoke("category/list", param, result => {
-        const grouping = _.chain(result).groupBy("kind").map((val)=>{
-          return _.filter(val, (i) => i.parentSeq == 0);
-        }).value();
-        console.log("grouping :>> ", grouping);
+        const categoryMap = _.groupBy(result, "kind");
+        for(const key in categoryMap) {
+          let list = categoryMap[key];
+          categoryMap[key] = this.findChildren(list, (element)=> element.parentSeq === 0);
+        }
+        this.itemListMap = categoryMap;
       });
     },
     close() {
@@ -93,6 +96,15 @@ export default {
           this.reset();
         }
       });
+    },
+    // 분류의 자식 로드 찾기
+    findChildren(list, findCondition) {
+      let currentDepthItems = list.filter(v => findCondition(v));
+      currentDepthItems.forEach(v=>{
+        const myChildren = this.findChildren(list, (element)=> element.parentSeq === v.categorySeq);
+        v["children"] = myChildren;
+      });
+      return currentDepthItems;
     },
   },
   mounted() {
