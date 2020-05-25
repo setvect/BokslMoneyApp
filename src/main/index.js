@@ -7,6 +7,7 @@ import loginService from "./module/login/loginService.js";
 import codeService from "./module/code/codeService.js";
 import accountService from "./module/account/accountService.js";
 import categoryService from "./module/category/categorytService.js";
+import transactionService from "./module/transaction/transactionService.js";
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
 import accountVo from "./model/account-vo.js";
@@ -92,6 +93,7 @@ loginService.init();
 codeService.init();
 accountService.init();
 categoryService.init();
+transactionService.init();
 
 app.on("ready", () => {
   let window = new BrowserWindow({

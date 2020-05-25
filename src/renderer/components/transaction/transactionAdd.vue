@@ -19,7 +19,7 @@
                   </div>
                   <div class="col-sm-4" style="padding-left:4px;">
                     <button type="button" class="btn btn-dark" style="margin-right: 0px;" @click="addDate(-1)">전날</button>
-                    <button type="button" class="btn btn-dark" style="margin-right: -3px;"  @click="addDate(1)">다음날</button>
+                    <button type="button" class="btn btn-dark" style="margin-right: -3px;" @click="addDate(1)">다음날</button>
                   </div>
                 </div>
               </div>
@@ -41,7 +41,7 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">메모:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <input type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'required'" data-vv-as="메모 " />
+                  <input ref="memo" type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'required'" data-vv-as="메모 " />
                   <span class="error" v-if="errors.has('note')">{{errors.first('note')}}</span>
                 </div>
               </div>
@@ -152,10 +152,10 @@
       </div>
     </div>
     <div>
-      <often ref="popupOften"/>
+      <often ref="popupOften" />
     </div>
     <div>
-      <category ref="popupCategory"/>
+      <category ref="popupCategory" />
     </div>
   </div>
 </template>
@@ -170,6 +170,7 @@ import "jquery-ui/themes/base/all.css";
 import categoryComponent from "./transactionCategory.vue";
 import oftenComponent from "./transactionOften.vue";
 import VueUtil from "../../common/vue-util.js";
+import ElectronUtil from "../../common/electron-util.js";
 import { debug } from "util";
 
 export default {
@@ -282,7 +283,7 @@ export default {
       this.$validator.reset();
 
       $("#addItem").off().on("shown.bs.modal", () => {
-        $("._note").focus();
+        this.$refs.memo.$el.focus();
       });
       $("#addItem").off().on("hidden.bs.modal", () => {
         if (this.closeReload) {
@@ -329,10 +330,9 @@ export default {
           if (cont && this.actionType == "add") {
             this.item.note = "";
             this.item.money = "";
+            // TODO 주석 삭제
             // 포커스가 제대로 안되서 timeout 적용. $nextTick 안됨.
-            setTimeout(() => {
-              $("._note").focus();
-            }, 100);
+            this.$refs.memo.$el.focus();
           } else {
             $("#addItem").modal("hide");
           }
@@ -345,10 +345,9 @@ export default {
     // 계좌 목록
     loadAccount() {
       // TODO
-
-      // VueUtil.get("/account/list.json", {}, (result) => {
-      //   this.accountList = result.data
-      // })
+      ElectronUtil.invoke("account/listItem", {}, result => {
+        this.accountList = result;
+      });
     },
     // 속성
     loadAttribute(codeMainId) {
@@ -472,7 +471,7 @@ export default {
 .form-control-feedback.left {
   padding-right: 8px;
 }
-.modal-lg{
+.modal-lg {
   max-width: 900px;
 }
 </style>
