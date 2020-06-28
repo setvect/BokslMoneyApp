@@ -136,10 +136,7 @@
                 </table>
               </div>
               <div class="x_content">
-                <button type="button" class="btn btn-primary btn-xs" @click="openOftenAdd()">
-                  자주쓰는
-                  거래 저장
-                </button>
+                <button type="button" class="btn btn-primary btn-xs" @click="openOftenAdd()">자주쓰는 거래 저장</button>
               </div>
             </div>
           </form>
@@ -350,7 +347,7 @@ export default {
     },
     // 항목 선택 팝업.
     openCategoryList(kind) {
-      this.$refs.popupCategory.openCategoryList(kind, "add");
+      this.$refs.popupCategory.openCategoryList(kind, this.insertCategory);
     },
     // 항목 팝업에서 선택한 값 입력
     insertCategory(mainItem, subItem) {
@@ -379,17 +376,21 @@ export default {
     // 현재 입력한 값을 전달
     openOftenAdd() {
       let copyItem = $.extend(true, {}, this.item);
+      console.log("copyItem :>> ", copyItem);
       if (!copyItem.categorySeq) {
         this.openOften("add", copyItem);
         return;
       }
 
+      console.log("AAAAAAAAAAAAAAAAA");
       ElectronUtil.invoke("category/getOne", this.item.categorySeq, (result)=>{
-        if (result.data) {
-          copyItem.category = result.data;
-          copyItem.parentCategory = result.data.parentCategory;
+        console.log("result :>> ", result);
+        if (result) {
+          copyItem.category = result;
+          copyItem.parentCategory = result.parentCategory;
         }
         delete copyItem.oftenUsedSeq;
+        console.log("copyItem :>> ", copyItem);
         this.openOften("add", copyItem);
       });
     },

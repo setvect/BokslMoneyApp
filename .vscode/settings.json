@@ -12,12 +12,18 @@
   "javascript.format.enable": false,
   "vetur.format.defaultFormatterOptions": {
     "prettyhtml": {
-      "printWidth": 200,
+      "printWidth": 200
+    },
+    "prettier": {
+      "stylelintIntegration": true,
+      "eslintIntegration": true,
+      "semi": true,
+      "singleQuote": false,
+      "tabWidth": 2,
+      "printWidth": 120
     }
   },
   "[javascript]": {
-    // prettier 쓰지 말자
-    // "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.defaultFormatter": "HookyQR.beautify"
   },
   "[jsonc]": {
@@ -29,5 +35,5 @@
   "[vue]": {
     "editor.defaultFormatter": "octref.vetur"
   },
-  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false
 }

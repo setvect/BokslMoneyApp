@@ -1,18 +1,38 @@
-import { ipcMain } from "electron";
+import {
+  ipcMain
+} from "electron";
 import category from "../../model/category-vo";
 
 export default {
   init() {
     // ================ 조회 ================
-    ipcMain.handle("category/getOne", async(event,categorySeq) => {
-      return await category.findByPk(categorySeq);
+    ipcMain.handle("category/getOne", async(event, categorySeq) => {
+      const result = await category.findByPk(categorySeq, {
+        raw: true,
+      });
+      console.log("result :>> ", result);
+      if (result.parentSeq != 0) {
+        result.parentCategory = await category.findByPk(result.parentSeq, {
+          raw: true,
+        });
+      }
+      return result;
     });
 
     // 메인 분류 목록
     ipcMain.handle("category/list", async(event, param) => {
-      const defaultCondition = { deleteF: false, };
-      const where = { ...defaultCondition, ...param, };
-      const result = await category.findAll({ where, order: ["orderNo"], raw: true, });
+      const defaultCondition = {
+        deleteF: false,
+      };
+      const where = {
+        ...defaultCondition,
+        ...param,
+      };
+      const result = await category.findAll({
+        where,
+        order: ["orderNo"],
+        raw: true,
+      });
       return result;
     });
 

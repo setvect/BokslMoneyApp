@@ -74,7 +74,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-3">속성계좌:</label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-3">속성:</label>
                 <div class="col-md-9 col-sm-9 col-xs-9">
                   <select class="form-control" v-model="item.attribute" name="attribute" v-validate="'required'" data-vv-as="속성 ">
                     <option v-for="attribute in attributeList" v-bind:value="attribute.codeItemSeq" :key="attribute.codeItemSeq">{{attribute.name}}</option>
@@ -156,7 +156,7 @@ export default {
     },
     // 항목 선택 팝업.
     openCategoryList(kind) {
-      this.$parent.$refs.popupCategory.openCategoryList(kind, "often");
+      this.$parent.$refs.popupCategory.openCategoryList(kind, this.insertCategory);
     },
     // 항목 팝업에서 선택한 값 입력
     insertCategory(mainItem, subItem) {

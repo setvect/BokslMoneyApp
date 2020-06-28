@@ -43,7 +43,7 @@ export default {
       mainList: [],
       selectMainItem: {},
       selectSubItem: null,
-      openParent: null,
+      callBack: null,
     };
   },
   methods: {
@@ -53,12 +53,8 @@ export default {
         alert("소분류 항목 선택해 주세요.");
         return;
       }
-      if (this.openParent == "add") {
-        this.$parent.insertCategory(this.selectMainItem, this.selectSubItem);
-      } else {
-        this.$parent.loadOftenUsed(this.selectMainItem, this.selectSubItem);
-      }
-      this.close();
+      this.callBack(this.selectMainItem, this.selectSubItem);
+      $("#itemAllList").modal("hide");
     },
     // 항목 조회
     loadItemAllList() {
@@ -73,21 +69,19 @@ export default {
         this.itemListMap = categoryMap;
       });
     },
-    close() {
-      $("#itemAllList").modal("hide");
-    },
     reset() {
       this.selectSubItem = null;
       $("._subItemSelect option:eq(0)").prop("selected", true);
       this.selectSubItem = this.selectMainItem.children[0];
     },
     // item: 유형(이체, 지출, 수입)
-    // openParent: 부모 모달 종류(add, often)
-    openCategoryList(itemType, openParent) {
+    // callBack: 부모 모달 종류(add, often)
+    openCategoryList(itemType, callBack) {
       console.log("itemType :>> ", itemType);
-      console.log("openParent :>> ", openParent);
+      console.log("callBack :>> ", callBack);
+
       this.mainList = this.itemListMap[itemType];
-      this.openParent = openParent;
+      this.callBack = callBack;
       $("#itemAllList").modal();
       // DOM 갱신 이후 발생한 이벤트
       this.$nextTick(() => {
