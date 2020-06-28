@@ -319,15 +319,15 @@ export default {
         delete this.item.category;
         delete this.item.parentCategory;
 
-        let url = this.actionType == "add" ? "/transaction/add.do" : "/transaction/edit.do";
-        VueUtil.post(url, this.item, (result) => {
+        let actionName = this.actionType == "add" ? "transaction/addItem" : "transaction/editItem";
+
+        ElectronUtil.invoke(actionName, this.item, (result)=>{
           this.closeReload = true;
           if (cont && this.actionType == "add") {
             this.item.note = "";
             this.item.money = "";
-            // TODO 주석 삭제
             // 포커스가 제대로 안되서 timeout 적용. $nextTick 안됨.
-            this.$refs.memo.$el.focus();
+            setTimeout(()=> this.$refs.memo.focus(), 100);
           } else {
             $("#addItem").modal("hide");
           }
