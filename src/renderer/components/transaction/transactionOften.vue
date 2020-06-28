@@ -13,7 +13,7 @@
               <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 col-xs-3">거래 제목:</label>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                  <input type="text" class="form-control _title" name="title" v-model="item.title" v-validate="'required'" data-vv-as="거래 제목 " />
+                  <input ref="title" type="text" class="form-control" name="title" v-model="item.title" v-validate="'required'" data-vv-as="거래 제목 " />
                   <div v-if="errors.has('title')">
                     <span class="error">{{errors.first('title')}}</span>
                   </div>
@@ -77,7 +77,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-3">속성계좌:</label>
                 <div class="col-md-9 col-sm-9 col-xs-9">
                   <select class="form-control" v-model="item.attribute" name="attribute" v-validate="'required'" data-vv-as="속성 ">
-                    <option v-for="attribute in attributeList" v-bind:value="attribute.codeItemKey.codeItemSeq" :key="attribute.codeItemKey.codeItemSeq">{{attribute.name}}</option>
+                    <option v-for="attribute in attributeList" v-bind:value="attribute.codeItemSeq" :key="attribute.codeItemSeq">{{attribute.name}}</option>
                   </select>
                   <span class="error" v-if="errors.has('attribute')">{{errors.first('attribute')}}</span>
                 </div>
@@ -95,15 +95,14 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js";
+import ElectronUtil from "../../common/electron-util.js";
+import transactionMixin from "./transaction-mixin.js";
 
 export default {
   data() {
     return {
       item: { money: 0, kind: null, },
-      accountList: [],
       itemPath: null,
-      attributeList: [],
       actionType: "null",
     };
   },
@@ -130,6 +129,7 @@ export default {
       return "required";
     },
   },
+  mixins:[transactionMixin],
   methods: {
     // 자주 쓰는 계좌
     openForm(actionType, item) {
@@ -147,10 +147,7 @@ export default {
         delete item.parentCategory;
       }
       $("#addOftenItem").on("shown.bs.modal", () => {
-        // timeout를 줘야 포커싱이 된다.
-        setTimeout(() => {
-          $("._title").focus();
-        }, 100);
+        this.$refs.title.focus();
       });
       $("#addOftenItem").modal();
     },
@@ -169,28 +166,15 @@ export default {
     // 등록 또는 수정
     addAction() {
       this.$validator.validateAll().then((result) => {
-        let url = this.actionType == "add" ? "/oftenUsed/add.do" : "/oftenUsed/edit.do";
-        VueUtil.post(url, this.item, (result) => {
+        if(!result) {
+          return;
+        }
+        let serviceName = this.actionType == "add" ? "oftenUsed/addItem" : "oftenUsed/editItem";
+        ElectronUtil.invoke(serviceName, this.currentMainCode, () => {
           $("#addOftenItem").modal("hide");
           this.$parent.loadOftenUsed();
         });
       });
-    },
-    // 계좌 목록
-    loadAccount() {
-      // TODO
-
-      // VueUtil.get("/account/list.json", {}, (result) => {
-      //   this.accountList = result.data
-      // })
-    },
-    // 속성
-    loadAttribute(codeMainId) {
-      // TODO
-
-      // VueUtil.get("/code/list.json", { codeMainId: codeMainId, }, (result) => {
-      //   this.attributeList = result.data
-      // })
     },
   },
   mounted() {

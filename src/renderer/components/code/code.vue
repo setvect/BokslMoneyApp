@@ -1,9 +1,9 @@
 <template>
   <div class id="app" v-cloak>
     <div class="page-title">
-      <div class="title_left">
+      <div class="title_left" style="margin-bottom:15px;">
         <h3>코드관리</h3>
-        <select v-model="currentMainCode" @change="list()">
+        <select v-model="currentMainCode" @change="list()" class="form-control">
           <option v-for="item in mainCodeList" :value="item.codeMainId" :key="item.codeMainId">{{item.name}}</option>
         </select>
       </div>

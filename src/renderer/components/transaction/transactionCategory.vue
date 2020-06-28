@@ -84,6 +84,8 @@ export default {
     // item: 유형(이체, 지출, 수입)
     // openParent: 부모 모달 종류(add, often)
     openCategoryList(itemType, openParent) {
+      console.log("itemType :>> ", itemType);
+      console.log("openParent :>> ", openParent);
       this.mainList = this.itemListMap[itemType];
       this.openParent = openParent;
       $("#itemAllList").modal();

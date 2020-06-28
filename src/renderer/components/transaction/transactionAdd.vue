@@ -86,7 +86,7 @@
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">속성:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <select class="form-control" v-model="item.attribute" name="attribute" v-validate="'required'" data-vv-as="속성 ">
-                    <option v-for="attribute in attributeList" v-bind:value="attribute.codeItemKey.codeItemSeq" :key="attribute.codeItemKey.codeItemSeq">{{attribute.name}}</option>
+                    <option v-for="attribute in attributeList" :value="attribute.codeItemSeq" :key="attribute.codeItemSeq">{{attribute.name}}</option>
                   </select>
                   <span class="error" v-if="errors.has('attribute')">{{errors.first('attribute')}}</span>
                 </div>
@@ -171,15 +171,13 @@ import categoryComponent from "./transactionCategory.vue";
 import oftenComponent from "./transactionOften.vue";
 import VueUtil from "../../common/vue-util.js";
 import ElectronUtil from "../../common/electron-util.js";
-import { debug } from "util";
+import transactionMixin from "./transaction-mixin.js";
 
 export default {
   data() {
     return {
       item: { money: 0, fee: 0, kind: null, },
-      accountList: [],
       actionType: "add",
-      attributeList: [],
       itemPath: null,
       selectDate: null,
       oftenUsedList: [],
@@ -227,6 +225,7 @@ export default {
       return "required";
     },
   },
+  mixins:[transactionMixin],
   methods: {
     // 등록 폼
     openAddForm(kind, date) {
@@ -248,7 +247,6 @@ export default {
       this.actionType = "edit";
       this.selectDate = moment(transaction.transactionDate);
       this.item = transaction;
-      console.log("this.item :", this.item);
       this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
       this.insertCategory(transaction.parentCategory, transaction.category);
       this.openForm(this.item.kind);
@@ -342,24 +340,6 @@ export default {
     close() {
       $("#addItem").modal("hide");
     },
-    // 계좌 목록
-    loadAccount() {
-      // TODO
-      ElectronUtil.invoke("account/listItem", {}, result => {
-        this.accountList = result;
-      });
-    },
-    // 속성
-    loadAttribute(codeMainId) {
-      // TODO
-
-      // VueUtil.get("/code/list.json", { codeMainId: codeMainId, }, (result) => {
-      //   this.attributeList = result.data
-      //   if (!this.item.attribute) {
-      //     this.item.attribute = this.attributeList[0].codeItemKey.codeItemSeq
-      //   }
-      // })
-    },
     // 자주쓰는 거래 정보
     loadOftenUsed() {
       // TODO
@@ -403,7 +383,8 @@ export default {
         this.openOften("add", copyItem);
         return;
       }
-      VueUtil.get("/category/getCategory.json", { categorySeq: this.item.categorySeq, }, (result) => {
+
+      ElectronUtil.invoke("category/getOne", this.item.categorySeq, (result)=>{
         if (result.data) {
           copyItem.category = result.data;
           copyItem.parentCategory = result.data.parentCategory;

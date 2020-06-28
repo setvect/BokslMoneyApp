@@ -4,6 +4,10 @@ import category from "../../model/category-vo";
 export default {
   init() {
     // ================ 조회 ================
+    ipcMain.handle("category/getOne", async(event,categorySeq) => {
+      return await category.findByPk(categorySeq);
+    });
+
     // 메인 분류 목록
     ipcMain.handle("category/list", async(event, param) => {
       const defaultCondition = { deleteF: false, };
