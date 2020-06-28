@@ -339,11 +339,9 @@ export default {
     },
     // 자주쓰는 거래 정보
     loadOftenUsed() {
-      // TODO
-
-      // VueUtil.get("/oftenUsed/list.json", { kind: this.item.kind, }, (result) => {
-      //   this.oftenUsedList = result.data
-      // })
+      ElectronUtil.invoke("oftenUsed/listItem", this.item.kind, (result)=>{
+        this.oftenUsedList = result;
+      });
     },
     // 항목 선택 팝업.
     openCategoryList(kind) {
@@ -382,7 +380,6 @@ export default {
         return;
       }
 
-      console.log("AAAAAAAAAAAAAAAAA");
       ElectronUtil.invoke("category/getOne", this.item.categorySeq, (result)=>{
         console.log("result :>> ", result);
         if (result) {
@@ -397,7 +394,7 @@ export default {
     // 정렬 순서 변경
     changeOrder(downOftenUsedSeq, upOftenUsedSeq) {
       let param = { downOftenUsedSeq: downOftenUsedSeq, upOftenUsedSeq: upOftenUsedSeq, };
-      VueUtil.post("/oftenUsed/changeOrder.do", param, (result) => {
+      ElectronUtil.invoke("oftenUsed/changeOrder", param, ()=>{
         this.loadOftenUsed();
       });
     },

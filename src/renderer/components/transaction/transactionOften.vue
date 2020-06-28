@@ -170,7 +170,7 @@ export default {
           return;
         }
         let serviceName = this.actionType == "add" ? "oftenUsed/addItem" : "oftenUsed/editItem";
-        ElectronUtil.invoke(serviceName, this.currentMainCode, () => {
+        ElectronUtil.invoke(serviceName, this.item, () => {
           $("#addOftenItem").modal("hide");
           this.$parent.loadOftenUsed();
         });

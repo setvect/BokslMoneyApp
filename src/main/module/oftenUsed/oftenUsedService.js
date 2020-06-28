@@ -2,6 +2,7 @@ import {
   ipcMain
 } from "electron";
 import oftenUsed from "../../model/oftenUsed-vo.js";
+import connSeque from "../../model/connSeque.js";
 import {
   Op
 } from "sequelize";
@@ -26,6 +27,14 @@ export default {
     // 계좌에 대한 계좌 항목 목록
     ipcMain.handle("oftenUsed/addItem", async(event, item) => {
       item.deleteF = false;
+      let order = await oftenUsed.max("orderNo", {
+        where: {
+          "kind": item.kind,
+        },
+      });
+      item.orderNo = order || 1;
+      item.orderNo++;
+
       const instance = await oftenUsed.create(item);
       return instance;
     });
@@ -38,13 +47,12 @@ export default {
     });
 
     // 정렬 변경
-    ipcMain.handle("oftenUsed/changeOrder", async(event, downOftenUsedSeq, upOftenUsedSeq) => {
-      const downItem = await oftenUsed.findByPk(downOftenUsedSeq);
-      const upItem = await oftenUsed.findByPk(upOftenUsedSeq);
-
-      const temp = downItem.orderNo;
-      downItem.orderNo = upItem.orderNo;
-      upItem.orderNo = temp;
+    ipcMain.handle("oftenUsed/changeOrder", async(event, param) => {
+      const downItem = await oftenUsed.findByPk(param.downOftenUsedSeq);
+      const upItem = await oftenUsed.findByPk(param.upOftenUsedSeq);
+      const temp = downItem.get("orderNo");
+      downItem.set("orderNo", upItem.get("orderNo"));
+      upItem.set("orderNo", temp);
       downItem.save();
       upItem.save();
     });
