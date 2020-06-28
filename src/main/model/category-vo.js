@@ -42,7 +42,7 @@ const categoryVo = connSeque.define(
     timestamps: false,
   }
 );
-categoryVo.hasMany(oftenUsed, { foreignKey: "category_seq", });
-categoryVo.hasMany(transaction, { foreignKey: "category_seq", });
+categoryVo.hasMany(oftenUsed, { foreignKey: "categorySeq", });
+categoryVo.hasMany(transaction, { foreignKey: "categorySeq", });
 
 export default categoryVo;

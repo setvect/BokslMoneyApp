@@ -2,6 +2,9 @@ import {
   ipcMain
 } from "electron";
 import category from "../../model/category-vo";
+import transactionService from "../transaction/transactionService.js";
+import moment from "moment";
+import _ from "lodash";
 
 export default {
   init() {
@@ -34,6 +37,18 @@ export default {
         raw: true,
       });
       return result;
+    });
+
+    ipcMain.handle("/category/listRecommend", async(event, param) => {
+      param.from = (moment()).add(-100, "days").toDate();
+      param.to = new Date();
+      param.returnCount = 1000;
+
+      let list = await transactionService.list(param);
+      let countBy = _.countBy(list, "categorySeq");
+      console.log("countBy :>> ", countBy);
+
+      return list;
     });
 
     // ================ 등록 ================

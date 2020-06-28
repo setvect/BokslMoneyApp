@@ -292,8 +292,9 @@ export default {
       $("._note").autocomplete({
         source: (request, response) => {
           let note = request.term;
-          VueUtil.get("/category/listRecommend.json", { note: note, kind: this.item.kind, }, (result) => {
-            response(result.data);
+          ElectronUtil.invoke("/category/listRecommend", { note: note, kind: this.item.kind, }, (result) => {
+            console.log("openForm(). result :>> ", result);
+            // response(result);
           }, { waitDialog: false, });
         },
         focus: () => false,

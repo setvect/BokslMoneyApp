@@ -11,35 +11,7 @@ export default {
     // ================ 조회 ================
     // 계좌 목록
     ipcMain.handle("transaction/listItem", async(event, param) => {
-      const where = {};
-      if (param.from && param.to) {
-        where["transactionDate"] = {
-          [Op.between]: [param.from, param.to],
-        };
-      }
-      if(param.note) {
-        where["note"] = {
-          [Op.like]: `%${param.note}%`,
-        };
-      }
-      if(param.categorySeq) {
-        where["categorySeq"] = param.categorySeq;
-      }
-
-      if(param.accountSeq) {
-        where["accountSeq"] = param.accountSeq;
-      }
-
-      if(param.kindTypeSet) {
-        where["kind"] = param.kindTypeSet;
-      }
-
-      const result = await transaction.findAll({
-        where,
-        raw: true,
-      });
-
-      return result;
+      return this.list(param);
     });
 
     // ================ 등록 ================
@@ -63,5 +35,41 @@ export default {
       saveItem.deleteF = true;
       saveItem.save();
     });
+
+  },
+  async list(param) {
+    const where = {};
+    if (param.from && param.to) {
+      where["transactionDate"] = {
+        [Op.between]: [param.from, param.to],
+      };
+    }
+    if(param.note) {
+      where["note"] = {
+        [Op.like]: `%${param.note}%`,
+      };
+    }
+    if(param.categorySeq) {
+      where["categorySeq"] = param.categorySeq;
+    }
+
+    if(param.accountSeq) {
+      where["accountSeq"] = param.accountSeq;
+    }
+
+    if(param.kindTypeSet) {
+      where["kind"] = param.kindTypeSet;
+    }
+
+    let condition = {
+      where,
+      raw: true,
+    };
+    if(param.returnCount) {
+      condition.limit = param.returnCount;
+    }
+    const result = await transaction.findAll(condition);
+
+    return result;
   },
 };
