@@ -42,7 +42,7 @@ export default {
     // ================ 수정 ================
     // 정보 수정
     ipcMain.handle("oftenUsed/editItem", async(event, item) => {
-      const saveItem = await oftenUsed.findByPk(item.transactionSeq);
+      const saveItem = await oftenUsed.findByPk(item.oftenUsedSeq);
       await saveItem.update(item);
     });
 
@@ -50,16 +50,16 @@ export default {
     ipcMain.handle("oftenUsed/changeOrder", async(event, param) => {
       const downItem = await oftenUsed.findByPk(param.downOftenUsedSeq);
       const upItem = await oftenUsed.findByPk(param.upOftenUsedSeq);
-      const temp = downItem.get("orderNo");
-      downItem.set("orderNo", upItem.get("orderNo"));
-      upItem.set("orderNo", temp);
+      const temp = downItem.orderNo;
+      downItem.orderNo = upItem.orderNo;
+      upItem.orderNo = temp;
       downItem.save();
       upItem.save();
     });
 
     // ================ 삭제 ================
-    ipcMain.handle("oftenUsed/deleteItem", async(event, transactionSeq) => {
-      const saveItem = await oftenUsed.findByPk(transactionSeq);
+    ipcMain.handle("oftenUsed/deleteItem", async(event, oftenUsedSeq) => {
+      const saveItem = await oftenUsed.findByPk(oftenUsedSeq);
       saveItem.deleteF = true;
       saveItem.save();
     });

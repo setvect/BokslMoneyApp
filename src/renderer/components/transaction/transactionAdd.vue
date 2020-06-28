@@ -124,7 +124,7 @@
                         </a>
                       </td>
                       <td>
-                        <a href="javascript:" @click="openOften('edit', often)">
+                        <a href="javascript:" @click="openOftenEdit(often)">
                           <i class="fa fa-edit"></i>
                         </a>
                         <a href="javascript:" @click="deleteOftenForm(often.oftenUsedSeq)">
@@ -361,8 +361,11 @@ export default {
       if (this.item.money == 0) {
         this.item.money = "";
       }
-      this.insertCategory(often.parentCategory, often.category);
-      // $('#payAccountList,#receiveAccountList').inputpicker('destroy');
+      ElectronUtil.invoke("category/getOne", this.item.categorySeq, (result)=>{
+        this.item.category = result;
+        this.item.parentCategory = result.parentCategory;
+        this.insertCategory(this.item.parentCategory, this.item.category);
+      });
     },
     // 자주쓰는 거래 팝업 열기
     // actionType: add, edit
@@ -374,21 +377,24 @@ export default {
     // 현재 입력한 값을 전달
     openOftenAdd() {
       let copyItem = $.extend(true, {}, this.item);
-      console.log("copyItem :>> ", copyItem);
       if (!copyItem.categorySeq) {
         this.openOften("add", copyItem);
         return;
       }
 
       ElectronUtil.invoke("category/getOne", this.item.categorySeq, (result)=>{
-        console.log("result :>> ", result);
-        if (result) {
-          copyItem.category = result;
-          copyItem.parentCategory = result.parentCategory;
-        }
+        copyItem.category = result;
+        copyItem.parentCategory = result.parentCategory;
         delete copyItem.oftenUsedSeq;
-        console.log("copyItem :>> ", copyItem);
         this.openOften("add", copyItem);
+      });
+    },
+    openOftenEdit(often) {
+      let copyItem = $.extend(true, {}, often);
+      ElectronUtil.invoke("category/getOne", copyItem.categorySeq, (result)=>{
+        copyItem.category = result;
+        copyItem.parentCategory = result.parentCategory;
+        this.openOften("edit", copyItem);
       });
     },
     // 정렬 순서 변경
@@ -403,8 +409,7 @@ export default {
       if (!confirm("삭제할거야?")) {
         return;
       }
-      let param = { oftenUsedSeq: oftenUsedSeq, };
-      VueUtil.post("/oftenUsed/delete.do", param, (result) => {
+      ElectronUtil.invoke("oftenUsed/deleteItem", oftenUsedSeq, ()=>{
         this.loadOftenUsed();
       });
     },
