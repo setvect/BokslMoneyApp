@@ -16,7 +16,6 @@ export default {
       const result = await category.findByPk(categorySeq, {
         raw: true,
       });
-      console.log("result :>> ", result);
       if (result.parentSeq != 0) {
         result.parentCategory = await category.findByPk(result.parentSeq, {
           raw: true,
@@ -43,9 +42,6 @@ export default {
 
       let list = await transactionService.list(param);
       let categoryMap = _.countBy(list, "categorySeq");
-      console.log("categorySeqMap :>> ", categorySeqMap);
-      console.log("categoryMap :>> ", categoryMap);
-
       let mergeCategorySeq = {};
       _(categorySeqMap).forEach((value, key) => {
         let v = mergeCategorySeq[key];
@@ -65,25 +61,29 @@ export default {
         }
       });
 
-      let sortCategories = Object.keys(mergeCategorySeq).sort((a, b) => {
-        return mergeCategorySeq[b] - mergeCategorySeq[a];
-      });
-
+      // console.log("mergeCategorySeq :>> ", mergeCategorySeq);
       // 자주 사용하는 카테고리
-      console.log("sortCategories :>> ", sortCategories);
       let findCategory = await category.findAll({
         where: {
           "categorySeq": {
-            [Op.in]: sortCategories,
+            [Op.in]: Object.keys(mergeCategorySeq),
           },
         },
         raw: true,
       });
-      console.log("findCategory :>> ", findCategory);
 
-      // TODO 카테고리 정렬 해야됨. sortCategories 순서 기준
+      // 많이 사용된 카테고리로 정렬
+      let sortCategory = _.sortBy(findCategory, (c) => -mergeCategorySeq[c.categorySeq]);
 
-      return list;
+      for (const c of sortCategory) {
+        const parent = await category.findByPk(c.parentSeq, {
+          raw: true,
+        });
+        c.parentCategory = parent;
+      }
+      // console.log("sortCategory :>> ", sortCategory);
+
+      return sortCategory;
     });
 
     // ================ 등록 ================
@@ -138,13 +138,11 @@ export default {
       ...param,
     };
 
-    console.log("where@@@@@@@@@@@@@@ :>> ", where);
     const result = await category.findAll({
       where,
       order: ["orderNo"],
       raw: true,
     });
     return result;
-
   },
 };

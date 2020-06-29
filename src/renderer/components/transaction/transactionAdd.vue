@@ -293,8 +293,7 @@ export default {
         source: (request, response) => {
           let note = request.term;
           ElectronUtil.invoke("/category/listRecommend", { note: note, kind: this.item.kind, }, (result) => {
-            console.log("openForm(). result :>> ", result);
-            // response(result);
+            response(result);
           }, { waitDialog: false, });
         },
         focus: () => false,
