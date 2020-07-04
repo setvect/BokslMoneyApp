@@ -12,7 +12,7 @@
             <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">이름:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <input type="text" class="form-control" name="name" v-model="item.name" v-validate="'required|max:20'" data-vv-as="이름 " />
+                <input id="nameField" type="text" class="form-control" name="name" v-model="item.name" v-validate="'required|max:20'" data-vv-as="이름 " />
                 <span class="error" v-if="errors.has('name')">{{errors.first('name')}}</span>
               </div>
             </div>
@@ -146,6 +146,9 @@ export default {
   },
   mounted() {
     this.listKindCode();
+    $("#addItem").off().on("shown.bs.modal", function() {
+      $("#nameField").focus();
+    });
   },
 };
 </script>

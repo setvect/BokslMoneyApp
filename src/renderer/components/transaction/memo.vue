@@ -13,7 +13,7 @@
               <div class="form-group">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">메모:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <textarea class="form-control" name="note" v-model="item.note" v-validate="'required|max:500'" data-vv-as="메모 "></textarea>
+                  <textarea id="noteField" class="form-control" name="note" v-model="item.note" v-validate="'required|max:500'" data-vv-as="메모 "></textarea>
                   <div v-if="errors.has('note')">
                     <span class="error">{{errors.first('note')}}</span>
                   </div>
@@ -60,6 +60,10 @@ export default {
     },
     // 자주 쓰는 계좌
     openForm(actionType, item) {
+      $("#addMemo").off().on("shown.bs.modal", () => {
+        $("#noteField").focus();
+      });
+
       $("#addMemo").modal();
     },
     close() {

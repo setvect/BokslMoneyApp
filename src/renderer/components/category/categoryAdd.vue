@@ -11,7 +11,7 @@
           <form onsubmit="return false;">
             <div class="form-group">
               <label>이름:</label>
-              <input type="text" class="form-control" name="name" v-model="item.name" v-validate="'required|max:20'" data-vv-as="이름 " v-on:keyup.13="addAction()" />
+              <input type="text" id="nameField" class="form-control" name="name" v-model="item.name" v-validate="'required|max:20'" data-vv-as="이름 " v-on:keyup.13="addAction()" />
               <!-- <span class="error" v-if="errors.has('name')">{{errors.first('name')}}</span> -->
             </div>
           </form>
@@ -74,6 +74,11 @@ export default {
         }
       });
     },
+  },
+  mounted() {
+    $("#addItem").off().on("shown.bs.modal", function() {
+      $("#nameField").focus();
+    });
   },
 };
 </script>

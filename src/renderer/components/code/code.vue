@@ -60,7 +60,7 @@
                   <form onsubmit="return false;">
                     <div class="form-group">
                       <label>이름:</label>
-                      <input type="text" class="form-control" name="name" v-model="formItem.name" v-validate="'required|max:20'" data-vv-as="이름 " v-on:keyup.13="addAction()" />
+                      <input id="nameField" type="text" class="form-control" name="name" v-model="formItem.name" v-validate="'required|max:20'" data-vv-as="이름 " v-on:keyup.13="addAction()" />
                       <span class="error" v-if="errors.has('name')">{{errors.first('name')}}</span>
                     </div>
                   </form>
@@ -122,6 +122,7 @@ export default {
     },
     openForm(item) {
       this.formItem = $.extend(true, {}, item);
+
       $("#addItem").modal();
     },
     // 등록 또는 수정
@@ -184,6 +185,9 @@ export default {
     this.currentMainCode = url.searchParams.get("currentMainCode");
   },
   mounted() {
+    $("#addItem").off().on("shown.bs.modal", function() {
+      $("#nameField").focus();
+    });
     this.currentMainCode = this.$route.query.mainCode;
     this.loadCodeMain();
     this.list();

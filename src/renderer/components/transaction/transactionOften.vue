@@ -13,7 +13,7 @@
               <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 col-xs-3">거래 제목:</label>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                  <input ref="title" type="text" class="form-control" name="title" v-model="item.title" v-validate="'required'" data-vv-as="거래 제목 " />
+                  <input id="titleField" type="text" class="form-control" name="title" v-model="item.title" v-validate="'required'" data-vv-as="거래 제목 " />
                   <div v-if="errors.has('title')">
                     <span class="error">{{errors.first('title')}}</span>
                   </div>
@@ -146,8 +146,9 @@ export default {
         delete item.category;
         delete item.parentCategory;
       }
-      $("#addOftenItem").on("shown.bs.modal", () => {
-        this.$refs.title.focus();
+      $("#addOftenItem").off().on("shown.bs.modal", () => {
+        // TODO 동작 안함, 왜 안되는지 모르겠음.
+        $("#titleField").focus();
       });
       $("#addOftenItem").modal();
     },

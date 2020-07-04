@@ -41,7 +41,7 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">메모:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <input ref="memo" type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'required'" data-vv-as="메모 " />
+                  <input id="memoField" type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'required'" data-vv-as="메모 " />
                   <span class="error" v-if="errors.has('note')">{{errors.first('note')}}</span>
                 </div>
               </div>
@@ -277,13 +277,14 @@ export default {
       });
       this.$validator.reset();
 
-      $("#addItem").off().on("shown.bs.modal", () => {
-        this.$refs.memo.$el.focus();
-      });
       $("#addItem").off().on("hidden.bs.modal", () => {
         if (this.closeReload) {
           this.$parent.reload();
         }
+      });
+
+      $("#addItem").off().on("shown.bs.modal", function() {
+        $("#memoField").focus();
       });
 
       $("#addItem").modal();
