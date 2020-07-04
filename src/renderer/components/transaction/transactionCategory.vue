@@ -102,6 +102,9 @@ export default {
       });
       return currentDepthItems;
     },
+    close() {
+      $("#itemAllList").modal("hide");
+    },
   },
   mounted() {
     this.loadItemAllList();
