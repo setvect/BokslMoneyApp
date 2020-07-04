@@ -13,6 +13,8 @@ module.exports = {
     __static: true,
     Swal: true,
     $: true,
+    ElectronUtil: true,
+    CommonUtil: true,
   },
   parserOptions: {
     ecmaVersion: 2018,

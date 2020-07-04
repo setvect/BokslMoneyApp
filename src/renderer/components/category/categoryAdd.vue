@@ -27,7 +27,6 @@
 
 <script type="text/javascript">
 import VueUtil from "../../common/vue-util.js";
-import ElectronUtil from "../../common/electron-util";
 
 export default {
   data() {

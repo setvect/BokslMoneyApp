@@ -53,8 +53,6 @@ import "datatables.net-buttons";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables/media/css/jquery.dataTables.css";
 
-import ElectronUtil from "../../common/electron-util.js";
-import CommonUtil from "../../common/common-util.js";
 import "../../common/vue-common.js";
 
 export default {

@@ -69,7 +69,7 @@ export default {
 
     let condition = {
       where,
-      raw: true,
+      // raw: true,
       nest: true,
       include: [{
         model: category,
@@ -79,7 +79,10 @@ export default {
       condition.limit = param.returnCount;
     }
     const result = await transaction.findAll(condition);
-    return result;
+    // 이런 방법도 있다
+    const rtnValue = result.map(record => record.get({ plain: true, }));
+    console.log("rtnValue :>> ", rtnValue);
+    return rtnValue;
   },
   async applyAccount(trans) {
     let money = trans.money;

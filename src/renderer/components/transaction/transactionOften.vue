@@ -95,7 +95,6 @@
 </template>
 
 <script type="text/javascript">
-import ElectronUtil from "../../common/electron-util.js";
 import transactionMixin from "./transaction-mixin.js";
 
 export default {

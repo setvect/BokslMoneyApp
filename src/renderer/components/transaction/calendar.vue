@@ -115,14 +115,12 @@ import "jquery-contextmenu";
 import "jquery-contextmenu/dist/jquery.contextMenu.css";
 
 import VueUtil from "../../common/vue-util.js";
-import CommonUtil from "../../common/common-util.js";
 import CalendarUtil from "../../common/calendar-util.js";
 import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
 import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
 import { ipcRenderer } from "electron";
 import "../../common/vue-common.js";
-import electronUtil from "../../common/electron-util";
 
 // vue 객체 생성
 export default {
@@ -231,7 +229,7 @@ export default {
     },
     // 해당 월에 거래 내역 및 메모 조회
     loadMonthData(year, month) {
-      electronUtil.invoke("transaction/listItem", { year: year, month: month, }, result=>{
+      ElectronUtil.invoke("transaction/listItem", { year: year, month: month, }, result=>{
         this.calendar.fullCalendar("removeEvents");
         this.transactionList = result;
 
@@ -240,7 +238,7 @@ export default {
         });
         this.multiUpdate(transactionSet);
 
-        electronUtil.invoke("memo/listItem", { year: year, month: month, }, result=>{
+        ElectronUtil.invoke("memo/listItem", { year: year, month: month, }, result=>{
           result => {
             this.memoList = result.data;
             for (let idx in this.memoList) {

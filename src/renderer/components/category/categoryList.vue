@@ -33,7 +33,6 @@
 </template>
 
 <script type="text/javascript">
-import ElectronUtil from "../../common/electron-util";
 
 export default {
   data() {

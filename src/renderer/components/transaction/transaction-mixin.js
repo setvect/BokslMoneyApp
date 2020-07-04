@@ -1,4 +1,3 @@
-import ElectronUtil from "../../common/electron-util.js";
 export default {
   data() {
     return {

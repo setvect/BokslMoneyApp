@@ -3,12 +3,12 @@ import Vuex from "vuex";
 
 import { createPersistedState, createSharedMutations } from "vuex-electron";
 
-import modules from "./modules";
+import account from "./modules/account.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules,
+  account,
   plugins: [
     createPersistedState(),
     createSharedMutations()

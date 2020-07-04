@@ -167,7 +167,6 @@ import "jquery-ui/themes/base/all.css";
 import categoryComponent from "./transactionCategory.vue";
 import oftenComponent from "./transactionOften.vue";
 import VueUtil from "../../common/vue-util.js";
-import ElectronUtil from "../../common/electron-util.js";
 import transactionMixin from "./transaction-mixin.js";
 
 export default {

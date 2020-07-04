@@ -78,7 +78,6 @@
   </div>
 </template>
 <script type="text/javascript">
-import ElectronUtil from "../../common/electron-util";
 
 // vue 객체 생성
 export default {

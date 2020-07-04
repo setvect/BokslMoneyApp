@@ -19,7 +19,6 @@
   </div>
 </template>
 <script type="text/javascript">
-import ElectronUtil from "../common/electron-util";
 import "../common/vue-common.js";
 
 export default {
