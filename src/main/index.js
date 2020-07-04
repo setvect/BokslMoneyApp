@@ -9,6 +9,7 @@ import accountService from "./module/account/accountService.js";
 import categoryService from "./module/category/categorytService.js";
 import transactionService from "./module/transaction/transactionService.js";
 import oftenUsedService from "./module/oftenUsed/oftenUsedService.js";
+import memoService from "./module/memo/memoService.js";
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
 import accountVo from "./model/account-vo.js";
@@ -96,6 +97,7 @@ accountService.init();
 categoryService.init();
 transactionService.init();
 oftenUsedService.init();
+memoService.init();
 
 app.on("ready", () => {
   let window = new BrowserWindow({

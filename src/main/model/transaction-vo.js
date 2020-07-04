@@ -1,5 +1,6 @@
 import connSeque from "./connSeque.js";
 import { DataTypes } from "sequelize";
+import categoryVo from "./category-vo.js";
 
 const transactionVo = connSeque.define(
   "transaction",
@@ -55,5 +56,6 @@ const transactionVo = connSeque.define(
     timestamps: false,
   }
 );
+transactionVo.belongsTo(categoryVo, { foreignKey: "categorySeq", });
 
 export default transactionVo;

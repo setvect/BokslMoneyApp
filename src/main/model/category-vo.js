@@ -1,7 +1,4 @@
 import connSeque from "./connSeque.js";
-import oftenUsed from "./oftenUsed-vo.js";
-import transaction from "./transaction-vo.js";
-
 import { DataTypes } from "sequelize";
 
 const categoryVo = connSeque.define(
@@ -42,7 +39,7 @@ const categoryVo = connSeque.define(
     timestamps: false,
   }
 );
-categoryVo.hasMany(oftenUsed, { foreignKey: "categorySeq", });
-categoryVo.hasMany(transaction, { foreignKey: "categorySeq", });
+
+// categoryVo.belongsTo(categoryVo, { foreignKey: "parentSeq", });
 
 export default categoryVo;

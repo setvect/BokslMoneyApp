@@ -98,10 +98,10 @@
       </div>
     </div>
     <div>
-      <add ref="popupAdd"/>
+      <add ref="popupAdd" />
     </div>
     <div>
-      <memo ref="popupMemo"/>
+      <memo ref="popupMemo" />
     </div>
   </div>
 </template>
@@ -122,6 +122,7 @@ import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
 import { ipcRenderer } from "electron";
 import "../../common/vue-common.js";
+import electronUtil from "../../common/electron-util";
 
 // vue 객체 생성
 export default {
@@ -230,6 +231,29 @@ export default {
     },
     // 해당 월에 거래 내역 및 메모 조회
     loadMonthData(year, month) {
+      console.log("year :>> ", year);
+      console.log("month :>> ", month);
+
+      electronUtil.invoke("transaction/listItem", { year: year, month: month, }, result=>{
+        this.calendar.fullCalendar("removeEvents");
+        this.transactionList = result;
+
+        let transactionSet = this.transactionList.map(t => {
+          return { date: moment(t.transactionDate).format("YYYY-MM-DD"), kind: t.kind, money: t.money, };
+        });
+        this.multiUpdate(transactionSet);
+
+        electronUtil.invoke("memo/listItem", { year: year, month: month, }, result=>{
+          result => {
+            this.memoList = result.data;
+            for (let idx in this.memoList) {
+              let memo = this.memoList[idx];
+              this.displayMemo(memo);
+            }
+          };
+        });
+      });
+
       // TODO
       // 해당 월에 등록된 지출,수입,이체 항목 조회
       // VueUtil.get("/transaction/listByMonth.json", { year: year, month: month, },

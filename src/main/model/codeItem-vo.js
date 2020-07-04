@@ -1,5 +1,6 @@
 import connSeque from "./connSeque.js";
 import { DataTypes } from "sequelize";
+import codeMainVo from "./codeMain-vo.js";
 
 const codeItemVo = connSeque.define(
   "codeItem",
@@ -36,4 +37,5 @@ const codeItemVo = connSeque.define(
   }
 );
 
+codeItemVo.belongsTo(codeMainVo, { foreignKey: "codeMainId", });
 export default codeItemVo;

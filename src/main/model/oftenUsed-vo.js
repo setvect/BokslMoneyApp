@@ -1,6 +1,6 @@
 import connSeque from "./connSeque.js";
-
 import { DataTypes } from "sequelize";
+import categoryVo from "./category-vo.js";
 
 const oftenUsedVo = connSeque.define(
   "oftenUsed",
@@ -60,5 +60,6 @@ const oftenUsedVo = connSeque.define(
     timestamps: false,
   }
 );
+oftenUsedVo.belongsTo(categoryVo, { foreignKey: "categorySeq", });
 
 export default oftenUsedVo;
