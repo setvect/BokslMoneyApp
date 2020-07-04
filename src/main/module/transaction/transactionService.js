@@ -3,6 +3,8 @@ import {
 } from "electron";
 import transaction from "../../model/transaction-vo.js";
 import account from "../../model/account-vo";
+import category from "../../model/category-vo.js";
+import categoryService from "../category/categorytService.js";
 import {
   Op
 } from "sequelize";
@@ -68,12 +70,15 @@ export default {
     let condition = {
       where,
       raw: true,
+      nest: true,
+      include: [{
+        model: category,
+      }],
     };
     if (param.returnCount) {
       condition.limit = param.returnCount;
     }
     const result = await transaction.findAll(condition);
-
     return result;
   },
   async applyAccount(trans) {
@@ -100,10 +105,14 @@ export default {
   },
   async addAcount(accountSeq, money) {
     let acc = await account.findByPk(accountSeq);
-    acc.update({ balance: acc.balance + money, });
+    acc.update({
+      balance: acc.balance + money,
+    });
   },
   async subAcount(accountSeq, money) {
     let acc = await account.findByPk(accountSeq);
-    acc.update({ balance: acc.balance - money, });
+    acc.update({
+      balance: acc.balance - money,
+    });
   },
 };

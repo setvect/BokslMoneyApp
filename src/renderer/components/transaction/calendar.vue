@@ -47,8 +47,8 @@
                       <td>{{t.parentCategory.name}} > {{t.category.name}}</td>
                       <td>{{t.note}}</td>
                       <td class="text-right">{{t.money | numberFormat}}</td>
-                      <td>{{t.payAccount | accountName}}</td>
-                      <td>{{t.receiveAccount | accountName}}</td>
+                      <!-- <td>{{t.payAccount | accountName}}</td>
+                      <td>{{t.receiveAccount | accountName}}</td> -->
                       <td class="text-center">
                         <div class="btn-group btn-group-xs">
                           <button type="button" class="btn btn-success btn-xs" @click="editForm(t)">수정</button>
@@ -231,9 +231,6 @@ export default {
     },
     // 해당 월에 거래 내역 및 메모 조회
     loadMonthData(year, month) {
-      console.log("year :>> ", year);
-      console.log("month :>> ", month);
-
       electronUtil.invoke("transaction/listItem", { year: year, month: month, }, result=>{
         this.calendar.fullCalendar("removeEvents");
         this.transactionList = result;
