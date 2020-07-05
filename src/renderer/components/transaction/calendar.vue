@@ -119,7 +119,6 @@ import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.j
 import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
 import "../../common/vue-common.js";
-import { mapGetters } from "vuex";
 
 // vue 객체 생성
 export default {
@@ -137,9 +136,6 @@ export default {
     memo: memoComponent,
   },
   computed: {
-    ...mapGetters([
-      "accountList"
-    ]),
     // 선택된 날짜의 지출, 수입, 이체 내역
     listSelectDayTransfer() {
       let r = this.transactionList.filter(t => {

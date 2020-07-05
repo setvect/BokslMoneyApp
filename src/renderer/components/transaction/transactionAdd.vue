@@ -193,6 +193,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "accountList",
       "categoryMap"
     ]),
     itemLabel() {
@@ -297,7 +298,6 @@ export default {
         source: (request, response) => {
           let note = request.term;
           ElectronUtil.invoke("/category/listRecommend", { note: note, kind: this.item.kind, }, (result) => {
-            console.log("result :>> ", result);
             response(result);
           }, { waitDialog: false, });
         },
@@ -308,10 +308,7 @@ export default {
           return false;
         },
       }).data("ui-autocomplete")._renderItem = (ul, item) =>{
-        console.log("item :>> ", item);
-        console.log("this.categoryMap :>> ", this.categoryMap);
         let parentCategory = this.categoryMap[item.parentSeq];
-        console.log("parentCategory :>> ", parentCategory, item.parentSeq);
         return $("<li>")
           .append("<div>" + parentCategory.name + " > " + item.name + "</div>")
           .appendTo(ul);
@@ -437,7 +434,6 @@ export default {
     },
   },
   mounted() {
-    this.loadAccount();
   },
   created() {
     // 커스텀 validation

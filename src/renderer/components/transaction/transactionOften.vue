@@ -96,6 +96,7 @@
 
 <script type="text/javascript">
 import transactionMixin from "./transaction-mixin.js";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -106,6 +107,10 @@ export default {
     };
   },
   computed: {
+    ...mapGetters([
+      "accountList",
+      "categoryMap"
+    ]),
     // 출금계좌 선택 박스 비활성
     disablePay() {
       return this.item.kind == "INCOME";
@@ -178,7 +183,6 @@ export default {
     },
   },
   mounted() {
-    this.loadAccount();
   },
 };
 </script>

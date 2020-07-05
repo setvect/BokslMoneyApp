@@ -338,6 +338,7 @@ export default {
   mounted() {
     this.initUi();
     this.loadTransaction();
+    // TODO mapGetters 이요
     this.loadAccount();
     // 지출, 이체, 수입 버튼 클릭
     $("._input").click(event => {
