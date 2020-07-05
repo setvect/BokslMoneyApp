@@ -7,7 +7,7 @@ const NOTING_OPERATION = () => {};
 export default {
   invoke(eventName, _param, _callback, _option) {
     let option = _option || {};
-    let param = _param || {};
+    let param = _param;
     let callback = _callback || NOTING_OPERATION;
     let waitMsg = option.waitMsg || "처리 중입니다";
     let finallyCall = option.finallyCall || NOTING_OPERATION;

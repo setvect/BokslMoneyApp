@@ -1,8 +1,12 @@
-import { ipcMain } from "electron";
+import {
+  ipcMain
+} from "electron";
 import codeMain from "../../model/codeMain-vo";
 import codeItem from "../../model/codeItem-vo";
 import connSeque from "../../model/connSeque.js";
-import { QueryTypes } from "sequelize";
+import {
+  QueryTypes
+} from "sequelize";
 
 export default {
   init() {
@@ -28,9 +32,10 @@ export default {
     // 메인코드에 대한 코드 항목 목록
     ipcMain.handle("code/addItem", async(event, item) => {
       const records = await connSeque.query(
-        "select ifnull(max(c.CODE_ITEM_SEQ), 0) + 1 as cnt from CB_CODE_ITEM c where c.CODE_MAIN_ID = $codeMainId",
-        {
-          bind: { codeMainId: item.codeMainId, },
+        "select ifnull(max(c.CODE_ITEM_SEQ), 0) + 1 as cnt from CB_CODE_ITEM c where c.CODE_MAIN_ID = $codeMainId", {
+          bind: {
+            codeMainId: item.codeMainId,
+          },
           type: QueryTypes.SELECT,
         }
       );
@@ -89,11 +94,14 @@ export default {
     });
   },
   async listCodeItem(mainCode) {
+    let where = {
+      deleteF: false,
+    };
+    if (mainCode) {
+      where.codeMainId = mainCode;
+    }
     const result = await codeItem.findAll({
-      where: {
-        deleteF: false,
-        codeMainId: mainCode,
-      },
+      where,
       order: ["orderNo"],
       raw: true,
     });

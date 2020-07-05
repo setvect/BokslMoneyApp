@@ -317,6 +317,7 @@ export default {
   mounted() {
     this.$store.dispatch("loadAcount")
       .then(()=>this.$store.dispatch("loadCategory"))
+      .then(()=>this.$store.dispatch("loadCode"))
       .then(()=>{
         this.initCalendar();
         // 지출, 이체, 수입 버튼 클릭

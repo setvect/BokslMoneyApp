@@ -77,7 +77,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-3">속성:</label>
                 <div class="col-md-9 col-sm-9 col-xs-9">
                   <select class="form-control" v-model="item.attribute" name="attribute" v-validate="'required'" data-vv-as="속성 ">
-                    <option v-for="attribute in attributeList" v-bind:value="attribute.codeItemSeq" :key="attribute.codeItemSeq">{{attribute.name}}</option>
+                    <option v-for="attribute in getAttributeList(item.kind)" v-bind:value="attribute.codeItemSeq" :key="attribute.codeItemSeq">{{attribute.name}}</option>
                   </select>
                   <span class="error" v-if="errors.has('attribute')">{{errors.first('attribute')}}</span>
                 </div>
@@ -96,7 +96,6 @@
 
 <script type="text/javascript">
 import transactionMixin from "./transaction-mixin.js";
-import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -107,10 +106,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "accountList",
-      "categoryMap"
-    ]),
     // 출금계좌 선택 박스 비활성
     disablePay() {
       return this.item.kind == "INCOME";
@@ -142,8 +137,6 @@ export default {
       if (actionType == "add") {
         this.item.title = "";
       }
-      const ITEM_TYPE_ATTR = { INCOME: "ATTR_INCOME", SPENDING: "ATTR_SPENDING", TRANSFER: "ATTR_TRANSFER", };
-      this.loadAttribute(ITEM_TYPE_ATTR[this.item.kind]);
 
       if (item.parentCategory && item.category) {
         this.insertCategory(item.parentCategory, item.category);

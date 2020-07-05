@@ -86,7 +86,7 @@
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">속성:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <select class="form-control" v-model="item.attribute" name="attribute" v-validate="'required'" data-vv-as="속성 ">
-                    <option v-for="attribute in attributeList" :value="attribute.codeItemSeq" :key="attribute.codeItemSeq">{{attribute.name}}</option>
+                    <option v-for="attribute in getAttributeList(item.kind)" :value="attribute.codeItemSeq" :key="attribute.codeItemSeq">{{attribute.name}}</option>
                   </select>
                   <span class="error" v-if="errors.has('attribute')">{{errors.first('attribute')}}</span>
                 </div>
@@ -167,7 +167,6 @@ import "jquery-ui/themes/base/all.css";
 import categoryComponent from "./transactionCategory.vue";
 import oftenComponent from "./transactionOften.vue";
 import transactionMixin from "./transaction-mixin.js";
-import { mapGetters } from "vuex";
 
 export default {
   name:"transactionAdd",
@@ -192,10 +191,6 @@ export default {
     "often": oftenComponent,
   },
   computed: {
-    ...mapGetters([
-      "accountList",
-      "categoryMap"
-    ]),
     itemLabel() {
       const ITEM_TYPE_LABEL = { INCOME: "수입", SPENDING: "지출", TRANSFER: "이체", };
       return ITEM_TYPE_LABEL[this.item.kind];
@@ -265,8 +260,6 @@ export default {
     // 계좌 입력 팝업창.
     openForm(kind) {
       this.item.kind = kind;
-      const ITEM_TYPE_ATTR = { INCOME: "ATTR_INCOME", SPENDING: "ATTR_SPENDING", TRANSFER: "ATTR_TRANSFER", };
-      this.loadAttribute(ITEM_TYPE_ATTR[this.item.kind]);
       this.loadOftenUsed();
       this.closeReload = false;
 
@@ -334,7 +327,7 @@ export default {
             this.item.note = "";
             this.item.money = "";
             // 포커스가 제대로 안되서 timeout 적용. $nextTick 안됨.
-            setTimeout(()=> this.$refs.memo.focus(), 100);
+            setTimeout(()=> $("#memoField").focus(), 100);
           } else {
             $("#addItem").modal("hide");
           }

@@ -80,7 +80,6 @@ export default {
     const result = await transaction.findAll(condition);
     // 이런 방법도 있다
     const rtnValue = result.map(record => record.get({ plain: true, }));
-    console.log("rtnValue :>> ", rtnValue);
     return rtnValue;
   },
   async applyAccount(trans) {

@@ -1,19 +1,30 @@
+import {
+  mapGetters
+} from "vuex";
+
+
+
 export default {
   data() {
     return {
-      attributeList: [],
     };
   },
   computed: {
+    ...mapGetters([
+      "accountList",
+      "categoryMap",
+      "codeMap"
+    ]),
   },
   methods: {
-    // 속성
-    loadAttribute(codeMainId) {
-      ElectronUtil.invoke("code/listItem", codeMainId, result => {
-        this.attributeList = result;
-      });
+    getAttributeList(kind) {
+      const ITEM_TYPE_ATTR = {
+        INCOME: "ATTR_INCOME",
+        SPENDING: "ATTR_SPENDING",
+        TRANSFER: "ATTR_TRANSFER",
+      };
+      return this.codeMap[ITEM_TYPE_ATTR[kind]];
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
