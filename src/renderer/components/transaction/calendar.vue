@@ -137,6 +137,9 @@ export default {
     memo: memoComponent,
   },
   computed: {
+    ...mapGetters([
+      "accountList"
+    ]),
     // 선택된 날짜의 지출, 수입, 이체 내역
     listSelectDayTransfer() {
       let r = this.transactionList.filter(t => {
@@ -146,9 +149,6 @@ export default {
       });
       return r;
     },
-    ...mapGetters([
-      "accountList"
-    ]),
   },
   methods: {
     initCalendar() {

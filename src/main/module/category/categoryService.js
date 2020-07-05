@@ -75,14 +75,6 @@ export default {
       // 많이 사용된 카테고리로 정렬
       let sortCategory = _.sortBy(findCategory, (c) => -mergeCategorySeq[c.categorySeq]);
 
-      for (const c of sortCategory) {
-        const parent = await category.findByPk(c.parentSeq, {
-          raw: true,
-        });
-        c.parentCategory = parent;
-      }
-      // console.log("sortCategory :>> ", sortCategory);
-
       return sortCategory;
     });
 

@@ -14,6 +14,8 @@ export default new Vuex.Store({
   getters: {
     accountList: state => state.account.accountList,
     accountMap: state => state.account.accountMap,
+    categoryList: state => state.category.categoryList,
+    categoryMap: state => state.category.categoryMap,
   },
   strict: process.env.NODE_ENV !== "production",
 });

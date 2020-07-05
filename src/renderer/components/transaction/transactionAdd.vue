@@ -166,10 +166,11 @@ import "jquery-ui/themes/base/all.css";
 
 import categoryComponent from "./transactionCategory.vue";
 import oftenComponent from "./transactionOften.vue";
-import VueUtil from "../../common/vue-util.js";
 import transactionMixin from "./transaction-mixin.js";
+import { mapGetters } from "vuex";
 
 export default {
+  name:"transactionAdd",
   data() {
     return {
       item: { money: 0, fee: 0, kind: null, },
@@ -191,6 +192,9 @@ export default {
     "often": oftenComponent,
   },
   computed: {
+    ...mapGetters[
+      "accountList"
+    ],
     itemLabel() {
       const ITEM_TYPE_LABEL = { INCOME: "수입", SPENDING: "지출", TRANSFER: "이체", };
       return ITEM_TYPE_LABEL[this.item.kind];
@@ -293,6 +297,7 @@ export default {
         source: (request, response) => {
           let note = request.term;
           ElectronUtil.invoke("/category/listRecommend", { note: note, kind: this.item.kind, }, (result) => {
+            console.log("result :>> ", result);
             response(result);
           }, { waitDialog: false, });
         },
@@ -302,6 +307,7 @@ export default {
           return false;
         },
       }).data("ui-autocomplete")._renderItem = function(ul, item) {
+
         return $("<li>")
           .append("<div>" + item.parentCategory.name + " > " + item.name + "</div>")
           .appendTo(ul);
