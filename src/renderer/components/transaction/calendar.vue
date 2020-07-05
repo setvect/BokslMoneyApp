@@ -342,11 +342,13 @@ export default {
     },
   },
   mounted() {
-    this.initCalendar();
-    // 지출, 이체, 수입 버튼 클릭
-    $("._input").click(event => {
-      let type = $(event.target).attr("data-type");
-      this.addItemForm(type);
+    this.$store.dispatch("loadAcount").then(()=>{
+      this.initCalendar();
+      // 지출, 이체, 수입 버튼 클릭
+      $("._input").click(event => {
+        let type = $(event.target).attr("data-type");
+        this.addItemForm(type);
+      });
     });
   },
 };

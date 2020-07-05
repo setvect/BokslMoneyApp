@@ -1,4 +1,3 @@
-
 const acount = {
   state: {
     accountList: [],
@@ -11,21 +10,18 @@ const acount = {
   },
   actions: {
     // 제가 접속 가능한 프로젝트 목록
-    loadMyacount({
+    loadAcount({
       commit,
     }) {
       return new Promise((resolve, reject) => {
-        // VueUtil.get(
-        //   "/acount/myacount", {},
-        //   res => {
-        //     commit("setMyacount", res.data);
-        //     resolve();
-        //   }, {
-        //     errorCall: error => {
-        //       reject(error);
-        //     },
-        //   }
-        // );
+        ElectronUtil.invoke("account/listItem", {}, result=>{
+          commit("setAcount", result);
+          resolve();
+        }, {
+          errorCall: error => {
+            reject(error);
+          },
+        });
       });
     },
   },

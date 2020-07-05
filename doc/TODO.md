@@ -3,6 +3,7 @@
 ### 메모
 
 ### 진행예정
+- NEW-20200706: 매뉴 뎁스 2->1로. 단축키 F1, F2, ... 이런식으로
 - NEW-20200705: AppUtil.getAccountName --> vuex 사용
 - NEW-20200628: category sequelize의 외래키 설정 이용해 parentCategory 가져오기
 - PBM-20200522: 두번 연속 팝업창 오픈하면 팝업창 요소가 클릭안되는 문제 - 발생하는 조건을 모르겠음.

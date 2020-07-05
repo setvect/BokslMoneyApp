@@ -1,9 +1,9 @@
 import Vue from "vue";
 import axios from "axios";
 
-import App from "./App";
-import router from "./router";
-import store from "./store";
+import App from "./App.vue";
+import router from "./router/index.js";
+import store from "./store/index.js";
 
 import BootstrapVue from "bootstrap-vue";
 
