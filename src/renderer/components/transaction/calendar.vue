@@ -153,13 +153,6 @@ export default {
         return;
       }
 
-      let date = new Date(),
-        d = date.getDate(),
-        m = date.getMonth(),
-        y = date.getFullYear(),
-        started,
-        categoryClass;
-
       this.calendar = $("#calendar").fullCalendar({
         editable: false,
         selectable: true,
@@ -227,7 +220,10 @@ export default {
     },
     // 해당 월에 거래 내역 및 메모 조회
     loadMonthData(year, month) {
-      ElectronUtil.invoke("transaction/listItem", { year: year, month: month, }, result=>{
+      let start = moment([year, month - 1, 1]);
+      var end = start.clone().add("month", 1).add("millisecond", -1);
+
+      ElectronUtil.invoke("transaction/listItem", { from: start.toDate(), to: end.toDate(), }, result=>{
         this.calendar.fullCalendar("removeEvents");
         this.transactionList = result;
 
@@ -236,14 +232,12 @@ export default {
         });
         this.multiUpdate(transactionSet);
 
-        ElectronUtil.invoke("memo/listItem", { year: year, month: month, }, result=>{
-          result => {
-            this.memoList = result.data;
-            for (let idx in this.memoList) {
-              let memo = this.memoList[idx];
-              this.displayMemo(memo);
-            }
-          };
+        ElectronUtil.invoke("memo/listItem", { from: start.toDate(), to: end.toDate(), }, result => {
+          this.memoList = result;
+          for (let idx in this.memoList) {
+            let memo = this.memoList[idx];
+            this.displayMemo(memo);
+          }
         });
       });
     },

@@ -76,8 +76,6 @@ export default {
     // item: 유형(이체, 지출, 수입)
     // callBack: 부모 모달 종류(add, often)
     openCategoryList(itemType, callBack) {
-      console.log("itemType :>> ", itemType);
-      console.log("callBack :>> ", callBack);
 
       this.mainList = this.itemListMap[itemType];
       this.callBack = callBack;

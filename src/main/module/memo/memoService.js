@@ -11,6 +11,8 @@ export default {
     // ================ 조회 ================
     // 계좌 목록
     ipcMain.handle("memo/listItem", async(event, param) => {
+
+
       const where = {};
       where["memoDate"] = {
         [Op.between]: [param.from, param.to],
@@ -25,7 +27,6 @@ export default {
         condition.limit = param.returnCount;
       }
       const result = await memo.findAll(condition);
-
       return result;
     });
 

@@ -3,6 +3,10 @@
 ### 메모
 
 ### 진행예정
+- PBM-20200706: GMT 계산 오류 확인해보기
+  memoService, transactionService
+  transaction_date` BETWEEN '2020-06-30 15:00:00.000 +00:00' AND '2020-07-31 14:59:59.999 +00:00';
+
 - NEW-20200706: TransactionMixin -> mixin 이동
 - NEW-20200706: 매뉴 뎁스 2->1로. 단축키 F1, F2, ... 이런식으로
 - NEW-20200705: AppUtil.getAccountName --> vuex 사용

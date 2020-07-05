@@ -174,7 +174,6 @@ export default {
         .clone()
         .add("month", 1)
         .add("second", -1);
-      console.log("kind :", kind);
 
       this.$refs.recordListPopup.openForm(from, to, kind, categorySeq);
     },

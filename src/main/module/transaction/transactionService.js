@@ -106,16 +106,12 @@ export default {
   },
   async addAcount(accountSeq, money) {
     let acc = await account.findByPk(accountSeq);
-    console.log("addAcount.acc.balance :>> ", acc.balance);
     acc.balance = acc.balance + money;
     await acc.save();
-    console.log("addAcount.acc.balance :>> ", acc.balance);
   },
   async subAcount(accountSeq, money) {
     let acc = await account.findByPk(accountSeq);
-    console.log("subAcount.acc.balance :>> ", acc.balance);
     acc.balance = acc.balance - money;
     await acc.save();
-    console.log("subAcount.acc.balance :>> ", acc.balance);
   },
 };

@@ -58,8 +58,7 @@ export default {
       this.item = memo;
       this.openForm();
     },
-    // 자주 쓰는 계좌
-    openForm(actionType, item) {
+    openForm() {
       $("#addMemo").off().on("shown.bs.modal", () => {
         $("#noteField").focus();
       });
@@ -74,8 +73,9 @@ export default {
         if (!result) {
           return;
         }
-        let url = this.actionType == "add" ? "/memo/add.do" : "/memo/edit.do";
-        VueUtil.post(url, this.item, result => {
+
+        let action = this.actionType == "add" ? "memo/addItem" : "memo/editItem";
+        ElectronUtil.invoke(action, this.item, result => {
           $("#addMemo").modal("hide");
           this.$parent.reload();
         });
@@ -86,7 +86,7 @@ export default {
       if (!confirm("삭제?")) {
         return;
       }
-      VueUtil.post("/memo/delete.do", { memoSeq: memoSeq, }, result => {
+      ElectronUtil.invoke("memo/deleteItem", memoSeq, result => {
         $("#addMemo").modal("hide");
         this.$parent.reload();
       });

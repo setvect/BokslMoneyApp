@@ -1,12 +1,5 @@
 const webpack = require("webpack");
 const path = require("path");
-console.log("###############################");
-console.log("###############################");
-console.log("path.resolve(__dirname, \"src/renderer/common/electron-util.js\") :>> ", path.resolve(__dirname, "src/renderer/common/electron-util.js"));
-console.log("###############################");
-console.log("###############################");
-
-
 module.exports = {
   plugins: [
     new webpack.ProvidePlugin({

@@ -270,18 +270,14 @@ export default {
         showDropdowns: true,
         startDate: this.selectDate.format("YYYY-MM-DD"),
       }, (start) => {
-        console.log("start.format(\"YYYY-MM-DD\") :", start.format("YYYY-MM-DD"));
         this.item.transactionDate = start.format("YYYY-MM-DD");
       });
       this.$validator.reset();
-
       $("#addItem").off().on("hidden.bs.modal", () => {
         if (this.closeReload) {
           this.$parent.reload();
         }
-      });
-
-      $("#addItem").off().on("shown.bs.modal", () =>{
+      }).on("shown.bs.modal", () =>{
         $("#memoField").focus();
       });
 
