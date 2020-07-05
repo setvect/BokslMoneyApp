@@ -5,14 +5,14 @@ import memo from "../../model/memo-vo.js";
 import {
   Op
 } from "sequelize";
-
+import {
+  Sequelize
+} from "sequelize";
 export default {
   init() {
     // ================ 조회 ================
     // 계좌 목록
     ipcMain.handle("memo/listItem", async(event, param) => {
-
-
       const where = {};
       where["memoDate"] = {
         [Op.between]: [param.from, param.to],
@@ -20,6 +20,11 @@ export default {
       where["deleteF"] = false;
 
       let condition = {
+        attributes: [
+          "memoSeq",
+          "note",
+          [Sequelize.fn("strftime", "%Y-%m-%d", Sequelize.col("memo_date")), "memoDate"]
+        ],
         where,
         raw: true,
       };
@@ -42,7 +47,7 @@ export default {
     // 정보 수정
     ipcMain.handle("memo/editItem", async(event, item) => {
       const saveItem = await memo.findByPk(item.memoSeq);
-      saveItem.memo = item.memo;
+      saveItem.set("note", item.note);
       await saveItem.save();
     });
 

@@ -221,7 +221,7 @@ export default {
     // 해당 월에 거래 내역 및 메모 조회
     loadMonthData(year, month) {
       let start = moment([year, month - 1, 1]);
-      var end = start.clone().add("month", 1).add("millisecond", -1);
+      var end = start.clone().add(1, "month").add(-1, "millisecond");
 
       ElectronUtil.invoke("transaction/listItem", { from: start.toDate(), to: end.toDate(), }, result=>{
         this.calendar.fullCalendar("removeEvents");
