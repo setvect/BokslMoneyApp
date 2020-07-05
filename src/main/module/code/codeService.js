@@ -56,7 +56,7 @@ export default {
         },
       });
       saveItem.name = item.name;
-      saveItem.save();
+      await saveItem.save();
     });
 
     // 정렬 변경
@@ -77,8 +77,8 @@ export default {
       const temp = downItem.orderNo;
       downItem.orderNo = upItem.orderNo;
       upItem.orderNo = temp;
-      downItem.save();
-      upItem.save();
+      await downItem.save();
+      await upItem.save();
     });
 
     // ================ 삭제 ================
@@ -90,7 +90,7 @@ export default {
         },
       });
       saveItem.deleteF = true;
-      saveItem.save();
+      await saveItem.save();
     });
   },
   async listCodeItem(mainCode) {

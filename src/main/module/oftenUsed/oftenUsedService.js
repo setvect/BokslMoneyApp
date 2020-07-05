@@ -53,15 +53,15 @@ export default {
       const temp = downItem.orderNo;
       downItem.orderNo = upItem.orderNo;
       upItem.orderNo = temp;
-      downItem.save();
-      upItem.save();
+      await downItem.save();
+      await upItem.save();
     });
 
     // ================ 삭제 ================
     ipcMain.handle("oftenUsed/deleteItem", async(event, oftenUsedSeq) => {
       const saveItem = await oftenUsed.findByPk(oftenUsedSeq);
       saveItem.deleteF = true;
-      saveItem.save();
+      await saveItem.save();
     });
   },
 };

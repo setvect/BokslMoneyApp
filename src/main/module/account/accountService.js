@@ -40,7 +40,7 @@ export default {
     ipcMain.handle("account/deleteItem", async(event, accountSeq) => {
       const saveItem = await account.findByPk(accountSeq);
       saveItem.deleteF = true;
-      saveItem.save();
+      await saveItem.save();
     });
   },
 };

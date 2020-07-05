@@ -244,7 +244,8 @@ export default {
       this.selectDate = moment(transaction.transactionDate);
       this.item = transaction;
       this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
-      this.insertCategory(transaction.parentCategory, transaction.category);
+      let parentCategory = this.categoryMap[transaction.category.parentSeq];
+      this.insertCategory(parentCategory, transaction.category);
       this.openForm(this.item.kind);
     },
     // datepicker

@@ -107,7 +107,7 @@ export default {
     ipcMain.handle("category/deleteItem", async(event, categorySeq) => {
       const saveItem = await category.findByPk(categorySeq);
       saveItem.deleteF = true;
-      saveItem.save();
+      await saveItem.save();
     });
   },
 

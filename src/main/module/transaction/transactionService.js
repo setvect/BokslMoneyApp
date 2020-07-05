@@ -13,7 +13,7 @@ export default {
     // ================ 조회 ================
     // 계좌 목록
     ipcMain.handle("transaction/listItem", async(event, param) => {
-      return this.list(param);
+      return await this.list(param);
     });
 
     // ================ 등록 ================
@@ -21,7 +21,7 @@ export default {
     ipcMain.handle("transaction/addItem", async(event, item) => {
       item.deleteF = false;
       const instance = await transaction.create(item);
-      this.applyAccount(item);
+      await this.applyAccount(item);
       return instance;
     });
 
@@ -37,8 +37,8 @@ export default {
     // ================ 삭제 ================
     ipcMain.handle("transaction/deleteItem", async(event, transactionSeq) => {
       const item = await transaction.findByPk(transactionSeq);
-      this.revertAccount(item);
-      item.destroy();
+      await this.revertAccount(item);
+      await item.destroy();
     });
 
   },
@@ -85,35 +85,37 @@ export default {
   async applyAccount(trans) {
     let money = trans.money;
     if (trans.kind == "INCOME") {
-      this.addAcount(trans.receiveAccount, money);
+      await this.addAcount(trans.receiveAccount, money);
     } else if (trans.kind == "SPENDING") {
-      this.subAcount(trans.payAccount, money);
+      await this.subAcount(trans.payAccount, money);
     } else if (trans.kind == "TRANSFER") {
-      this.subAcount(trans.payAccount, money + trans.fee);
-      this.addAcount(trans.receiveAccount, money);
+      await this.subAcount(trans.payAccount, money + trans.fee);
+      await this.addAcount(trans.receiveAccount, money);
     }
   },
   async revertAccount(trans) {
     let money = trans.money;
     if (trans.kind == "INCOME") {
-      this.subAcount(trans.receiveAccount, money);
+      await this.subAcount(trans.receiveAccount, money);
     } else if (trans.kind == "SPENDING") {
-      this.addAcount(trans.payAccount, money);
+      await this.addAcount(trans.payAccount, money);
     } else if (trans.kind == "TRANSFER") {
-      this.addAcount(trans.payAccount, money);
-      this.subAcount(trans.receiveAccount, money + trans.fee);
+      await this.addAcount(trans.payAccount, money);
+      await this.subAcount(trans.receiveAccount, money + trans.fee);
     }
   },
   async addAcount(accountSeq, money) {
     let acc = await account.findByPk(accountSeq);
-    acc.update({
-      balance: acc.balance + money,
-    });
+    console.log("addAcount.acc.balance :>> ", acc.balance);
+    acc.balance = acc.balance + money;
+    await acc.save();
+    console.log("addAcount.acc.balance :>> ", acc.balance);
   },
   async subAcount(accountSeq, money) {
     let acc = await account.findByPk(accountSeq);
-    acc.update({
-      balance: acc.balance - money,
-    });
+    console.log("subAcount.acc.balance :>> ", acc.balance);
+    acc.balance = acc.balance - money;
+    await acc.save();
+    console.log("subAcount.acc.balance :>> ", acc.balance);
   },
 };
