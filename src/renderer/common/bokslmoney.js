@@ -63,9 +63,7 @@ const TransactionMixin = {
       if (!confirm("삭제하시겠습니까?")) {
         return;
       }
-      // VueUtil.post("/transaction/delete.do", { itemSeq: item.transactionSeq, }, result => {
-      //   this.reload()
-      // })
+      ElectronUtil.invoke("transaction/deleteItem", item.transactionSeq, ()=>this.reload());
     },
     // 유형에 따른 UI 표현 속성값
     getKindAttr(kind) {
