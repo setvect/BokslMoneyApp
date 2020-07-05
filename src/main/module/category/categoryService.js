@@ -117,6 +117,10 @@ export default {
       name: {
         [Op.like]: `%${param.name}%`,
       },
+      // child만 가져옴
+      parentSeq: {
+        [Op.not]: 0,
+      },
     });
     let categorySeqMap = _.chain(categoryList).keyBy("categorySeq").mapValues(() => 1000).value();
     return categorySeqMap;

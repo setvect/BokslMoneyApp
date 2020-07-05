@@ -192,9 +192,9 @@ export default {
     "often": oftenComponent,
   },
   computed: {
-    ...mapGetters[
-      "accountList"
-    ],
+    ...mapGetters([
+      "categoryMap"
+    ]),
     itemLabel() {
       const ITEM_TYPE_LABEL = { INCOME: "수입", SPENDING: "지출", TRANSFER: "이체", };
       return ITEM_TYPE_LABEL[this.item.kind];
@@ -286,7 +286,7 @@ export default {
         }
       });
 
-      $("#addItem").off().on("shown.bs.modal", function() {
+      $("#addItem").off().on("shown.bs.modal", () =>{
         $("#memoField").focus();
       });
 
@@ -303,13 +303,17 @@ export default {
         },
         focus: () => false,
         select: (event, ui) => {
-          this.insertCategory(ui.item.parentCategory, ui.item);
+          let parentCategory = this.categoryMap[ui.item.parentSeq];
+          this.insertCategory(parentCategory, ui.item);
           return false;
         },
-      }).data("ui-autocomplete")._renderItem = function(ul, item) {
-
+      }).data("ui-autocomplete")._renderItem = (ul, item) =>{
+        console.log("item :>> ", item);
+        console.log("this.categoryMap :>> ", this.categoryMap);
+        let parentCategory = this.categoryMap[item.parentSeq];
+        console.log("parentCategory :>> ", parentCategory, item.parentSeq);
         return $("<li>")
-          .append("<div>" + item.parentCategory.name + " > " + item.name + "</div>")
+          .append("<div>" + parentCategory.name + " > " + item.name + "</div>")
           .appendTo(ul);
       };
     },
