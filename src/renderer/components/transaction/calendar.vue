@@ -44,15 +44,15 @@
                   <tbody>
                     <tr v-for="t in listSelectDayTransfer" :key="t.transactionSeq">
                       <td :style="{color:getKindAttr(t.kind).color}">{{kindMapValue(t.kind).title}}</td>
-                      <!-- <td>{{t.parentCategory.name}} > {{t.category.name}}</td> -->
+                      <td>{{t.category.parentSeq | categoryName}} > {{t.categorySeq | categoryName}}</td>
                       <td>{{t.note}}</td>
                       <td class="text-right">{{t.money | numberFormat}}</td>
                       <td>{{t.payAccount | accountName}}</td>
                       <td>{{t.receiveAccount | accountName}}</td>
                       <td class="text-center">
                         <div class="btn-group btn-group-xs">
-                          <button type="button" class="btn btn-success btn-xs" @click="editForm(t)">수정</button>
-                          <button type="button" class="btn btn-dark btn-xs" @click="deleteAction(t)">삭제</button>
+                          <button type="button" class="btn btn-success btn-sm" @click="editForm(t)">수정</button>
+                          <button type="button" class="btn btn-dark btn-sm" @click="deleteAction(t)">삭제</button>
                         </div>
                       </td>
                     </tr>
@@ -250,31 +250,6 @@ export default {
           };
         });
       });
-
-      // TODO
-      // 해당 월에 등록된 지출,수입,이체 항목 조회
-      // VueUtil.get("/transaction/listByMonth.json", { year: year, month: month, },
-      //   result => {
-      //     this.calendar.fullCalendar("removeEvents")
-      //     this.transactionList = result.data
-
-      //     let transactionSet = this.transactionList.map(t => {
-      //       return { date: moment(t.transactionDate).format("YYYY-MM-DD"), kind: t.kind, money: t.money, }
-      //     })
-      //     this.multiUpdate(transactionSet)
-
-      //     // 해당 월에 등록된 메모 조회
-      //     VueUtil.get("/memo/listByMonth.json", { year: year, month: month, },
-      //       result => {
-      //         this.memoList = result.data
-      //         for (let idx in this.memoList) {
-      //           let memo = this.memoList[idx]
-      //           this.displayMemo(memo)
-      //         }
-      //       }
-      //     )
-      //   }
-      // )
     },
     // 해당 날짜에 등록된 메모 항목 반환
     getMemo(date) {
@@ -344,14 +319,16 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("loadAcount").then(()=>{
-      this.initCalendar();
-      // 지출, 이체, 수입 버튼 클릭
-      $("._input").click(event => {
-        let type = $(event.target).attr("data-type");
-        this.addItemForm(type);
+    this.$store.dispatch("loadAcount")
+      .then(()=>this.$store.dispatch("loadCategory"))
+      .then(()=>{
+        this.initCalendar();
+        // 지출, 이체, 수입 버튼 클릭
+        $("._input").click(event => {
+          let type = $(event.target).attr("data-type");
+          this.addItemForm(type);
+        });
       });
-    });
   },
 };
 </script>

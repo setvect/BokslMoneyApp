@@ -1,11 +1,14 @@
+import _ from "lodash";
+
 const acount = {
   state: {
     accountList: [],
-    currentacountSeq: 0,
+    accountMap: {},
   },
   mutations: {
     setAcount: (state, accountList) => {
       state.accountList = accountList;
+      state.accountMap = _.keyBy(accountList, "accountSeq");
     },
   },
   actions: {

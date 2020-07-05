@@ -1,9 +1,7 @@
 import Vue from "vue";
 import moment from "moment";
 import CommonUtil from "./common-util.js";
-import { mapGetters } from "vuex";
 import store from "../store/index.js";
-import _ from "lodash";
 
 // 숫자 (,)콤마 추가
 Vue.filter("numberFormat", (value) => {
@@ -30,12 +28,20 @@ Vue.filter("dateFormat", (value, format) => {
 
 // 계좌 이름
 Vue.filter("accountName", function(accountSeq) {
-  let accountMap = _.keyBy(store.state.account.accountList, "accountSeq");
-  let account = accountMap[accountSeq];
+  let account = store.state.account.accountMap[accountSeq];
   if(account == null) {
     return null;
   }
   return account.name;
+});
+
+// 카테고리 이름
+Vue.filter("categoryName", function(categorySeq) {
+  let category = store.state.category.categoryMap[categorySeq];
+  if(category == null) {
+    return null;
+  }
+  return category.name;
 });
 
 // 목록 번호 계산. 내림차순(높은 번호 부터)으로 표시

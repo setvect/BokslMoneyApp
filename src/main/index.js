@@ -6,7 +6,7 @@ import menu from "./menu.js";
 import loginService from "./module/login/loginService.js";
 import codeService from "./module/code/codeService.js";
 import accountService from "./module/account/accountService.js";
-import categoryService from "./module/category/categorytService.js";
+import categoryService from "./module/category/categoryService.js";
 import transactionService from "./module/transaction/transactionService.js";
 import oftenUsedService from "./module/oftenUsed/oftenUsedService.js";
 import memoService from "./module/memo/memoService.js";

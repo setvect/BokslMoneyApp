@@ -4,7 +4,6 @@ import {
 import transaction from "../../model/transaction-vo.js";
 import account from "../../model/account-vo";
 import category from "../../model/category-vo.js";
-import categoryService from "../category/categorytService.js";
 import {
   Op
 } from "sequelize";
