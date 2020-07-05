@@ -43,6 +43,7 @@ const TransactionMixin = {
   methods: {
     // 거래내역 또는 메모 등록 폼
     addItemForm(type) {
+      console.log("type :>> ", type);
       if (type == "MEMO") {
         let memo = this.getMemo(this.selectDate);
         // 해당 날짜에 등록된 메모가 있다면 수정으로 없다면 새롭게 등록
@@ -59,7 +60,6 @@ const TransactionMixin = {
       var d = $.extend(true, {}, item);
       this.$refs.popupAdd.openEditForm(d);
     },
-    // eslint-disable-next-line no-unused-vars
     deleteAction(item) {
       if (!confirm("삭제하시겠습니까?")) {
         return;
@@ -81,26 +81,5 @@ const TransactionMixin = {
   },
 };
 
-/** 응용어플리케이션에 의존된 공통 기능 */
-let AppUtil = {};
-/**
- * 계좌 이름
- */
-AppUtil.getAccountName = function(accountSeq) {
-  if (AppUtil.accountMap == null) {
-    var v = $.ajax({
-      type: "GET",
-      url: CommonUtil.appendContextRoot("/account/mapName.json"),
-      async: false,
-    }).responseText;
-    AppUtil.accountMap = JSON.parse(v);
-  }
-  return AppUtil.accountMap[accountSeq];
-};
 
-// 계좌 이름
-Vue.filter("accountName", function(accountSeq) {
-  return AppUtil.getAccountName(accountSeq);
-});
-
-export { TransactionMixin, AppUtil, TYPE_VALUE };
+export { TransactionMixin, TYPE_VALUE };

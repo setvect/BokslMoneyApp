@@ -4,8 +4,8 @@ const acount = {
     currentacountSeq: 0,
   },
   mutations: {
-    setAcount: (state, acountList) => {
-      state.acountList = acountList;
+    setAcount: (state, accountList) => {
+      state.accountList = accountList;
     },
   },
   actions: {

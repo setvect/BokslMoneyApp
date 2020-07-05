@@ -3,6 +3,7 @@
 ### 메모
 
 ### 진행예정
+- NEW-20200706: TransactionMixin -> mixin 이동
 - NEW-20200706: 매뉴 뎁스 2->1로. 단축키 F1, F2, ... 이런식으로
 - NEW-20200705: AppUtil.getAccountName --> vuex 사용
 - NEW-20200628: category sequelize의 외래키 설정 이용해 parentCategory 가져오기

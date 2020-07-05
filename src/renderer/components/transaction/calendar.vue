@@ -44,11 +44,11 @@
                   <tbody>
                     <tr v-for="t in listSelectDayTransfer" :key="t.transactionSeq">
                       <td :style="{color:getKindAttr(t.kind).color}">{{kindMapValue(t.kind).title}}</td>
-                      <td>{{t.parentCategory.name}} > {{t.category.name}}</td>
+                      <!-- <td>{{t.parentCategory.name}} > {{t.category.name}}</td> -->
                       <td>{{t.note}}</td>
                       <td class="text-right">{{t.money | numberFormat}}</td>
-                      <!-- <td>{{t.payAccount | accountName}}</td>
-                      <td>{{t.receiveAccount | accountName}}</td> -->
+                      <td>{{t.payAccount | accountName}}</td>
+                      <td>{{t.receiveAccount | accountName}}</td>
                       <td class="text-center">
                         <div class="btn-group btn-group-xs">
                           <button type="button" class="btn btn-success btn-xs" @click="editForm(t)">수정</button>
@@ -114,18 +114,17 @@ import "fullcalendar/dist/fullcalendar.min.css";
 import "jquery-contextmenu";
 import "jquery-contextmenu/dist/jquery.contextMenu.css";
 
-import VueUtil from "../../common/vue-util.js";
 import CalendarUtil from "../../common/calendar-util.js";
 import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
 import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
-import { ipcRenderer } from "electron";
 import "../../common/vue-common.js";
+import { mapGetters } from "vuex";
 
 // vue 객체 생성
 export default {
+  name:"calender",
   mixins: [TransactionMixin],
-
   data: function() {
     return {
       calendar: null,
@@ -147,6 +146,9 @@ export default {
       });
       return r;
     },
+    ...mapGetters([
+      "accountList"
+    ]),
   },
   methods: {
     initCalendar() {
