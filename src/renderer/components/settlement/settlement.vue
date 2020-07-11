@@ -63,7 +63,6 @@
 import moment from "moment";
 
 import VueUtil from "../../common/vue-util.js";
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
 import "../../common/vue-common.js";
 import recordListComponent from "./recordList.vue";
 

@@ -115,15 +115,16 @@ import "jquery-contextmenu";
 import "jquery-contextmenu/dist/jquery.contextMenu.css";
 
 import CalendarUtil from "../../common/calendar-util.js";
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
+import transactionMixin from "../../components/transaction/transaction-mixin.js";
 import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
 import "../../common/vue-common.js";
+import typeValue from "../../common/bokslmoney.js";
 
 // vue 객체 생성
 export default {
   name:"calender",
-  mixins: [TransactionMixin],
+  mixins: [transactionMixin],
   data: function() {
     return {
       calendar: null,
@@ -171,7 +172,7 @@ export default {
         eventRender(event, element) {
           // 거래별 합산
           if (event.type) {
-            let t = TYPE_VALUE[event.type];
+            let t = typeValue[event.type];
             element.find(".fc-title").prepend("<i class='fa " + t.icon + "'></i>" + t.title + " : " + CommonUtil.toComma(event.cost));
           }
           // 메모
@@ -274,7 +275,7 @@ export default {
         tranDate["listGroupByDate"].forEach(tranKind => {
           let kind = tranKind["kind"];
           let money = tranKind["money"];
-          events.push({ type: kind, color: TYPE_VALUE[kind].color, cost: money, start: date, });
+          events.push({ type: kind, color: typeValue[kind].color, cost: money, start: date, });
         });
       });
       this.calendar.fullCalendar("addEventSource", events);
@@ -286,7 +287,7 @@ export default {
       );
     },
     kindMapValue(kind) {
-      return TYPE_VALUE[kind];
+      return typeValue[kind];
     },
     // 현재 보고 있는 달력 거래 내역 다시 읽기.
     reload() {

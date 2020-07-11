@@ -7,7 +7,6 @@
   memoService, transactionService
   transaction_date` BETWEEN '2020-06-30 15:00:00.000 +00:00' AND '2020-07-31 14:59:59.999 +00:00';
 
-- NEW-20200706: TransactionMixin -> mixin 이동
 - NEW-20200705: AppUtil.getAccountName --> vuex 사용
 - NEW-20200628: category sequelize의 외래키 설정 이용해 parentCategory 가져오기
 - PBM-20200522: 두번 연속 팝업창 오픈하면 팝업창 요소가 클릭안되는 문제 - 발생하는 조건을 모르겠음.
@@ -24,6 +23,7 @@
 - NEW-20200101: 통계
 
 ### 완료
+- NEW-20200706(20200711): TransactionMixin -> mixin 이동
 - NEW-20200706(20200711): 매뉴 뎁스 2->1로. 단축키 F1, F2, ... 이런식으로
 - NEW-20200101(20200705): 가계부 쓰기 - 달력
 - REF-20200522: 글로벌 이벤트 버스 사용하지 않기

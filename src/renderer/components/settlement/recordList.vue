@@ -58,13 +58,12 @@ import "datatables";
 import "datatables.net-buttons";
 import "datatables.net-buttons/js/buttons.html5.js";
 
-import VueUtil from "../../common/vue-util.js";
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
+import transactionMixin from "../../components/transaction/transaction-mixin.js";
 import "../../common/vue-common.js";
 
 // vue 객체 생성
 export default {
-  mixins: [TransactionMixin],
+  mixins: [transactionMixin],
   data: function() {
     return {
       // 검색 조건

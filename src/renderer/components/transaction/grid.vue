@@ -167,8 +167,7 @@ import "daterangepicker/daterangepicker.css";
 import "iCheck/icheck.js";
 import "iCheck/skins/all.css";
 
-import VueUtil from "../../common/vue-util.js";
-import { TransactionMixin, AppUtil, TYPE_VALUE } from "../../common/bokslmoney.js";
+import transactionMixin from "../../components/transaction/transaction-mixin.js";
 import itemAddComponent from "./transactionAdd.vue";
 import "../../common/vue-common.js";
 
@@ -177,7 +176,7 @@ moment.locale("ko");
 
 // vue 객체 생성
 export default {
-  mixins: [TransactionMixin],
+  mixins: [transactionMixin],
   data: function() {
     return {
       // 검색 조건
