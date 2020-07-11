@@ -15,7 +15,7 @@
 </template>
 <script type="text/javascript">
 import Chart from "chart.js";
-import typeValue from "../../common/bokslmoney.js";
+import { TYPE_VALUE } from "../../common/constant.js";
 
 export default {
   data() {
@@ -58,7 +58,7 @@ export default {
       // 월 목록
       let monthList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-      let dataset = $.map(typeValue, (value, key) => {
+      let dataset = $.map(TYPE_VALUE, (value, key) => {
         let data = monthList.map(m => {
           let monthData = this.kindGroupSum[m];
           if (!monthData) {

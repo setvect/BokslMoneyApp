@@ -1,4 +1,4 @@
-export default {
+const TYPE_VALUE = {
   SPENDING: {
     title: "지출",
     color: "#00bb33",
@@ -15,4 +15,7 @@ export default {
     icon: "fa-check-square-o",
   },
 };
+
+
+export { TYPE_VALUE };
 

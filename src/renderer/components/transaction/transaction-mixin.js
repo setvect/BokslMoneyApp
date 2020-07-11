@@ -2,7 +2,7 @@ import {
   mapGetters
 } from "vuex";
 import moment from "moment";
-import typeValue from "../../common/bokslmoney.js";
+import { TYPE_VALUE } from "../../common/constant.js";
 export default {
   data() {
     return {
@@ -62,7 +62,7 @@ export default {
     },
     // 유형에 따른 UI 표현 속성값
     getKindAttr(kind) {
-      return typeValue[kind];
+      return TYPE_VALUE[kind];
     },
     // 수입, 지출, 이체 합산
     sumCalculation(filterCondition) {
