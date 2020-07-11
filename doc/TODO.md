@@ -7,7 +7,7 @@
   memoService, transactionService
   transaction_date` BETWEEN '2020-06-30 15:00:00.000 +00:00' AND '2020-07-31 14:59:59.999 +00:00';
 
-- NEW-20200705: AppUtil.getAccountName --> vuex 사용
+- NEW-20200712: 매뉴 구조 표시 되게(상단 매뉴 사용 안함)
 - NEW-20200628: category sequelize의 외래키 설정 이용해 parentCategory 가져오기
 - PBM-20200522: 두번 연속 팝업창 오픈하면 팝업창 요소가 클릭안되는 문제 - 발생하는 조건을 모르겠음.
 - NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8
@@ -17,12 +17,12 @@
 - NEW-20200509: 샘플 데이터 입력
 - REF-20200507: vue-util.js 삭제
 - NEW-20200331: sequelize 외래키
-- NEW-20200101: 로그인
 - NEW-20200101: 가계부 쓰기 - 표
 - NEW-20200101: 결산
 - NEW-20200101: 통계
 
 ### 완료
+- NEW-20200101(20200712): 로그인
 - NEW-20200711: 불필요한 블럭 레이어 표시하지 않기
 - NEW-20200706(20200711): TransactionMixin -> mixin 이동
 - NEW-20200706(20200711): 매뉴 뎁스 2->1로. 단축키 F1, F2, ... 이런식으로
@@ -53,3 +53,4 @@
 ### 못함
 
 ### 안함
+- NEW-20200705: AppUtil.getAccountName --> vuex 사용

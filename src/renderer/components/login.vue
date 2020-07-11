@@ -40,19 +40,22 @@ export default {
   },
   methods: {
     loginProc() {
-
       ElectronUtil.invoke("checkLogin", this.form.password, loginSuccess => {
         if (!loginSuccess) {
-          alert("비밀번호 틀렸다.");
+          Swal.fire(
+            "비밀번호 틀렸다.",
+            "",
+            "warning"
+          );
           return;
         }
         this.$router.push({ name: "transaction-calendar", });
-      });
+      }, { waitMsg: false, });
     },
   },
   mounted() {
-    // TODO 로그인 페이지 통과. 향후 주석 해제
-    this.$router.push({ name: "transaction-calendar", });
+    // TODO 로그인 페이지 통과. 향후 아래 코드 제거
+    // this.$router.push({ name: "transaction-calendar", });
   },
 };
 </script>
