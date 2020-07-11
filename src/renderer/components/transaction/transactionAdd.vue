@@ -362,7 +362,7 @@ export default {
         this.item.category = result;
         this.item.parentCategory = result.parentCategory;
         this.insertCategory(this.item.parentCategory, this.item.category);
-      });
+      }, { waitDialog: false, });
     },
     // 자주쓰는 거래 팝업 열기
     // actionType: add, edit
