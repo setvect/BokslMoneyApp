@@ -14,7 +14,7 @@
                 <label class="col-form-label col-md-2">날짜:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <div class="col-sm-8" style="padding:0;">
-                    <input type="text" class="form-control has-feedback-left _datepicker" placeholder="First Name" readonly="readonly" v-model="item.transactionDate" v-once />
+                    <input v-model="item.transactionDate" v-once type="text" class="form-control has-feedback-left _datepicker" placeholder="First Name" readonly="readonly" />
                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                   </div>
                   <div class="col-sm-4" style="padding-left:4px;">

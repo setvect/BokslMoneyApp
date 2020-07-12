@@ -14,17 +14,17 @@
               <div class="form-inline">
                 <div class="form-group">
                   <label for="memo_field">메모:</label>
-                  <input type="text" class="form-control" id="memo_field" v-model="condition.note" @keyup.13="search()" />
+                  <input v-model="condition.note" type="text" class="form-control" id="memo_field" @keyup.13="search()" />
                 </div>
                 <div class="checkbox form-group" style="margin:0 10px">
                   <label>
-                    <input type="checkbox" value="SPENDING" class="flat" v-model="condition.kindTypeSet" /> 지출
+                    <input v-model="condition.kindTypeSet" type="checkbox" value="SPENDING" class="flat" /> 지출
                   </label>
                   <label>
-                    <input type="checkbox" value="INCOME" class="flat" v-model="condition.kindTypeSet" /> 수입
+                    <input v-model="condition.kindTypeSet" type="checkbox" value="INCOME" class="flat" /> 수입
                   </label>
                   <label>
-                    <input type="checkbox" value="TRANSFER" class="flat" v-model="condition.kindTypeSet" /> 이체
+                    <input v-model="condition.kindTypeSet" type="checkbox" value="TRANSFER" class="flat" /> 이체
                   </label>
                 </div>
                 <button type="button" class="btn btn-info" style="margin: 0" @click="search();">검색</button>
@@ -52,7 +52,7 @@
                     <td>{{idx + 1}}</td>
                     <td :style="{color:getKindAttr(item.kind).color}" style="font-weight: bold">{{getKindAttr(item.kind).title}}</td>
                     <td>{{item.note}}</td>
-                    <td>{{item.parentCategory.name}}</td>
+                    <td>{{categoryMap[item.category.parentSeq].name}}</td>
                     <td>{{item.category.name}}</td>
                     <td class="text-right">{{item.money | numberFormat}}</td>
                     <td class="text-right">{{item.fee | numberFormat}}</td>
@@ -61,8 +61,8 @@
                     <td>{{item.transactionDate | dateFormat('YYYY.MM.DD')}}</td>
                     <td class="text-center">
                       <div class="btn-group btn-group-xs">
-                        <button type="button" class="btn btn-success btn-xs" @click="editForm(item)">수정</button>
-                        <button type="button" class="btn btn-dark btn-xs" @click="deleteAction(item)">삭제</button>
+                        <button type="button" class="btn btn-success btn-sm" @click="editForm(item)">수정</button>
+                        <button type="button" class="btn btn-dark btn-sm" @click="deleteAction(item)">삭제</button>
                       </div>
                     </td>
                   </tr>
@@ -92,7 +92,7 @@
                   <div class="form-group row">
                     <label class="control-label col-sm-3" for="end_date">계좌:</label>
                     <div class="col-sm-9">
-                      <select class="form-control" v-model="condition.accountSeq" name="account">
+                      <select v-model="condition.accountSeq" class="form-control" name="account">
                         <option v-bind:value="0">== 전체 ==</option>
                         <option
                           v-for="account in accountList"
@@ -112,7 +112,7 @@
                   <div class="ln_solid" style="margin:10px 0;"></div>
                 </div>
                 <div>
-                  <h4>{{condition.from}} ~ {{condition.to}} 결산</h4>
+                  <h4>{{condition.from | dateFormat("YYYY-MM-DD")}} ~ {{condition.to | dateFormat("YYYY-MM-DD")}} 결산</h4>
                   <table class="table table-bordered">
                     <tbody>
                       <tr>
@@ -176,20 +176,18 @@ moment.locale("ko");
 
 // vue 객체 생성
 export default {
+  name:"grid",
   mixins: [transactionMixin],
   data: function() {
     return {
       // 검색 조건
       condition: {
         kindTypeSet: ["INCOME", "SPENDING", "TRANSFER"],
-        from: moment([NOW_DATE.getFullYear(), NOW_DATE.getMonth()]).format(
-          "YYYY-MM-DD"
-        ),
-        to: moment().format("YYYY-MM-DD"),
+        from: moment([NOW_DATE.getFullYear(), NOW_DATE.getMonth()]).toDate(),
+        to: moment().toDate(),
         note: "",
         accountSeq: 0,
       },
-      accountList: [],
       gridTable: null,
       // 정렬 조건 유지하기 위함
       order: [0, "asc"],
@@ -199,6 +197,20 @@ export default {
     add: itemAddComponent,
   },
   computed: {},
+  mounted() {
+    this.$store.dispatch("loadAcount")
+      .then(()=>this.$store.dispatch("loadCategory"))
+      .then(()=>this.$store.dispatch("loadCode"))
+      .then(()=>{
+        this.initUi();
+        this.loadTransaction();
+        // 지출, 이체, 수입 버튼 클릭
+        $("._input").click(event => {
+          let type = $(event.target).attr("data-type");
+          this.addItemForm(type);
+        });
+      });
+  },
   methods: {
     // UI 객체 초기화
     initUi() {
@@ -228,7 +240,7 @@ export default {
           startDate: this.condition.from,
         },
         from => {
-          this.condition.from = from.format("YYYY-MM-DD");
+          this.condition.from = from.toDate();
         }
       );
 
@@ -240,7 +252,7 @@ export default {
           startDate: this.condition.to,
         },
         to => {
-          this.condition.to = to.format("YYYY-MM-DD");
+          this.condition.to = to.toDate();
         }
       );
     },
@@ -287,18 +299,15 @@ export default {
     },
     // 거래내역 조회
     loadTransaction() {
-      // VueUtil.get(
-      //   "/transaction/listByRange.json",
-      //   this.condition,
-      //   result => {
-      //     this.destroyGrid()
-      //     this.transactionList = result.data
-      //     this.$nextTick(() => {
-      //       this.initGrid()
-      //     })
-      //   },
-      //   { paramParsing: true, }
-      // )
+      console.log("this.condition :>> ", this.condition);
+      ElectronUtil.invoke("transaction/listItem", this.condition, result=>{
+        console.log("result :>> ", result);
+        this.destroyGrid();
+        this.transactionList = result;
+        // this.$nextTick(() => {
+        //   this.initGrid();
+        // });
+      });
     },
     // 검색
     search() {
@@ -306,7 +315,7 @@ export default {
     },
     // 달 이동
     moveMonth(diff) {
-      let fromDate = moment(this.condition.from, "YYYY-MM-DD");
+      let fromDate = moment(this.condition.from);
       fromDate.add(diff, "months");
       if (diff == 0) {
         fromDate = moment();
@@ -316,8 +325,8 @@ export default {
       let toDate = fromDate.clone();
       toDate.add(1, "months").add(-1, "Days");
 
-      this.condition.from = fromDate.format("YYYY-MM-DD");
-      this.condition.to = toDate.format("YYYY-MM-DD");
+      this.condition.from = fromDate.toDate();
+      this.condition.to = toDate.toDate();
       this.initDatepicker();
       this.search();
     },
@@ -333,17 +342,6 @@ export default {
       // datatables에 있는 버튼 클릭
       $(".buttons-excel").trigger("click");
     },
-  },
-  mounted() {
-    this.initUi();
-    this.loadTransaction();
-    // TODO mapGetters 이요
-    this.loadAccount();
-    // 지출, 이체, 수입 버튼 클릭
-    $("._input").click(event => {
-      let type = $(event.target).attr("data-type");
-      this.addItemForm(type);
-    });
   },
 };
 </script>

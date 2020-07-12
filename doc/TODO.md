@@ -7,6 +7,7 @@
   memoService, transactionService
   transaction_date` BETWEEN '2020-06-30 15:00:00.000 +00:00' AND '2020-07-31 14:59:59.999 +00:00';
 
+- NEW-20200712: 계좌 정보 업데이트 반영하기 - vuex - accountList
 - NEW-20200712: 매뉴 구조 표시 되게(상단 매뉴 사용 안함)
 - NEW-20200628: category sequelize의 외래키 설정 이용해 parentCategory 가져오기
 - PBM-20200522: 두번 연속 팝업창 오픈하면 팝업창 요소가 클릭안되는 문제 - 발생하는 조건을 모르겠음.
