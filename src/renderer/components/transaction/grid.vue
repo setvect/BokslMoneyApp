@@ -150,7 +150,7 @@
       </div>
     </div>
     <div>
-      <add />
+      <add ref="popupAdd" />
     </div>
   </div>
 </template>
@@ -162,6 +162,8 @@ import "datatables/media/css/jquery.dataTables.css";
 import "datatables.net-buttons";
 import "datatables.net-buttons/js/dataTables.buttons.js";
 import "datatables.net-buttons/js/buttons.html5.js";
+
+
 import "daterangepicker";
 import "daterangepicker/daterangepicker.css";
 import "iCheck/icheck.js";
@@ -299,14 +301,12 @@ export default {
     },
     // 거래내역 조회
     loadTransaction() {
-      console.log("this.condition :>> ", this.condition);
       ElectronUtil.invoke("transaction/listItem", this.condition, result=>{
-        console.log("result :>> ", result);
         this.destroyGrid();
         this.transactionList = result;
-        // this.$nextTick(() => {
-        //   this.initGrid();
-        // });
+        this.$nextTick(() => {
+          this.initGrid();
+        });
       });
     },
     // 검색
@@ -330,16 +330,10 @@ export default {
       this.initDatepicker();
       this.search();
     },
-    // 계좌 목록
-    loadAccount() {
-      // TODO
-      // VueUtil.get("/account/list.json", {}, result => {
-      //   this.accountList = result.data
-      // })
-    },
     // 엑셀 다운로드
     exportExcel() {
       // datatables에 있는 버튼 클릭
+      // TODO 엑셀 다운로드
       $(".buttons-excel").trigger("click");
     },
   },

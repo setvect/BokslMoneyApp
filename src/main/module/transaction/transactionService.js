@@ -59,7 +59,11 @@ export default {
     }
 
     if (param.accountSeq) {
-      where["accountSeq"] = param.accountSeq;
+      where[Op.or] = [{
+        "payAccount": param.accountSeq,
+      }, {
+        "receiveAccount": param.accountSeq,
+      }];
     }
 
     if (param.kindTypeSet) {
