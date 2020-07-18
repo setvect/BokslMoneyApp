@@ -33,7 +33,6 @@
 </template>
 
 <script type="text/javascript">
-import VueUtil from "../../common/vue-util.js";
 
 export default {
   data() {

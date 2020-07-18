@@ -18,7 +18,6 @@
 import moment from "moment";
 import Chart from "chart.js";
 
-import VueUtil from "../../common/vue-util.js";
 
 export default {
   data() {

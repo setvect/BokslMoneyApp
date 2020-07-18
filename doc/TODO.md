@@ -14,15 +14,15 @@
 - NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8
 - NEW-20200512: 페이지 전체 최소 넓이 지정
 - NEW-20200512: bootstrap3으로 되어 있는 스타일을 bootstrap4로 변경(대규모 작업)
-- NEW-20200509: 마이그레이션
 - NEW-20200509: 샘플 데이터 입력
-- REF-20200507: vue-util.js 삭제
 - NEW-20200331: sequelize 외래키
 - NEW-20200101: 가계부 쓰기 - 표
 - NEW-20200101: 결산
 - NEW-20200101: 통계
 
 ### 완료
+- REF-20200507(20200718): vue-util.js 사용하는 부분 없애기
+- NEW-20200509(20200718): 마이그레이션(BokslMemoy 프로젝트에서 진행했음)
 - NEW-20200101(20200712): 로그인
 - NEW-20200711: 불필요한 블럭 레이어 표시하지 않기
 - NEW-20200706(20200711): TransactionMixin -> mixin 이동

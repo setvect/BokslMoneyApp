@@ -62,7 +62,6 @@
 <script type="text/javascript">
 import moment from "moment";
 
-import VueUtil from "../../common/vue-util.js";
 import "../../common/vue-common.js";
 import recordListComponent from "./recordList.vue";
 
