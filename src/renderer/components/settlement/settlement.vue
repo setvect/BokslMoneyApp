@@ -138,14 +138,18 @@ export default {
     },
     // 선택항목 거래 내역 조회
     // month: mement 객체
-    viewList(month, kind, categorySeq) {
+    viewList(month, kind, parentCategorySeq) {
       let from = month.clone();
       let to = month
         .clone()
         .add("month", 1)
         .add("second", -1);
 
-      this.$refs.recordListPopup.openForm(from, to, kind, categorySeq);
+      let subCategorySeqSet = null;
+      if(parentCategorySeq != 0) {
+        subCategorySeqSet = this.categoryList.filter(c=>c.parentSeq == parentCategorySeq).map(c=>c.categorySeq);
+      }
+      this.$refs.recordListPopup.openForm(from, to, kind, subCategorySeqSet);
     },
     // month: 0부터 시작,
     // categorySeq: 대분류 아이디
