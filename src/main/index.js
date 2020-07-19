@@ -9,6 +9,7 @@ import accountService from "./module/account/accountService.js";
 import categoryService from "./module/category/categoryService.js";
 import transactionService from "./module/transaction/transactionService.js";
 import oftenUsedService from "./module/oftenUsed/oftenUsedService.js";
+import settlement from "./module/settlement/settlementService.js";
 import memoService from "./module/memo/memoService.js";
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
@@ -97,6 +98,7 @@ accountService.init();
 categoryService.init();
 transactionService.init();
 oftenUsedService.init();
+settlement.init();
 memoService.init();
 
 app.on("ready", () => {

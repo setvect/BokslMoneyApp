@@ -16,12 +16,12 @@
                 <option :value="year" v-for="year in yearList" :key="year">{{year}}년</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-default" style="margin: 0" @click="runSettlement()">조회</button>
-            <button type="button" class="btn btn-success" style="margin: 0;float: right" @click="exportExcel();">내보내기(엑셀)</button>
+            <button type="submit" class="btn btn-secondary" style="margin: 0 10px;" @click="runSettlement()">조회</button>
+            <button type="button" class="btn btn-success ml-auto" style="margin: 0;float: right" @click="exportExcel();">내보내기(엑셀)</button>
           </div>
 
           <div class="col-md-12 col-sm-12 col-xs-12">
-            <table class="table jambo_table bulk_action table-bordered" id="grid">
+            <table ref="dataTable" class="table jambo_table bulk_action table-bordered">
               <thead>
                 <tr class="headings">
                   <th class="text-center">항목</th>
@@ -29,7 +29,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="spending in spendingList" :key="spending.categorySeq">
+                <tr v-for="spending in categorySpedingList" :key="spending.categorySeq">
                   <td>{{spending.name}}</td>
                   <td class="text-right" v-for="month in monthList" :key="month.valueOf()" @click="viewList(month, spending.kind, spending.categorySeq)">
                     {{getSpending(month.month(),
@@ -60,8 +60,11 @@
 </template>
 
 <script type="text/javascript">
-import moment from "moment";
+import {
+  mapGetters
+} from "vuex";
 
+import moment from "moment";
 import "../../common/vue-common.js";
 import recordListComponent from "./recordList.vue";
 
@@ -69,6 +72,7 @@ const currentYear = new Date().getFullYear();
 
 // vue 객체 생성
 export default {
+  name:"settlement",
   data: function() {
     return {
       spendingList: [],
@@ -83,6 +87,13 @@ export default {
     recordList: recordListComponent,
   },
   computed: {
+    ...mapGetters([
+      "categoryList"
+    ]),
+    // 상위 카테고리 중 지출항목망
+    categorySpedingList() {
+      return this.categoryList.filter(c=>c.parentSeq == 0 && c.kind == "SPENDING");
+    },
     yearList() {
       let years = [];
       let d = new Date();
@@ -108,61 +119,22 @@ export default {
       ];
     },
   },
-  methods: {
-    initGrid() {
-      this.gridTable = $("#grid").DataTable({
-        paging: false,
-        bInfo: false,
-        searching: false,
-        ordering: false,
-        dom: "Bfrtip",
-        buttons: [
-          {
-            extend: "excelHtml5",
-            title: "복슬머니 결산(" + this.yearChoice + ")",
-            customize: function(xlsx) {
-              var sheet = xlsx.xl.worksheets["sheet1.xml"];
-              $("row c", sheet).attr("s", "25");
-            },
-          }
-        ],
+  mounted() {
+    this.$store.dispatch("loadCategory")
+      .then(()=>{
+        this.runSettlement();
       });
-      // 엑셀 다운로드 button 감추기
-      $(".buttons-excel").hide();
-    },
-    destroyGrid() {
-      if (this.gridTable != null) {
-        this.gridTable.destroy();
-      }
-    },
-    // 리스트
-    listSpending() {
-      // let param = { kind: "SPENDING", parent: 0 };
-      // VueUtil.get("/category/list.json", param, result => {
-      // 	this.spendingList = result.data;
-      // });
-    },
+  },
+  methods: {
     // 결산
     runSettlement() {
       this.year = this.yearChoice;
-      // VueUtil.get(
-      // 	"/settlement/groupOfMonth.json",
-      // 	{ year: this.year, kind: "SPENDING" },
-      // 	result => {
-      // 		this.spendingGroupSum = result.data;
-      // 		VueUtil.get(
-      // 			"/settlement/groupKindOfMonth.json",
-      // 			{ year: this.year },
-      // 			result => {
-      // 				this.kindGroupSum = result.data;
-      // 				this.$nextTick(() => {
-      // 					this.destroyGrid();
-      // 					this.initGrid();
-      // 				});
-      // 			}
-      // 		);
-      // 	}
-      // );
+      ElectronUtil.invoke("settlement/groupOfMonth", { year: this.year, kind: "SPENDING", }, result=>{
+        this.spendingGroupSum = result;
+        ElectronUtil.invoke("settlement/groupKindOfMonth", { year: this.year, }, result =>{
+          this.kindGroupSum = result;
+        });
+      });
     },
     // 선택항목 거래 내역 조회
     // month: mement 객체
@@ -195,13 +167,19 @@ export default {
     },
     // 엑셀 다운로드
     exportExcel() {
-      // datatables에 있는 버튼 클릭
-      $(".buttons-excel").trigger("click");
+      let html = this.$refs.dataTable;
+      const htmlText = CommonUtil.replaceAll(html.outerHTML, "<table", "<table border='1'");
+      CommonUtil.download(htmlText, `결산(${this.year}).xls`, "text/html;encoding:utf-8");
     },
-  },
-  mounted() {
-    this.listSpending();
-    this.runSettlement();
   },
 };
 </script>
+
+<style>
+.info td {
+  background-color: #d9edf7;
+}
+.success td {
+  background-color: #dff0d8;
+}
+</style>

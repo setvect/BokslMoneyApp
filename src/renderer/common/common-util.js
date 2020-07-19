@@ -66,6 +66,10 @@ CommonUtil.destroyPage = function(selector) {
   }
 };
 
+CommonUtil.replaceAll = (text, org, dest) => {
+  return text.split(org).join(dest);
+};
+
 // 콤마
 CommonUtil.toComma = function(value) {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -178,10 +182,9 @@ CommonUtil.convertHtmlTable = function(data) {
   let head = true;
   const rows = data.map((arr) => {
     let fields = arr.map((item) => {
-      if(head) {
+      if (head) {
         return `<th>${CommonUtil.escapeHtml(item)}</th>`;
-      }
-      else{
+      } else {
         return `<td>${CommonUtil.escapeHtml(item)}</td>`;
       }
     }).join("");
