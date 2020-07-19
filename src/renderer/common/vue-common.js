@@ -1,5 +1,4 @@
 import Vue from "vue";
-import moment from "moment";
 import CommonUtil from "./common-util.js";
 import store from "../store/index.js";
 
@@ -14,16 +13,7 @@ Vue.filter("numberFormat", (value) => {
 // 날짜 포맷 변환
 // moment format pattern
 Vue.filter("dateFormat", (value, format) => {
-  if (moment.isMoment(value)) {
-    return value.format(format);
-  }
-  if (value instanceof Date) {
-    return moment(value).format(format);
-  }
-  if (!isNaN(value)) {
-    return moment(value).format(format);
-  }
-  return moment().format(format);
+  return CommonUtil.formatDate(value, format);
 });
 
 // 계좌 이름

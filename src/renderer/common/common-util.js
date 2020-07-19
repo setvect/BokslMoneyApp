@@ -1,3 +1,5 @@
+import moment from "moment";
+
 // 프로그램 전역적으로 사용하는 공통 함수
 var CommonUtil = {};
 
@@ -106,13 +108,26 @@ CommonUtil.escapeRegExp = function(str) {
 };
 
 CommonUtil.escapeHtml = function(str) {
-  str = str || "" ;
+  str = str || "";
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\\"/g, "&quot;");
 };
 
 CommonUtil.unescapeHtml = function(str) {
   str = str || "";
   return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"");
+};
+// format - moment 라이브러리 날짜 패턴(예: YYYY.MM.DD)
+CommonUtil.formatDate = (value, format) => {
+  if (moment.isMoment(value)) {
+    return value.format(format);
+  }
+  if (value instanceof Date) {
+    return moment(value).format(format);
+  }
+  if (!isNaN(value)) {
+    return moment(value).format(format);
+  }
+  return moment().format(format);
 };
 
 // content 내용을 다운로드
@@ -160,10 +175,17 @@ CommonUtil.convertCsv = function(data) {
 
 // 이차원 배열 값을 html table 형태로 변경(xls파일로 다운로드 받아 엑셀에서 열수 있게 하기 위함)
 CommonUtil.convertHtmlTable = function(data) {
+  let head = true;
   const rows = data.map((arr) => {
     let fields = arr.map((item) => {
-      return `<td>${CommonUtil.escapeHtml(item)}</td>`;
+      if(head) {
+        return `<th>${CommonUtil.escapeHtml(item)}</th>`;
+      }
+      else{
+        return `<td>${CommonUtil.escapeHtml(item)}</td>`;
+      }
     }).join("");
+    head = false;
     return `<tr>${fields}</tr>`;
   }).join("\n");
   return `<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><table border="1">${rows}</table>`;

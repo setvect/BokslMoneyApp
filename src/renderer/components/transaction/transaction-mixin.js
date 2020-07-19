@@ -14,6 +14,7 @@ export default {
   computed: {
     ...mapGetters([
       "accountList",
+      "accountMap",
       "categoryMap",
       "codeMap"
     ]),

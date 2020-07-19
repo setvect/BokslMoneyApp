@@ -270,12 +270,6 @@ export default {
             exportOptions: {
               columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             },
-            title:
-              "복슬머니(" + this.condition.from + "_" + this.condition.to + ")",
-            customize: function(xlsx) {
-              var sheet = xlsx.xl.worksheets["sheet1.xml"];
-              $("row c", sheet).attr("s", "25");
-            },
           }
         ],
       });
@@ -332,9 +326,30 @@ export default {
     },
     // 엑셀 다운로드
     exportExcel() {
-      // datatables에 있는 버튼 클릭
-      // TODO 엑셀 다운로드
-      $(".buttons-excel").trigger("click");
+      const csvData = [];
+      csvData.push(["유형", "메모", "대분류", "소분류", "금액", "수수료", "출금계좌", "입금계좌", "날짜"]);
+      this.transactionList.forEach(item => {
+        const record = [];
+        record.push(this.getKindAttr(item.kind).title);
+        record.push(item.note);
+        record.push(this.categoryMap[item.category.parentSeq].name);
+        record.push(item.category.name);
+        record.push(item.money.toLocaleString());
+        record.push(item.fee.toLocaleString());
+
+        let payAccount = this.accountMap[item.payAccount];
+        record.push(payAccount == null ? "" : payAccount.name);
+
+        let receiveAccount = this.accountMap[item.receiveAccount];
+        record.push(receiveAccount == null ? "" : receiveAccount.name);
+
+        record.push(CommonUtil.formatDate(item.transactionDate, "YYYY.MM.DD"));
+        csvData.push(record);
+      });
+      const csvString = CommonUtil.convertHtmlTable(csvData);
+      let fromLabel = CommonUtil.formatDate(this.condition.from, "YYYY.MM.DD");
+      let toLabel = CommonUtil.formatDate(this.condition.to, "YYYY.MM.DD");
+      CommonUtil.download(csvString, `거래 내역(${fromLabel}~${toLabel}).xls`, "text/html;encoding:utf-8");
     },
   },
 };
