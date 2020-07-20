@@ -54,7 +54,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-info" @click="openEditForm(item)">수정</button>
           <button type="button" class="btn btn-info" @click="deleteAction(item.accountSeq)">삭제</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
         </div>
       </div>
     </div>

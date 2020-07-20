@@ -7,7 +7,7 @@
           <option :value="year" v-for="year in yearList" :key="year">{{ year }}년</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-default" style="margin: 0" @click="runStat()">조회</button>
+      <button type="submit" class="btn btn-secondary" style="margin: 0 10px" @click="runStat()">조회</button>
     </div>
 
     <canvas id="kind_group_chart"></canvas>
@@ -40,16 +40,12 @@ export default {
     // 통계
     runStat() {
       this.year = this.yearChoice;
-      // VueUtil.get(
-      // 	"/settlement/groupKindOfMonth.json",
-      // 	{ year: this.year },
-      // 	result => {
-      // 		this.kindGroupSum = result.data;
-      // 		this.$nextTick(() => {
-      // 			this.drawChart();
-      // 		});
-      // 	}
-      // );
+      ElectronUtil.invoke("settlement/groupKindOfMonth", { year: this.year, }, result =>{
+        this.kindGroupSum = result;
+        this.$nextTick(() => {
+          this.drawChart();
+        });
+      });
     },
     drawChart() {
       if (this.chart) {

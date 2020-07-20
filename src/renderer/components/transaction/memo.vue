@@ -25,7 +25,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-info" @click="addAction()">저장</button>
           <button type="button" class="btn btn-warning" @click="deleteAction(item.memoSeq)" v-show="actionType == 'edit'">삭제</button>
-          <button type="button" class="btn btn-default" @click="close()">닫기</button>
+          <button type="button" class="btn btn-secondary" @click="close()">닫기</button>
         </div>
       </div>
     </div>

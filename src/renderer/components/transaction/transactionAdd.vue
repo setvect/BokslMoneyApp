@@ -144,7 +144,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-info" @click="addAction(true)" v-show="this.actionType == 'add'">계속입력</button>
           <button type="button" class="btn btn-info" @click="addAction(false)">저장</button>
-          <button type="button" class="btn btn-default" @click="close()">닫기</button>
+          <button type="button" class="btn btn-secondary" @click="close()">닫기</button>
         </div>
       </div>
     </div>

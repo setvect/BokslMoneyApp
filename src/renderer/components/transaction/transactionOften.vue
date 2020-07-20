@@ -25,7 +25,7 @@
                   <div class="input-group no-padding">
                     <input type="text" class="form-control" readonly="readonly" name="item" v-model="itemPath" v-validate="'required'" data-vv-as="항목 " />
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" @click="openCategoryList(item.kind)">선택</button>
+                      <button class="btn btn-secondary" type="button" @click="openCategoryList(item.kind)">선택</button>
                     </span>
                   </div>
                   <div v-if="errors.has('item')">
@@ -87,7 +87,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-info" @click="addAction()">저장</button>
-          <button type="button" class="btn btn-default" @click="close()">닫기</button>
+          <button type="button" class="btn btn-secondary" @click="close()">닫기</button>
         </div>
       </div>
     </div>

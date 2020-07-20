@@ -7,7 +7,7 @@
           <option :value="year" v-for="year in yearList" :key="year">{{year}}년</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-default" style="margin: 0" @click="runStat()">조회</button>
+      <button type="submit" class="btn btn-secondary" style="margin: 0" @click="runStat()">조회</button>
     </div>
 
     <canvas id="assets_chart"></canvas>

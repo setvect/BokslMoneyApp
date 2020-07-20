@@ -25,7 +25,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-info" @click="confirm()">저장</button>
-          <button type="button" class="btn btn-default" @click="close()">닫기</button>
+          <button type="button" class="btn btn-secondary" @click="close()">닫기</button>
         </div>
       </div>
     </div>
