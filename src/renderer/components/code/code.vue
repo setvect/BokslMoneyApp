@@ -1,5 +1,5 @@
 <template>
-  <div class id="app" v-cloak>
+  <div v-cloak>
     <div class="page-title">
       <div class="title_left" style="margin-bottom:15px;">
         <h3>코드관리</h3>
