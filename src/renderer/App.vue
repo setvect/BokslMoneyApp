@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -19,7 +17,6 @@ export default {
       code: "code",
     };
     ipcRenderer.on("movePage", (event, page, query) => {
-      console.log("movePage :", page, query);
       let pageName = pageMapping[page];
       if (pageName != null && this.$route.name != pageName) {
         this.$router.push({ name: pageName, query: query, });
@@ -30,6 +27,6 @@ export default {
 </script>
 
 <style>
-  /* CSS */
+/* CSS */
 </style>
 
