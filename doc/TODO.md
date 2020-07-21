@@ -3,6 +3,7 @@
 ### 메모
 
 ### 진행예정
+- NEW-20200721: 데이터가 아무것도 없는 경우 초기데이터 입력
 - NEW-20200719: 비밀번호 변경
 - PBM-20200706: GMT 계산 오류 확인해보기
   memoService, transactionService

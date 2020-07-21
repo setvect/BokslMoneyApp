@@ -7,9 +7,8 @@
           <option :value="year" v-for="year in yearList" :key="year">{{year}}년</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-secondary" style="margin: 0" @click="runStat()">조회</button>
+      <button type="submit" class="btn btn-secondary" style="margin: 0 10px" @click="runStat()">조회</button>
     </div>
-
     <canvas id="assets_chart"></canvas>
   </div>
 </template>
@@ -36,20 +35,14 @@ export default {
       }
       return years.reverse();
     },
-    monthList() {
-      return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    },
   },
   methods: {
     // 통계
     runStat() {
-      this.year = this.yearChoice;
-      let from = moment();
-      let month = this.fromMonth;
-      if (this.type == "year") {
-        month = 1;
-      }
-      let fromDate = moment([this.fromYear, 0, 1]);
+      ElectronUtil.invoke("settlement/statAssets", { fromYear: this.fromYear, }, result =>{
+        console.log("result :>> ", result);
+      });
+
       // VueUtil.get(
       // 	"/settlement/statAssets.json",
       // 	{ from: fromDate.valueOf() },

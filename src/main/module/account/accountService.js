@@ -1,4 +1,6 @@
-import { ipcMain } from "electron";
+import {
+  ipcMain
+} from "electron";
 import account from "../../model/account-vo";
 import codeService from "../code/codeService";
 
@@ -7,18 +9,7 @@ export default {
     // ================ 조회 ================
     // 계좌 목록
     ipcMain.handle("account/listItem", async() => {
-      const result = await account.findAll({
-        where: { deleteF: false, },
-        raw: true,
-      });
-
-      const codeMap = await codeService.getMappingCode("KIND_CODE");
-
-      result.forEach((item) => {
-        item.kindName = codeMap[item.kindCode].name;
-      });
-
-      return result;
+      return await this.listAccount();
     });
 
     // ================ 등록 ================
@@ -43,4 +34,18 @@ export default {
       await saveItem.save();
     });
   },
+  async listAccount() {
+    const result = await account.findAll({
+      where: {
+        deleteF: false,
+      },
+      raw: true,
+    });
+    const codeMap = await codeService.getMappingCode("KIND_CODE");
+    result.forEach((item) => {
+      item.kindName = codeMap[item.kindCode].name;
+    });
+    return result;
+  },
+
 };
