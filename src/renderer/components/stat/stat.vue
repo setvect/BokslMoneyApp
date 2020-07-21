@@ -19,10 +19,10 @@
               </li>
             </ul>
             <div class="tab-content">
-              <div class="container tab-pane active" id="tab_content1">
+              <div class="tab-pane active" style="margin:0 80px;" id="tab_content1">
                 <kind-group />
               </div>
-              <div class="container tab-pane fade" id="tab_content2">
+              <div class="tab-pane fade" style="margin:0 80px;" id="tab_content2">
                 <stat-assets />
               </div>
             </div>
