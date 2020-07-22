@@ -62,10 +62,30 @@ export default {
         replacements: { fromDate: fromDate, },
         type: QueryTypes.SELECT,
       });
-      console.log("records :>> ", records);
+      let dateByGroup = _.groupBy(records, "DATE");
+
+      let sumOfMonth = _.map(dateByGroup, (value, key)=>{
+        let monthType = _.chain(value)
+          .keyBy("kind")
+          .mapValues("MONEY")
+          .value();
+        let profit = monthType["INCOME"] - monthType["SPENDING"];
+
+        return { "DATE": new Date(key + "-01").getTime(), profit, };
+      });
+
       let allAcount = await accountService.listAccount();
-      const totalSum = _.sumBy(allAcount, "balance");
-      return [];
+      const totalAssets = _.sumBy(allAcount, "balance");
+
+      let rangeSum = _.sumBy(sumOfMonth, "profit");
+
+      let result = _.chain(sumOfMonth).keyBy("DATE").mapValues((v)=>{
+        rangeSum -= v.profit;
+        let diff = totalAssets - rangeSum;
+        return diff;
+      }).value();
+
+      return result;
     });
   },
   async getKindOfMonth(param) {

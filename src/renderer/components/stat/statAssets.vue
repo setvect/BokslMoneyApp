@@ -41,18 +41,11 @@ export default {
     runStat() {
       ElectronUtil.invoke("settlement/statAssets", { fromYear: this.fromYear, }, result =>{
         console.log("result :>> ", result);
+        this.accumulateOfMonth = result;
+        this.$nextTick(() => {
+          this.drawChart();
+        });
       });
-
-      // VueUtil.get(
-      // 	"/settlement/statAssets.json",
-      // 	{ from: fromDate.valueOf() },
-      // 	result => {
-      // 		this.accumulateOfMonth = result.data;
-      // 		this.$nextTick(() => {
-      // 			this.drawChart();
-      // 		});
-      // 	}
-      // );
     },
     drawChart() {
       if (this.chart) {
