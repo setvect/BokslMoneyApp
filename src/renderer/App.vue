@@ -5,12 +5,12 @@
         <div class="col-md-3 left_col">
           <left-menu />
         </div>
-        <top/>
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- Custom Theme Scripts -->
           <div id="app">
             <router-view></router-view>
+            <user-edit ref="userEdit" />
           </div>
         </div>
         <!-- /page content -->
@@ -21,15 +21,24 @@
 </template>
 
 <script>
+import { ipcRenderer } from "electron";
+import userEdit from "./components/user/loginUserEdit.vue";
 import leftMenu from "./components/include/menu.vue";
-import top from "./components/include/top.vue";
-
 export default {
   name: "bokslMoney",
   components:{
-    leftMenu, top,
+    userEdit, leftMenu,
   },
   mounted() {
+    ipcRenderer.on("changePassword", (event, page, query) => {
+      this.$refs.userEdit.openForm();
+    });
   },
 };
 </script>
+
+<style>
+/* CSS */
+</style>
+
+

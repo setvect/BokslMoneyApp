@@ -506,8 +506,8 @@ html , body{
  }
  .page-title {
      width: 100%;
-     height: 65px;
-     padding: 10px 0
+     height: 40px;
+     padding: 0
  }
  .page-title .title_left {
      width: 45%;

@@ -13,6 +13,12 @@ export default {
         },
       },
       {
+        label: "비밀번호 변경",
+        click(item, focusedWindow) {
+          focusedWindow.webContents.send("changePassword");
+        },
+      },
+      {
         role: "Help",
         submenu: [{
           label: "Reload",
@@ -28,7 +34,7 @@ export default {
           },
         },
         {
-          label: "Learn More",
+          label: "소스 보기",
           click() {
             require("electron").shell.openExternal(
               "https://github.com/setvect/BokslMoneyApp"
