@@ -9,6 +9,7 @@ import transactionService from "./module/transaction/transactionService.js";
 import oftenUsedService from "./module/oftenUsed/oftenUsedService.js";
 import settlement from "./module/settlement/settlementService.js";
 import memoService from "./module/memo/memoService.js";
+import userService from "./module/user/userService.js";
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
 import accountVo from "./model/account-vo.js";
@@ -18,6 +19,7 @@ import memoVo from "./model/memo-vo.js";
 import transactionVo from "./model/transaction-vo.js";
 import codeMainVo from "./model/codeMain-vo.js";
 import codeItemVo from "./model/codeItem-vo.js";
+import constant from "./constant.js";
 
 // 0. 디렉토리 생성
 util.makeDir("./db");
@@ -38,7 +40,7 @@ userVo
     const hash = util.encodeBcrypt("1234");
     // 기본 사용자 등록
     return userVo.create({
-      userId: "boksl",
+      userId: constant.USER_ID,
       name: "복슬이",
       password: hash,
       deleteF: false,
@@ -89,6 +91,7 @@ codeItemVo.sync().then(() => console.log("codeItem .."));
 
 // event init
 loginService.init();
+userService.init();
 codeService.init();
 accountService.init();
 categoryService.init();

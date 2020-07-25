@@ -57,9 +57,14 @@ export default {
       },
     },
     {
+      label: "비밀번호 변경",
+      click(item, focusedWindow) {
+        focusedWindow.webContents.send("changePassword");
+      },
+    },
+    {
       label: "새창",
       click() {
-        console.log("util :>> ", util);
         util.newInstanceWindow();
       },
     },
