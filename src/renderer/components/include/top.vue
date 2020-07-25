@@ -2,14 +2,9 @@
   <div class="top_nav">
     <div class="nav_menu">
       <nav>
-        <div class="nav toggle">
-          <a id="menu_toggle">
-            <i class="fa fa-bars"></i>
-          </a>
-        </div>
         <ul class="nav navbar-nav navbar-right" style="display:block">
           <li class="dropdown">
-            <a @click="changePassword()" href="javascript:void(0)" style="margin-right:20px;">
+            <a @click="toggle()" href="javascript:void(0)" style="margin-right:20px;">
               비밀번호 변경
               <i class="fa fa-edit"></i>
             </a>
@@ -41,6 +36,8 @@ export default {
   mounted() {
   },
   methods: {
+    toggle() {
+    },
     changePassword() {
       this.$refs.userEdit.openForm();
     },
