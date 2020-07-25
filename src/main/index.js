@@ -1,6 +1,4 @@
-import { app, BrowserWindow } from "electron";
-import path from "path";
-import { format as formatUrl } from "url";
+import { app } from "electron";
 import menu from "./menu.js";
 
 import loginService from "./module/login/loginService.js";
@@ -20,8 +18,6 @@ import memoVo from "./model/memo-vo.js";
 import transactionVo from "./model/transaction-vo.js";
 import codeMainVo from "./model/codeMain-vo.js";
 import codeItemVo from "./model/codeItem-vo.js";
-
-const isDevelopment = process.env.NODE_ENV !== "production";
 
 // 0. 디렉토리 생성
 util.makeDir("./db");
@@ -102,29 +98,7 @@ settlement.init();
 memoService.init();
 
 app.on("ready", () => {
-  let window = new BrowserWindow({
-    width: 1500,
-    height: 1200,
-    webPreferences: {
-      nodeIntegration: true,
-    },
-    // 개발자 도구를 엽니다.
-  });
-  if (isDevelopment) {
-    window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
-  } else {
-    window.loadURL(
-      formatUrl({
-        pathname: path.join(__dirname, "index.html"),
-        protocol: "file",
-        slashes: true,
-      })
-    );
-  }
-  window.on("closed", () => {
-    window = null;
-  });
-  window.webContents.openDevTools();
+  util.newInstanceWindow();
 });
 
 app.on("window-all-closed", () => {

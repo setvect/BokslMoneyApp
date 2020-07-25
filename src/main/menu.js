@@ -1,6 +1,7 @@
 import {
   Menu
 } from "electron";
+import util from "./util.js";
 
 export default {
   init() {
@@ -53,6 +54,13 @@ export default {
         focusedWindow.webContents.send("movePage", "code", {
           mainCode: "KIND_CODE",
         });
+      },
+    },
+    {
+      label: "새창",
+      click() {
+        console.log("util :>> ", util);
+        util.newInstanceWindow();
       },
     },
     {
