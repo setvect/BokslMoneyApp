@@ -871,7 +871,7 @@ html , body{
      width: 70px
  }
  .toggle a {
-     padding: 15px 15px 0;
+     padding: 0px 15px 0;
      margin: 0;
      cursor: pointer
  }
