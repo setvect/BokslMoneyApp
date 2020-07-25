@@ -22,7 +22,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in itemList" :key="item.codeItemSeq">
+                <tr v-for="(item, index) in itemList" :key="index">
                   <td>{{item.name}}</td>
                   <td>
                     <a href="javascript:" @click="changeOrder(itemList[index - 1].codeItemSeq, item.codeItemSeq)" :style="{visibility: isUpable(index) ? '' : 'hidden'}">
