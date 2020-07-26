@@ -47,5 +47,4 @@ export default {
     });
     return result;
   },
-
 };

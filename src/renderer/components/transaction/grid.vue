@@ -356,5 +356,10 @@ export default {
 </script>
 
 <style scoped>
-/* .form-inline label {display: inline-block !important; } */
+.checkbox label{
+  margin-right: 10px;
+}
+.form-inline{
+  margin-bottom: 5px;;
+}
 </style>

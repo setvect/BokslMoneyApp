@@ -24,6 +24,8 @@ import codeMainVo from "./model/codeMain-vo.js";
 import codeItemVo from "./model/codeItem-vo.js";
 import constant from "./constant.js";
 
+import initDataSet from "./initDataSet.js";
+
 log4js.configure({
   appenders: {
     boksl: {
@@ -39,86 +41,14 @@ log4js.configure({
   },
 });
 
-const logger = log4js.getLogger("boksl");
-
 // 0. 디렉토리 생성
 util.makeDir("./db");
 
 // 1. 윈도우 메뉴 초기화
 menu.init();
 
-// 2. DB 초기화
-userVo
-  .sync()
-  .then(() => {
-    return userVo.findAll();
-  })
-  .then((users) => {
-    if (users.length !== 0) {
-      return null;
-    }
-    const hash = util.encodeBcrypt("1234");
-    // 기본 사용자 등록
-    return userVo.create({
-      userId: constant.USER_ID,
-      name: "복슬이",
-      password: hash,
-      deleteF: false,
-    });
-  })
-  .catch(util.errorLog);
-
-accountVo.sync();
-categoryVo.sync();
-oftenUsedVo.sync();
-memoVo.sync();
-transactionVo.sync();
-codeMainVo
-  .sync()
-  .then(() => {
-    return codeMainVo.findAll();
-  })
-  .then((codeMain) => {
-    if (codeMain.length !== 0) {
-      return null;
-    }
-    // 기본 코드
-    return codeMainVo.bulkCreate([{
-      codeMainId: "KIND_CODE",
-      name: "자산유형",
-      deleteF: false,
-    },
-    {
-      codeMainId: "ATTR_SPENDING",
-      name: "지출속성",
-      deleteF: false,
-    },
-    {
-      codeMainId: "ATTR_TRANSFER",
-      name: "이체속성",
-      deleteF: false,
-    },
-    {
-      codeMainId: "ATTR_INCOME",
-      name: "수입속성",
-      deleteF: false,
-    }
-    ]);
-  });
-codeItemVo.sync();
-
-// event init
-loginService.init();
-userService.init();
-codeService.init();
-accountService.init();
-categoryService.init();
-transactionService.init();
-oftenUsedService.init();
-settlement.init();
-memoService.init();
-
-app.on("ready", () => {
+app.on("ready", async() => {
+  await init();
   util.newInstanceWindow();
 });
 
@@ -127,3 +57,61 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+/**
+ * DB 초기화
+ */
+async function init() {
+  await userVo.sync();
+  let users = await userVo.findAll();
+  if (users.length == 0) {
+    const hash = util.encodeBcrypt("1234");
+    // 기본 사용자 등록
+    userVo.create({
+      userId: constant.USER_ID,
+      name: "복슬이",
+      password: hash,
+      deleteF: false,
+    });
+  }
+
+  await codeMainVo.sync();
+  let codeMain = await codeMainVo.findAll();
+  if (codeMain.length == 0) {
+    await codeMainVo.bulkCreate(initDataSet.codeMain);
+  }
+
+  await codeItemVo.sync();
+  let codeItem = await codeItemVo.findAll();
+  if (codeItem.length == 0) {
+    await codeItemVo.bulkCreate(initDataSet.codeItem);
+  }
+
+  await categoryVo.sync();
+  let category = await categoryVo.findAll();
+
+  if (category.length == 0) {
+    categoryVo.bulkCreate(initDataSet.category);
+  }
+
+  await accountVo.sync();
+  let account = await accountVo.findAll();
+  if (account.length == 0) {
+    accountVo.bulkCreate(initDataSet.account);
+  }
+
+  oftenUsedVo.sync();
+  memoVo.sync();
+  transactionVo.sync();
+
+  // event init
+  loginService.init();
+  userService.init();
+  codeService.init();
+  accountService.init();
+  categoryService.init();
+  transactionService.init();
+  oftenUsedService.init();
+  settlement.init();
+  memoService.init();
+}
