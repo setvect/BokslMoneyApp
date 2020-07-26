@@ -3,12 +3,10 @@
 ### 메모
 
 ### 진행예정
+- NEW-20200726: electron 아이콘
 - NEW-20200721: 데이터가 아무것도 없는 경우 초기데이터 입력
-
-- NEW-20200628: category sequelize의 외래키 설정 이용해 parentCategory 가져오기
 - PBM-20200522: 두번 연속 팝업창 오픈하면 팝업창 요소가 클릭안되는 문제 - 발생하는 조건을 모르겠음.
 - NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8
-- NEW-20200331: sequelize 외래키
 
 ### 완료
 - NEW-20200725: 비밀번호 변경 이동
@@ -55,6 +53,9 @@
 - NEW-20200101: DB 설계
 
 ### 못함
+- NEW-20200628: category sequelize의 외래키 설정 이용해 parentCategory 가져오기
+- NEW-20200331: sequelize 외래키
+  - sequelize는 JPA는 아니다.
 
 ### 안함
 - PBM-20200706: GMT 계산 오류 확인해보기

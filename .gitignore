@@ -10,3 +10,4 @@ db/
 temp/
 thumbs.db
 !.gitkeep
+logs/*

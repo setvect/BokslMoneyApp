@@ -1,5 +1,8 @@
-import { app } from "electron";
+import {
+  app
+} from "electron";
 import menu from "./menu.js";
+import log4js from "log4js";
 
 import loginService from "./module/login/loginService.js";
 import codeService from "./module/code/codeService.js";
@@ -20,6 +23,23 @@ import transactionVo from "./model/transaction-vo.js";
 import codeMainVo from "./model/codeMain-vo.js";
 import codeItemVo from "./model/codeItem-vo.js";
 import constant from "./constant.js";
+
+log4js.configure({
+  appenders: {
+    boksl: {
+      type: "file",
+      filename: "./logs/bokslMoney.log",
+    },
+  },
+  categories: {
+    default: {
+      appenders: ["boksl"],
+      level: "info",
+    },
+  },
+});
+
+const logger = log4js.getLogger("boksl");
 
 // 0. 디렉토리 생성
 util.makeDir("./db");
@@ -48,11 +68,11 @@ userVo
   })
   .catch(util.errorLog);
 
-accountVo.sync().then(() => console.log("account .."));
-categoryVo.sync().then(() => console.log("category .."));
-oftenUsedVo.sync().then(() => console.log("oftenUsed .."));
-memoVo.sync().then(() => console.log("memo .."));
-transactionVo.sync().then(() => console.log("transaction .."));
+accountVo.sync();
+categoryVo.sync();
+oftenUsedVo.sync();
+memoVo.sync();
+transactionVo.sync();
 codeMainVo
   .sync()
   .then(() => {
@@ -63,31 +83,29 @@ codeMainVo
       return null;
     }
     // 기본 코드
-    return codeMainVo.bulkCreate([
-      {
-        codeMainId: "KIND_CODE",
-        name: "자산유형",
-        deleteF: false,
-      },
-      {
-        codeMainId: "ATTR_SPENDING",
-        name: "지출속성",
-        deleteF: false,
-      },
-      {
-        codeMainId: "ATTR_TRANSFER",
-        name: "이체속성",
-        deleteF: false,
-      },
-      {
-        codeMainId: "ATTR_INCOME",
-        name: "수입속성",
-        deleteF: false,
-      }
+    return codeMainVo.bulkCreate([{
+      codeMainId: "KIND_CODE",
+      name: "자산유형",
+      deleteF: false,
+    },
+    {
+      codeMainId: "ATTR_SPENDING",
+      name: "지출속성",
+      deleteF: false,
+    },
+    {
+      codeMainId: "ATTR_TRANSFER",
+      name: "이체속성",
+      deleteF: false,
+    },
+    {
+      codeMainId: "ATTR_INCOME",
+      name: "수입속성",
+      deleteF: false,
+    }
     ]);
-  })
-  .then(() => console.log("codeMain .."));
-codeItemVo.sync().then(() => console.log("codeItem .."));
+  });
+codeItemVo.sync();
 
 // event init
 loginService.init();

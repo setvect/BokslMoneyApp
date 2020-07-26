@@ -2,8 +2,10 @@ const SALT = 10;
 import path from "path";
 import { format as formatUrl } from "url";
 import { BrowserWindow } from "electron";
+import log4js from "log4js";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+const logger = log4js.getLogger("boksl");
 
 export default{
   newInstanceWindow() {
@@ -13,10 +15,13 @@ export default{
       webPreferences: {
         nodeIntegration: true,
       },
-      // 개발자 도구를 엽니다.
     });
+    logger.info(path.join(__dirname, "assets/icons/boksl-16.png"));
+    // window.setIcon(path.join(__dirname, "assets/icons/boksl-16.png"));
+
     if (isDevelopment) {
       window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
+      window.webContents.openDevTools();
     } else {
       window.loadURL(
         formatUrl({
@@ -29,7 +34,6 @@ export default{
     window.on("closed", () => {
       window = null;
     });
-    window.webContents.openDevTools();
   },
   makeDir(dir) {
     const fs = require("fs");

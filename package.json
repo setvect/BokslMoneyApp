@@ -48,6 +48,7 @@
     "jquery-ui": "^1.12.1",
     "jszip": "^3.3.0",
     "lodash": "^4.17.15",
+    "log4js": "^6.3.0",
     "moment": "^2.24.0",
     "moment-lunar": "0.0.4",
     "sequelize": "^5.21.7",
@@ -82,11 +83,14 @@
     "webpack": "^4.42.1"
   },
   "build": {
-    "appId": "com.myappid",
+    "appId": "boksl",
     "productName": "BokslMoney",
     "directories": {
       "output": "dist"
     },
+    "files": [
+      "./main/assets/**/*"
+    ],
     "target": "NSIS",
     "nsis": {
       "oneClick": false,
