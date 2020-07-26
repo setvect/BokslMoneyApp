@@ -84,13 +84,20 @@ export default {
   data: function() {
     return {
       item: {},
-      currentMainCode: "",
+      currentMainCode: "KIND_CODE",
       itemList: [],
       actionType: "",
       codeMain: {},
       formItem: {},
       mainCodeList: [],
     };
+  },
+  mounted() {
+    $("#addItem").off().on("shown.bs.modal", function() {
+      $("#nameField").focus();
+    });
+    this.loadCodeMain();
+    this.list();
   },
   methods: {
     // 리스트
@@ -178,18 +185,6 @@ export default {
       }
       return index + 1 !== this.itemList.length;
     },
-  },
-  created() {
-    let url = new URL(location.href);
-    this.currentMainCode = url.searchParams.get("currentMainCode");
-  },
-  mounted() {
-    $("#addItem").off().on("shown.bs.modal", function() {
-      $("#nameField").focus();
-    });
-    this.currentMainCode = this.$route.query.mainCode;
-    this.loadCodeMain();
-    this.list();
   },
 };
 </script>
