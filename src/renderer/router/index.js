@@ -4,13 +4,16 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      name: "login",
-      component: require("@/components/login.vue").default,
-    },
-    {
+  routes: [{
+    path: "/",
+    name: "login",
+    component: require("@/components/login.vue").default,
+  },
+  {
+    path: "/home",
+    name: "home",
+    component: require("@/components/home.vue").default,
+    children: [{
       path: "/main",
       name: "transaction-calendar",
       component: require("@/components/transaction/calendar.vue").default,
@@ -44,10 +47,12 @@ export default new Router({
       path: "/code",
       name: "code",
       component: require("@/components/code/code.vue").default,
-    },
-    {
-      path: "*",
-      redirect: "/",
     }
+    ],
+  },
+  {
+    path: "*",
+    redirect: "/",
+  }
   ],
 });
