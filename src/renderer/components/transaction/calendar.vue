@@ -210,10 +210,11 @@ export default {
           self.holiydayDisplay();
         },
       });
+      $.contextMenu("destroy", "#calendar");
       // 오른쪽 마우스 클릭
       $.contextMenu({
         selector: "#calendar",
-        callback: function(type, options) {
+        callback: (type, options) => {
           self.addItemForm(type);
         },
         items: {
