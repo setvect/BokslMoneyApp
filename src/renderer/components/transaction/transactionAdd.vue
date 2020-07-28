@@ -1,6 +1,6 @@
 <template>
   <div id="addItem" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -101,7 +101,7 @@
             </div>
             <div class="col-md-5 col-sm-5 col-xs-5">
               <p>자주 쓰는 거래</p>
-              <div style="height:285px;overflow: auto;">
+              <div style="height:380px;overflow: auto;">
                 <table class="table table-striped">
                   <colgroup>
                     <col style="width:30px;" />
