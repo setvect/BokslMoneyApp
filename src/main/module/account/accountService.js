@@ -39,6 +39,7 @@ export default {
       where: {
         deleteF: false,
       },
+      order: ["name"],
       raw: true,
     });
     const codeMap = await codeService.getMappingCode("KIND_CODE");

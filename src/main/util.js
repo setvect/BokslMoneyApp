@@ -10,7 +10,7 @@ const logger = log4js.getLogger("boksl");
 export default{
   newInstanceWindow() {
     let window = new BrowserWindow({
-      width: 1500,
+      width: 1900,
       height: 1200,
       webPreferences: {
         nodeIntegration: true,
