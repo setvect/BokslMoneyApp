@@ -3,6 +3,7 @@
 ### 메모
 
 ### 진행예정
+- NEW-20200730: 통계에 보기에서 `이체` 비활성화를 기본값으로
 - NEW-20200728: 종료 후 이전 화면 크기 유지한 상태에서 실행
 - NEW-20200726: electron 아이콘
 - NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8

@@ -65,7 +65,7 @@ async function init() {
   await userVo.sync();
   let users = await userVo.findAll();
   if (users.length == 0) {
-    const hash = util.encodeBcrypt("1234");
+    const hash = util.encodeBcrypt("boksl");
     // 기본 사용자 등록
     userVo.create({
       userId: constant.USER_ID,
