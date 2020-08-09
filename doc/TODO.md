@@ -1,8 +1,15 @@
 # 복슬포털 - TODO
 
 ### 메모
+패치
+```sql
+ALTER TABLE "BA_ACCOUNT"
+	ADD COLUMN "stock_f" TINYINT NOT NULL DEFAULT '0';
+```
+
 
 ### 진행예정
+- NEW-20200808: 주식 거래 기능
 - NEW-20200730: 통계에 보기에서 `이체` 비활성화를 기본값으로
 - NEW-20200728: 종료 후 이전 화면 크기 유지한 상태에서 실행
 - NEW-20200726: electron 아이콘

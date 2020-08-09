@@ -22,9 +22,12 @@ import memoVo from "./model/memo-vo.js";
 import transactionVo from "./model/transaction-vo.js";
 import codeMainVo from "./model/codeMain-vo.js";
 import codeItemVo from "./model/codeItem-vo.js";
+import stockVo from "./model/stock-vo.js";
+import trading from "./model/trading-vo.js";
 import constant from "./constant.js";
 
 import initDataSet from "./initDataSet.js";
+import tradingVo from "./model/trading-vo.js";
 
 log4js.configure({
   appenders: {
@@ -100,9 +103,11 @@ async function init() {
     accountVo.bulkCreate(initDataSet.account);
   }
 
-  oftenUsedVo.sync();
-  memoVo.sync();
-  transactionVo.sync();
+  await oftenUsedVo.sync();
+  await memoVo.sync();
+  await transactionVo.sync();
+  await stockVo.sync();
+  await tradingVo.sync();
 
   // event init
   loginService.init();

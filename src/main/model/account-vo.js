@@ -50,6 +50,10 @@ const accountVo = connSeque.define(
       type: DataTypes.STRING(1000),
       allowNull: true,
     },
+    stockF: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     deleteF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

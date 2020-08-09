@@ -24,6 +24,7 @@
           <th>계좌(카드)번호</th>
           <th>월 납입액</th>
           <th>만기일</th>
+          <th>주식계좌</th>
           <th>메모</th>
         </tr>
       </thead>
@@ -36,6 +37,7 @@
           <td>{{item.accountNumber}}</td>
           <td>{{item.monthlyPay}}</td>
           <td>{{item.expDate}}</td>
+          <td class="text-center">{{item.stockF ? "예" : "아니오"}}</td>
           <td class="td-ell">{{item.note}}</td>
         </tr>
       </tbody>

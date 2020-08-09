@@ -24,7 +24,10 @@
               </tr>
               <tr>
                 <th scope="row">자산종류</th>
-                <td>{{item.kindName}}</td>
+                <td>
+                  {{item.kindName}}
+                  <code v-if="item.stockF">O</code>
+                </td>
                 <th scope="row">잔고</th>
                 <td>{{item.balance | numberFormat}}</td>
               </tr>
