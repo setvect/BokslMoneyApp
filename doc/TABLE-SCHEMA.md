@@ -106,15 +106,16 @@
 
 - DA_STOCK: 주식
 
-| Column Name | Attribute Name | Key | Type    | Len  | Not Null | Description       |
-| ----------- | -------------- | --- | ------- | ---- | -------- | ----------------- |
-| STOCK_SEQ   | 일련번호       | PK  | integer |      | Y        |
-| ACCOUNT_SEQ | 연결 계좌      | FK  | integer |      | Y        | BA_ACCOUNT 외래키 |
-| NAME        | 이름           |     | varchar | 100  | Y        |
-| QUANTITY    | 수량           |     | integer |      | Y        |
-| LINK        | 상세정보 링크  |     | varchar | 200  |
-| NOTE        | 메모 내용      |     | varchar | 1000 |
-| DELETE_F    | 삭제 여부      |     | varchar | 1    | Y        |
+| Column Name     | Attribute Name | Key | Type    | Len  | Not Null | Description       |
+| --------------- | -------------- | --- | ------- | ---- | -------- | ----------------- |
+| STOCK_SEQ       | 일련번호       | PK  | integer |      | Y        |
+| ACCOUNT_SEQ     | 연결 계좌      | FK  | integer |      | Y        | BA_ACCOUNT 외래키 |
+| NAME            | 이름           |     | varchar | 100  | Y        |
+| QUANTITY        | 수량           |     | integer |      | Y        |
+| PURCHASE_AMOUNT | 구매금액       |     | integer |      | Y        |
+| LINK            | 상세정보 링크  |     | varchar | 200  |
+| NOTE            | 메모 내용      |     | varchar | 1000 |
+| DELETE_F        | 삭제 여부      |     | varchar | 1    | Y        |
 
 - DB_TRADING: 매매
 

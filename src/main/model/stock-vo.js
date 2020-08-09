@@ -1,6 +1,6 @@
 import connSeque from "./connSeque.js";
 import { DataTypes } from "sequelize";
-import transactionVo from "./transaction-vo.js";
+import accountVo from "./account-vo.js";
 
 const stockVo = connSeque.define(
   "stock",
@@ -20,6 +20,10 @@ const stockVo = connSeque.define(
       allowNull: false,
     },
     quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    purchaseAmount: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -45,5 +49,5 @@ const stockVo = connSeque.define(
   }
 );
 
-stockVo.belongsTo(transactionVo, { foreignKey: "accountSeq", });
+stockVo.belongsTo(accountVo, { foreignKey: "accountSeq", });
 export default stockVo;

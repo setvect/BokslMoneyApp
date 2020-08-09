@@ -60,3 +60,10 @@ table.dataTable{
 .fc-title{
   color:#fff
 }
+
+.btn-group-xs > .btn, .btn-xs {
+  padding: .4rem .4rem;
+  font-size: .775rem;
+  line-height: .5;
+  border-radius: .2rem;
+}

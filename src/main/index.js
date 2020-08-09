@@ -13,6 +13,8 @@ import oftenUsedService from "./module/oftenUsed/oftenUsedService.js";
 import settlement from "./module/settlement/settlementService.js";
 import memoService from "./module/memo/memoService.js";
 import userService from "./module/user/userService.js";
+import stockService from "./module/stock/stockService.js";
+
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
 import accountVo from "./model/account-vo.js";
@@ -23,7 +25,6 @@ import transactionVo from "./model/transaction-vo.js";
 import codeMainVo from "./model/codeMain-vo.js";
 import codeItemVo from "./model/codeItem-vo.js";
 import stockVo from "./model/stock-vo.js";
-import trading from "./model/trading-vo.js";
 import constant from "./constant.js";
 
 import initDataSet from "./initDataSet.js";
@@ -119,4 +120,5 @@ async function init() {
   oftenUsedService.init();
   settlement.init();
   memoService.init();
+  stockService.init();
 }

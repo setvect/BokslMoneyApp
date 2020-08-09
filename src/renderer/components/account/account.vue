@@ -18,6 +18,9 @@
           <div>
             <read ref="popupRead"/>
           </div>
+          <div>
+            <stock ref="stockAdd"/>
+          </div>
         </div>
       </div>
     </div>
@@ -27,6 +30,7 @@
 import listComponent from "./accountList.vue";
 import addComponent from "./accountAdd.vue";
 import readComponent from "./accountRead.vue";
+import stockComponent from "./stockAdd.vue";
 
 export default {
   data() {
@@ -37,6 +41,7 @@ export default {
     list: listComponent,
     add: addComponent,
     read: readComponent,
+    stock: stockComponent,
   },
   methods: {
   },

@@ -29,15 +29,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item) in itemList" :key="item.accountSeq" @click="readForm(item)" style="cursor: pointer">
+        <tr v-for="(item) in itemList" :key="item.accountSeq" style="cursor: pointer">
           <td>{{item.kindName}}</td>
-          <td>{{item.name}}</td>
+          <td>
+            <a @click="readForm(item)" href="javascript:void(0)">{{item.name}}</a>
+          </td>
           <td class="text-right">{{item.balance | numberFormat}}</td>
           <td>{{item.interestRate}}</td>
           <td>{{item.accountNumber}}</td>
           <td>{{item.monthlyPay}}</td>
           <td>{{item.expDate}}</td>
-          <td class="text-center">{{item.stockF ? "예" : "아니오"}}</td>
+          <td class="text-center">
+            {{item.stockF ? "예" : "아니오"}}
+            <button v-show="item.stockF" @click="addStock(item.accountSeq)" type="button" class="btn btn-success btn-xs">주식 등록</button>
+          </td>
           <td class="td-ell">{{item.note}}</td>
         </tr>
       </tbody>
@@ -136,6 +141,9 @@ export default {
     addForm() {
       this.$parent.$refs.popupAdd.openAddForm({});
     },
+    addStock(accountSeq) {
+      this.$parent.$refs.stockAdd.openAddForm({ accountSeq, });
+    },
     // 엑셀 다운로드
     exportExcel() {
       const csvData = [];
@@ -164,4 +172,7 @@ export default {
 </script>
 
 <style>
+table a {
+  text-decoration: underline;
+}
 </style>
