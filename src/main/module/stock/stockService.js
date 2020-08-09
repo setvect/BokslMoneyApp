@@ -8,6 +8,7 @@ export default {
     // ================ 조회 ================
     // 계좌 목록
     ipcMain.handle("stock/listItem", async(event, accountSeq) => {
+      console.log("accountSeq :>> ", accountSeq);
       return await this.listStock(accountSeq);
     });
 
@@ -39,14 +40,22 @@ export default {
    * @param {*} accountSeq 연결계좌
    */
   async listStock(accountSeq) {
-    const result = await stock.findAll({
-      where: {
+    let where = {
+      deleteF: false,
+    };
+    if (accountSeq != null) {
+      where = {
+        ...where,
         accountSeq,
-        deleteF: false,
-      },
+      };
+    }
+
+    const result = await stock.findAll({
+      where,
       order: ["name"],
       raw: true,
     });
+
     return result;
   },
 };

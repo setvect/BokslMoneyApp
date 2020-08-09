@@ -40,8 +40,8 @@
           <td>{{item.monthlyPay}}</td>
           <td>{{item.expDate}}</td>
           <td class="text-center">
-            {{item.stockF ? "예" : "아니오"}}
             <button v-show="item.stockF" @click="addStock(item.accountSeq)" type="button" class="btn btn-success btn-xs">주식 등록</button>
+            <button v-show="item.stockF" @click="openStockList(item.accountSeq)" type="button" class="btn btn-success btn-xs">목록 ({{item.stockList.length}})</button>
           </td>
           <td class="td-ell">{{item.note}}</td>
         </tr>
@@ -143,6 +143,9 @@ export default {
     },
     addStock(accountSeq) {
       this.$parent.$refs.stockAdd.openAddForm({ accountSeq, });
+    },
+    openStockList(accountSeq) {
+      this.$parent.$refs.stockList.openForm(accountSeq);
     },
     // 엑셀 다운로드
     exportExcel() {

@@ -10,16 +10,19 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div>
-            <list ref="pageList"/>
+            <list ref="pageList" />
           </div>
           <div>
             <add ref="popupAdd" />
           </div>
           <div>
-            <read ref="popupRead"/>
+            <read ref="popupRead" />
           </div>
           <div>
-            <stock ref="stockAdd"/>
+            <stock ref="stockAdd" />
+          </div>
+          <div>
+            <stock-list ref="stockList" />
           </div>
         </div>
       </div>
@@ -31,6 +34,7 @@ import listComponent from "./accountList.vue";
 import addComponent from "./accountAdd.vue";
 import readComponent from "./accountRead.vue";
 import stockComponent from "./stockAdd.vue";
+import stockListComponent from "./stockList.vue";
 
 export default {
   data() {
@@ -42,6 +46,7 @@ export default {
     add: addComponent,
     read: readComponent,
     stock: stockComponent,
+    stockList: stockListComponent,
   },
   methods: {
   },

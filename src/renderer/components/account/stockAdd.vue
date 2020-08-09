@@ -10,9 +10,9 @@
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group row">
-              <label class="control-label col-md-3 col-sm-3 col-xs-3">이름:</label>
+              <label class="control-label col-md-3 col-sm-3 col-xs-3">종목:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <input id="nameField" type="text" class="form-control" name="name" v-model="item.name" v-validate="'required|max:20'" data-vv-as="이름 " />
+                <input id="nameField" type="text" class="form-control" name="name" v-model="item.name" v-validate="'required|max:20'" data-vv-as="종목 " />
                 <span class="error" v-if="errors.has('name')">{{errors.first('name')}}</span>
               </div>
             </div>

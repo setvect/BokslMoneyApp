@@ -3,6 +3,7 @@ import {
 } from "electron";
 import account from "../../model/account-vo";
 import codeService from "../code/codeService";
+import stockService from "../stock/stockService.js";
 
 export default {
   init() {
@@ -35,17 +36,23 @@ export default {
     });
   },
   async listAccount() {
-    const result = await account.findAll({
+    const accountList = await account.findAll({
       where: {
         deleteF: false,
       },
       order: ["name"],
       raw: true,
     });
+    // 자산 종류
     const codeMap = await codeService.getMappingCode("KIND_CODE");
-    result.forEach((item) => {
-      item.kindName = codeMap[item.kindCode].name;
+    // 연결 주식 맵핑
+    let stockList = await stockService.listStock();
+
+    accountList.forEach((account) => {
+      account.kindName = codeMap[account.kindCode].name;
+      account.stockList = stockList.filter(s => s.accountSeq == account.accountSeq);
     });
-    return result;
+
+    return accountList;
   },
 };
