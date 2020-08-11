@@ -66,9 +66,11 @@ export default {
           label: value.title,
           backgroundColor: value.color,
           data: data,
+          hidden: key == "TRANSFER",
         };
         return item;
       });
+
       let barChartData = {
         labels: monthList.map(m => m + 1 + "월"),
         datasets: dataset,
