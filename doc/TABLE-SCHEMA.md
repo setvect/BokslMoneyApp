@@ -123,7 +123,10 @@
 | ------------ | -------------- | --- | ------- | --- | -------- | --------------- |
 | TRADING_SEQ  | 일련번호       | PK  | integer |     | Y        |
 | STOCK_SEQ    | 관련 주식      | FK  | integer |     | Y        | DA_STOCK 외래키 |
+| NOTE         | 메모 내용      |     | varchar | 100 | Y        |
 | KIND         | 유형           |     | varchar | 20  | Y        | BUYING, SELL    |
 | TRADING_DATE | 매매일         |     | date    |     | Y        |
 | PRICE        | 가격           |     | integer |     | Y        |
 | QUANTITY     | 수량           |     | integer |     | Y        |
+| TAX          | 세금           |     | integer |     | Y        |
+| FEES         | 수수료         |     | integer |     | Y        |

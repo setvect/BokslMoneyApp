@@ -18,6 +18,7 @@
                 <button type="button" data-type="SPENDING" class="btn btn-info _input">지출</button>
                 <button type="button" data-type="INCOME" class="btn btn-info _input">수입</button>
                 <button type="button" data-type="TRANSFER" class="btn btn-info _input">이체</button>
+                <button type="button" data-type="STOCK" class="btn btn-info _input">주식 매매</button>
                 <button type="button" data-type="MEMO" class="btn btn-warning _input">메모</button>
               </div>
               <div>
@@ -103,6 +104,9 @@
     <div>
       <memo ref="popupMemo" />
     </div>
+    <div>
+      <stock ref="stock"/>
+    </div>
   </div>
 </template>
 <script type="text/javascript">
@@ -118,6 +122,7 @@ import CalendarUtil from "../../common/calendar-util.js";
 import transactionMixin from "../../components/transaction/transaction-mixin.js";
 import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
+import stockComponent from "./transactionStock.vue";
 import "../../common/vue-common.js";
 import { TYPE_VALUE } from "../../common/constant.js";
 
@@ -135,6 +140,7 @@ export default {
   components: {
     add: itemAddComponent,
     memo: memoComponent,
+    stock: stockComponent,
   },
   computed: {
     // 선택된 날짜의 지출, 수입, 이체 내역

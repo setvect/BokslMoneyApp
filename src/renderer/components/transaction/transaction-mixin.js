@@ -2,7 +2,9 @@ import {
   mapGetters
 } from "vuex";
 import moment from "moment";
-import { TYPE_VALUE } from "../../common/constant.js";
+import {
+  TYPE_VALUE
+} from "../../common/constant.js";
 export default {
   data() {
     return {
@@ -47,6 +49,8 @@ export default {
         } else {
           this.$refs.popupMemo.openAddForm(this.selectDate);
         }
+      } else if (type == "STOCK") {
+        this.$refs.stock.openAddForm(this.selectDate);
       } else {
         this.$refs.popupAdd.openAddForm(type, this.selectDate);
       }
@@ -59,7 +63,7 @@ export default {
       if (!confirm("삭제하시겠습니까?")) {
         return;
       }
-      ElectronUtil.invoke("transaction/deleteItem", item.transactionSeq, ()=>this.reload());
+      ElectronUtil.invoke("transaction/deleteItem", item.transactionSeq, () => this.reload());
     },
     // 유형에 따른 UI 표현 속성값
     getKindAttr(kind) {
