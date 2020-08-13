@@ -26,12 +26,8 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">거래계좌:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <select class="form-control" v-model="item.receiveAccount" name="receiveAccount" v-validate="'required'" data-vv-as="거래 계좌 ">
-                    <option
-                      v-for="account in accountList"
-                      v-bind:value="account.accountSeq"
-                      :key="account.accountSeq"
-                    >{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
+                  <select class="form-control" v-model="tradingAccount" name="receiveAccount" v-validate="'required'" data-vv-as="거래 계좌 ">
+                    <option v-for="account in stockAccountList" v-bind:value="account" :key="account.accountSeq">{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
                   </select>
                   <span class="error" v-if="errors.has('receiveAccount')">{{errors.first('receiveAccount')}}</span>
                 </div>
@@ -48,7 +44,7 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">메모:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <input id="memoField" type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'required'" data-vv-as="메모 " />
+                  <input id="stockMemoField" type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'required'" data-vv-as="메모 " />
                   <span class="error" v-if="errors.has('note')">{{errors.first('note')}}</span>
                 </div>
               </div>
@@ -127,15 +123,27 @@ export default {
   data() {
     return {
       item: { price: 0, fee: 0, tax:0, quantity:0, kind: "BUYING", },
+      tradingAccount: null,
       actionType: "add",
       itemPath: null,
       selectDate: null,
       // 모달 창 닫을 시 부모 페이지를 리로딩 할 지 여부
       closeReload: false,
-      stockList:[],
     };
   },
+  mounted() {
+  },
   computed: {
+    stockAccountList() {
+      return this.accountList.filter(a=>a.stockF);
+    },
+    // 주식 항목
+    stockList() {
+      if(this.tradingAccount != null) {
+        return this.tradingAccount.stockList;
+      }
+      return [];
+    },
   },
   mixins:[transactionMixin],
   methods: {
@@ -170,6 +178,9 @@ export default {
     },
     // 계좌 입력 팝업창.
     openForm(kind) {
+      if (this.tradingAccount == null) {
+        this.tradingAccount = this.stockAccountList.length == 0 ? null : this.stockAccountList[0];
+      }
       this.item.kind = kind;
       this.loadOftenUsed();
       this.closeReload = false;
@@ -188,31 +199,9 @@ export default {
           this.$parent.reload();
         }
       }).on("shown.bs.modal", () =>{
-        $("#memoField").focus();
+        $("#stockMemoField").focus();
       });
-
       $("#stockAddFrom").modal();
-
-      // 메모 입력시 관련 카테고리 추천
-      $("._note").autocomplete({
-        source: (request, response) => {
-          let note = request.term;
-          ElectronUtil.invoke("/category/listRecommend", { note: note, kind: this.item.kind, }, (result) => {
-            response(result);
-          }, { waitDialog: false, });
-        },
-        focus: () => false,
-        select: (event, ui) => {
-          let parentCategory = this.categoryMap[ui.item.parentSeq];
-          this.insertCategory(parentCategory, ui.item);
-          return false;
-        },
-      }).data("ui-autocomplete")._renderItem = (ul, item) =>{
-        let parentCategory = this.categoryMap[item.parentSeq];
-        return $("<li>")
-          .append("<div>" + parentCategory.name + " > " + item.name + "</div>")
-          .appendTo(ul);
-      };
     },
     // 등록 또는 수정
     // cont. true: 연속입력, false: 입력후 모달 닫기
@@ -234,7 +223,7 @@ export default {
             this.item.note = "";
             this.item.money = "";
             // 포커스가 제대로 안되서 timeout 적용. $nextTick 안됨.
-            setTimeout(()=> $("#memoField").focus(), 100);
+            setTimeout(()=> $("#stockMemoField").focus(), 100);
           } else {
             $("#stockAddFrom").modal("hide");
           }
@@ -332,19 +321,6 @@ export default {
       }
       return index + 1 !== this.oftenUsedList.length;
     },
-  },
-  mounted() {
-  },
-  created() {
-    // 커스텀 validation
-    this.$validator.extend("notEquals", {
-      getMessage: function(field, args) {
-        return "같은 계좌를 지정할 수 없습니다.";
-      },
-      validate: function(value, args) {
-        return value != args[0];
-      },
-    });
   },
 };
 </script>
