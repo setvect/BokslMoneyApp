@@ -1,35 +1,35 @@
 import {
   ipcMain
 } from "electron";
-import stock from "../../model/stock-vo.js";
+import trading from "../../model/trading-vo.js";
 
 export default {
   init() {
     // ================ 조회 ================
     // 계좌 목록
-    ipcMain.handle("stock/listItem", async(event, accountSeq) => {
+    ipcMain.handle("trading/listItem", async(event, accountSeq) => {
       return await this.listStock(accountSeq);
     });
 
     // ================ 등록 ================
     // 계좌에 대한 계좌 항목 목록
 
-    ipcMain.handle("stock/addItem", async(event, item) => {
+    ipcMain.handle("trading/addItem", async(event, item) => {
       item.deleteF = false;
-      const instance = await stock.create(item);
+      const instance = await trading.create(item);
       return instance;
     });
 
     // ================ 수정 ================
     // 정보 수정
-    ipcMain.handle("stock/editItem", async(event, item) => {
-      const saveItem = await stock.findByPk(item.stockSeq);
+    ipcMain.handle("trading/editItem", async(event, item) => {
+      const saveItem = await trading.findByPk(item.tradingSeq);
       await saveItem.update(item);
     });
 
     // ================ 삭제 ================
-    ipcMain.handle("stock/deleteItem", async(event, stockSeq) => {
-      const saveItem = await stock.findByPk(stockSeq);
+    ipcMain.handle("trading/deleteItem", async(event, tradingSeq) => {
+      const saveItem = await trading.findByPk(tradingSeq);
       saveItem.deleteF = true;
       await saveItem.save();
     });
@@ -49,7 +49,7 @@ export default {
       };
     }
 
-    const result = await stock.findAll({
+    const result = await trading.findAll({
       where,
       order: ["name"],
       raw: true,

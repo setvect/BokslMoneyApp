@@ -14,6 +14,7 @@ import settlement from "./module/settlement/settlementService.js";
 import memoService from "./module/memo/memoService.js";
 import userService from "./module/user/userService.js";
 import stockService from "./module/stock/stockService.js";
+import tradingService from "./module/trading/tradingService.js";
 
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
@@ -121,4 +122,5 @@ async function init() {
   settlement.init();
   memoService.init();
   stockService.init();
+  tradingService.init();
 }

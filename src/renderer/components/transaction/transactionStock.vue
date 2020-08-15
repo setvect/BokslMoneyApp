@@ -36,7 +36,7 @@
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">종목:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <select class="form-control" v-model="item.stockSeq" name="stockSeq" v-validate="'required'" data-vv-as="종목 ">
-                    <option v-for="stock in stockList" v-bind:value="stock.accountSeq" :key="stock.accountSeq">{{stock.name}} : {{stock.quantity | numberFormat}}원 ({{stock.purchaseAmount}})</option>
+                    <option v-for="stock in stockList" v-bind:value="stock.stockSeq" :key="stock.accountSeq">{{stock.name}} : {{stock.quantity | numberFormat}}원 ({{stock.purchaseAmount}})</option>
                   </select>
                   <span class="error" v-if="errors.has('stockSeq')">{{errors.first('stockSeq')}}</span>
                 </div>
@@ -73,15 +73,6 @@
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <my-currency-input v-model="item.quantity" @press-enter="addAction(true)" class="form-control" name="quantity" maxlength="10" v-validate="'required'" data-vv-as="수량 "></my-currency-input>
                   <span class="error" v-if="errors.has('quantity')">{{errors.first('quantity')}}</span>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="control-label col-md-2 col-sm-2 col-xs-2">속성:</label>
-                <div class="col-md-10 col-sm-10 col-xs-10">
-                  <select class="form-control" v-model="item.attribute" name="attribute" v-validate="'required'" data-vv-as="속성 ">
-                    <option v-for="attribute in getAttributeList(item.kind)" :value="attribute.codeItemSeq" :key="attribute.codeItemSeq">{{attribute.name}}</option>
-                  </select>
-                  <span class="error" v-if="errors.has('attribute')">{{errors.first('attribute')}}</span>
                 </div>
               </div>
               <div class="form-group row">
@@ -122,7 +113,7 @@ export default {
   name:"transactionStock",
   data() {
     return {
-      item: { price: 0, fee: 0, tax:0, quantity:0, kind: "BUYING", },
+      item: { stockSeq:0, price: 0, fee: 0, tax:0, quantity:0, kind: "BUYING", },
       tradingAccount: null,
       actionType: "add",
       itemPath: null,
@@ -151,29 +142,26 @@ export default {
     openAddForm(date) {
       this.actionType = "add";
       this.selectDate = date;
-      this.insertCategory(this.item.parentCategory, this.item.category);
-      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
+      this.item.tradingDate = this.selectDate.format("YYYY-MM-DD");
       delete this.item.transactionSeq;
       this.openForm(this.item.kind);
     },
     // 수정 폼
     openEditForm(transaction) {
       this.actionType = "edit";
-      this.selectDate = moment(transaction.transactionDate);
+      this.selectDate = moment(transaction.tradingDate);
       this.item = transaction;
-      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
-      let parentCategory = this.categoryMap[transaction.category.parentSeq];
-      this.insertCategory(parentCategory, transaction.category);
+      this.item.tradingDate = this.selectDate.format("YYYY-MM-DD");
       this.openForm(this.item.kind);
     },
     // datepicker
     updateDate(d) {
-      this.item.transactionDate = d;
+      this.item.tradingDate = d;
     },
     // 현재 날짜 조정
     addDate(diff) {
       this.selectDate.add(diff, "days");
-      this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
+      this.item.tradingDate = this.selectDate.format("YYYY-MM-DD");
       $("._datepicker").data("daterangepicker").setStartDate(this.selectDate.format("YYYY-MM-DD"));
     },
     // 계좌 입력 팝업창.
@@ -191,7 +179,7 @@ export default {
         showDropdowns: true,
         startDate: this.selectDate.format("YYYY-MM-DD"),
       }, (start) => {
-        this.item.transactionDate = start.format("YYYY-MM-DD");
+        this.item.tradingDate = start.format("YYYY-MM-DD");
       });
       this.$validator.reset();
       $("#stockAddFrom").off().on("hidden.bs.modal", () => {
@@ -210,18 +198,18 @@ export default {
         if (!result) {
           return;
         }
-        this.beforeTransaction[this.item.kind] = $.extend(true, {}, this.item);
+        let actionName = this.actionType == "add" ? "trading/addItem" : "trading/editItem";
 
-        delete this.item.category;
-        delete this.item.parentCategory;
-
-        let actionName = this.actionType == "add" ? "transaction/stockAddFrom" : "transaction/editItem";
+        console.log("this.item :>> ", this.item);
 
         ElectronUtil.invoke(actionName, this.item, (result)=>{
           this.closeReload = true;
           if (cont && this.actionType == "add") {
             this.item.note = "";
-            this.item.money = "";
+            this.item.price = 0;
+            this.item.quantity = 0;
+            this.item.tax = 0;
+            this.item.fee = 0;
             // 포커스가 제대로 안되서 timeout 적용. $nextTick 안됨.
             setTimeout(()=> $("#stockMemoField").focus(), 100);
           } else {
@@ -238,88 +226,6 @@ export default {
       ElectronUtil.invoke("oftenUsed/listItem", this.item.kind, (result)=>{
         this.oftenUsedList = result;
       });
-    },
-    // 항목 선택 팝업.
-    openCategoryList(kind) {
-      this.$refs.popupCategory.openCategoryList(kind, this.insertCategory);
-    },
-    // 항목 팝업에서 선택한 값 입력
-    insertCategory(mainItem, subItem) {
-      this.itemPath = "";
-      if (mainItem) {
-        this.item.categorySeq = subItem.categorySeq;
-        this.itemPath = mainItem.name + " > " + subItem.name;
-      }
-    },
-    // 자주쓰는 거래 선택
-    selectOftenUsed(often) {
-      this.item = Object.assign(this.item, $.extend(true, {}, often));
-      if (this.item.money == 0) {
-        this.item.money = "";
-      }
-      ElectronUtil.invoke("category/getOne", this.item.categorySeq, (result)=>{
-        this.item.category = result;
-        this.item.parentCategory = result.parentCategory;
-        this.insertCategory(this.item.parentCategory, this.item.category);
-      }, { waitDialog: false, });
-    },
-    // 자주쓰는 거래 팝업 열기
-    // actionType: add, edit
-    // often: 거래 내역항목
-    openOften(actionType, often) {
-      this.$refs.popupOften.openForm(actionType, $.extend(true, {}, often));
-    },
-    // 자주 쓰는 거래 신규 등록
-    // 현재 입력한 값을 전달
-    openOftenAdd() {
-      let copyItem = $.extend(true, {}, this.item);
-      if (!copyItem.categorySeq) {
-        this.openOften("add", copyItem);
-        return;
-      }
-
-      ElectronUtil.invoke("category/getOne", this.item.categorySeq, (result)=>{
-        copyItem.category = result;
-        copyItem.parentCategory = result.parentCategory;
-        delete copyItem.oftenUsedSeq;
-        this.openOften("add", copyItem);
-      });
-    },
-    openOftenEdit(often) {
-      let copyItem = $.extend(true, {}, often);
-      ElectronUtil.invoke("category/getOne", copyItem.categorySeq, (result)=>{
-        copyItem.category = result;
-        copyItem.parentCategory = result.parentCategory;
-        this.openOften("edit", copyItem);
-      });
-    },
-    // 정렬 순서 변경
-    changeOrder(downOftenUsedSeq, upOftenUsedSeq) {
-      let param = { downOftenUsedSeq: downOftenUsedSeq, upOftenUsedSeq: upOftenUsedSeq, };
-      ElectronUtil.invoke("oftenUsed/changeOrder", param, ()=>{
-        this.loadOftenUsed();
-      });
-    },
-    // 자주 쓰는 거래 삭제
-    deleteOftenForm(oftenUsedSeq) {
-      if (!confirm("삭제할거야?")) {
-        return;
-      }
-      ElectronUtil.invoke("oftenUsed/deleteItem", oftenUsedSeq, ()=>{
-        this.loadOftenUsed();
-      });
-    },
-    isUpable(index) {
-      if (this.oftenUsedList <= 1) {
-        return false;
-      }
-      return index !== 0;
-    },
-    isDownable(index) {
-      if (this.oftenUsedList.length <= 1) {
-        return false;
-      }
-      return index + 1 !== this.oftenUsedList.length;
     },
   },
 };
