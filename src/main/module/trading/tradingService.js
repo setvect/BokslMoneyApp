@@ -52,13 +52,17 @@ export default {
 
     let condition = {
       where,
-      raw: true,
+      // raw: true,
       nest: true,
     };
     if (param.returnCount) {
       condition.limit = param.returnCount;
     }
     const result = await trading.findAll(condition);
-    return result;
+    // raw를 false로 하고 이렇게 해야 date 타입 값이 moment에 문제 없이 처리 된다.
+    const rtnValue = result.map(record => record.get({
+      plain: true,
+    }));
+    return rtnValue;
   },
 };

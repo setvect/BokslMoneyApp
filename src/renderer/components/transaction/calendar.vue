@@ -83,7 +83,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="t in listSelectDayTrading" :key="t.tradingSeq">
-                      <td :style="{color:getStockKindAttr(t.kind).color}">{{getStockKindAttr(t.kind).title}}</td>
+                      <td :style="{color:getKindAttr(t.kind).color}">{{getKindAttr(t.kind).title}}</td>
                       <td>{{t.note}}</td>
                       <td>{{t.stockSeq | stockName}}</td>
                       <td class="text-right">{{t.price | numberFormat}}</td>
@@ -164,7 +164,7 @@ import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
 import stockComponent from "./transactionStock.vue";
 import "../../common/vue-common.js";
-import { TYPE_VALUE, TRADING_VALUE } from "../../common/constant.js";
+import { TYPE_VALUE } from "../../common/constant.js";
 
 // vue 객체 생성
 export default {
@@ -239,6 +239,7 @@ export default {
         },
         // 이벤트를 달력 셀에 표시
         eventRender(event, element) {
+          console.log("event :>> ", event);
           // 거래별 합산
           if (event.type) {
             let t = TYPE_VALUE[event.type];
@@ -301,7 +302,16 @@ export default {
         let transactionSet = this.transactionList.map(t => {
           return { date: moment(t.transactionDate).format("YYYY-MM-DD"), kind: t.kind, money: t.money, };
         });
-        this.multiUpdate(transactionSet);
+        console.log("##################################################");
+        ElectronUtil.invoke("trading/listItem", { from: start.toDate(), to: end.toDate(), }, result=>{
+          this.tradingList = result;
+          let tradingSet = this.tradingList.map(t => {
+            return { date: moment(t.tradingDate).format("YYYY-MM-DD"), kind: t.kind, money: t.price * t.quantity, };
+          });
+          console.log("transactionSet :>> ", transactionSet, tradingSet);
+
+          this.multiUpdate(transactionSet, tradingSet);
+        });
 
         ElectronUtil.invoke("memo/listItem", { from: start.toDate(), to: end.toDate(), }, result => {
           this.memoList = result;
@@ -310,9 +320,6 @@ export default {
             this.displayMemo(memo);
           }
         });
-      });
-      ElectronUtil.invoke("trading/listItem", { from: start.toDate(), to: end.toDate(), }, result=>{
-        this.tradingList = result;
       });
 
     },
@@ -327,10 +334,11 @@ export default {
     },
     // 지출, 이체, 수입 항목 달력 셀에 표시 값 지정
     // 한꺼번에 등록(속도 향상을 위함 것임)
-    multiUpdate(transactionSet) {
+    multiUpdate(transactionSet, tradingSet) {
+      let dataSetMergeSet = transactionSet.concat(tradingSet);
       // debugger;
       // transactionSet
-      let transactionGroupDate = _.chain(transactionSet)
+      let dataGroupDate = _.chain(dataSetMergeSet)
         .groupBy("date")
         .map((listGroupByDate1, date) => {
           var listGroupByDate = _.map(listGroupByDate1, function(c) {
@@ -344,9 +352,9 @@ export default {
           return { listGroupByDate, date, };
         }).value();
       let events = [];
-      transactionGroupDate.forEach(tranDate => {
-        let date = tranDate["date"];
-        tranDate["listGroupByDate"].forEach(tranKind => {
+      dataGroupDate.forEach(dataDate => {
+        let date = dataDate["date"];
+        dataDate["listGroupByDate"].forEach(tranKind => {
           let kind = tranKind["kind"];
           let money = tranKind["money"];
           events.push({ type: kind, color: TYPE_VALUE[kind].color, cost: money, start: date, });
