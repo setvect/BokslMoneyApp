@@ -44,7 +44,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="t in listSelectDayTransfer" :key="t.transactionSeq">
-                      <td :style="{color:getKindAttr(t.kind).color}">{{kindMapValue(t.kind).title}}</td>
+                      <td :style="{color:getKindAttr(t.kind).color}">{{getKindAttr(t.kind).title}}</td>
                       <td>{{t.category.parentSeq | categoryName}} > {{t.categorySeq | categoryName}}</td>
                       <td>{{t.note}}</td>
                       <td class="text-right">{{t.money | numberFormat}}</td>
@@ -54,6 +54,45 @@
                         <div class="btn-group btn-group-xs">
                           <button type="button" class="btn btn-success btn-sm" @click="editForm(t)">수정</button>
                           <button type="button" class="btn btn-dark btn-sm" @click="deleteAction(t)">삭제</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h4>{{selectDate | dateFormat("YYYY년 MM월 DD일")}} 주식 거래</h4>
+                <table class="table table-bordered">
+                  <colgroup>
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="15%" />
+                    <col width="15%" />
+                    <col width="15%" />
+                  </colgroup>
+                  <thead>
+                    <th>유형</th>
+                    <th>내용</th>
+                    <th>종목</th>
+                    <th>단가</th>
+                    <th>수량</th>
+                    <th>거래계좌</th>
+                    <th>기능</th>
+                  </thead>
+                  <tbody>
+                    <tr v-for="t in listSelectDayTrading" :key="t.tradingSeq">
+                      <td :style="{color:getStockKindAttr(t.kind).color}">{{getStockKindAttr(t.kind).title}}</td>
+                      <td>{{t.note}}</td>
+                      <td>{{t.stockSeq}}</td>
+                      <td class="text-right">{{t.price | numberFormat}}</td>
+                      <td>{{t.quantity | numberFormat}}</td>
+                      <td>계좌</td>
+                      <td class="text-center">
+                        <div class="btn-group btn-group-xs">
+                          <button type="button" class="btn btn-success btn-sm" @click="editStockForm(t)">수정</button>
+                          <button type="button" class="btn btn-dark btn-sm" @click="deleteStockAction(t)">삭제</button>
                         </div>
                       </td>
                     </tr>
@@ -105,7 +144,7 @@
       <memo ref="popupMemo" />
     </div>
     <div>
-      <stock ref="stock"/>
+      <stock ref="stock" />
     </div>
   </div>
 </template>
@@ -120,16 +159,17 @@ import "jquery-contextmenu/dist/jquery.contextMenu.css";
 
 import CalendarUtil from "../../common/calendar-util.js";
 import transactionMixin from "../../components/transaction/transaction-mixin.js";
+import stockMixin from "../../components/transaction/stock-mixin.js";
 import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
 import stockComponent from "./transactionStock.vue";
 import "../../common/vue-common.js";
-import { TYPE_VALUE } from "../../common/constant.js";
+import { TYPE_VALUE, TRADING_VALUE } from "../../common/constant.js";
 
 // vue 객체 생성
 export default {
   name:"calender",
-  mixins: [transactionMixin],
+  mixins: [transactionMixin, stockMixin],
   data: function() {
     return {
       calendar: null,
@@ -148,6 +188,15 @@ export default {
       let r = this.transactionList.filter(t => {
         return (
           this.selectDate.toDate().getDate() == new Date(t.transactionDate).getDate()
+        );
+      });
+      return r;
+    },
+    // 선택된 날짜의 지출, 수입, 이체 내역
+    listSelectDayTrading() {
+      let r = this.tradingList.filter(t => {
+        return (
+          this.selectDate.toDate().getDate() == new Date(t.tradingDate).getDate()
         );
       });
       return r;
@@ -261,6 +310,10 @@ export default {
           }
         });
       });
+      ElectronUtil.invoke("trading/listItem", { from: start.toDate(), to: end.toDate(), }, result=>{
+        this.tradingList = result;
+      });
+
     },
     // 해당 날짜에 등록된 메모 항목 반환
     getMemo(date) {
@@ -305,9 +358,6 @@ export default {
       this.calendar.fullCalendar("renderEvent",
         { text: memo.note, color: "#aaa", start: moment(memo.memoDate).format("YYYY-MM-DD"), }
       );
-    },
-    kindMapValue(kind) {
-      return TYPE_VALUE[kind];
     },
     // 현재 보고 있는 달력 거래 내역 다시 읽기.
     reload() {

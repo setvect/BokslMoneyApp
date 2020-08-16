@@ -1,14 +1,17 @@
 import {
   ipcMain
 } from "electron";
+import {
+  Op
+} from "sequelize";
 import trading from "../../model/trading-vo.js";
 
 export default {
   init() {
     // ================ 조회 ================
     // 계좌 목록
-    ipcMain.handle("trading/listItem", async(event, accountSeq) => {
-      return await this.listStock(accountSeq);
+    ipcMain.handle("trading/listItem", async(event, param) => {
+      return await this.list(param);
     });
 
     // ================ 등록 ================
@@ -34,27 +37,28 @@ export default {
       await saveItem.save();
     });
   },
-  /**
-   *
-   * @param {*} accountSeq 연결계좌
-   */
-  async listStock(accountSeq) {
-    let where = {
-      deleteF: false,
-    };
-    if (accountSeq != null) {
-      where = {
-        ...where,
-        accountSeq,
+  async list(param) {
+    const where = {};
+    if (param.from && param.to) {
+      where["tradingDate"] = {
+        [Op.between]: [param.from, param.to],
+      };
+    }
+    if (param.note) {
+      where["note"] = {
+        [Op.like]: `%${param.note}%`,
       };
     }
 
-    const result = await trading.findAll({
+    let condition = {
       where,
-      order: ["name"],
       raw: true,
-    });
-
+      nest: true,
+    };
+    if (param.returnCount) {
+      condition.limit = param.returnCount;
+    }
+    const result = await trading.findAll(condition);
     return result;
   },
 };

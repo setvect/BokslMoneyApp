@@ -15,7 +15,19 @@ const TYPE_VALUE = {
     icon: "fa-check-square-o",
   },
 };
+const TRADING_VALUE = {
+  BUYING: {
+    title: "매수",
+    color: "#f51818",
+    icon: "fa-minus-square",
+  },
+  SELL: {
+    title: "매도",
+    color: "#1b61d1",
+    icon: "fa-plus-square",
+  },
+};
 
 
-export { TYPE_VALUE };
+export { TYPE_VALUE, TRADING_VALUE };
 
