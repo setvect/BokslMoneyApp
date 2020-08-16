@@ -25,6 +25,28 @@ Vue.filter("accountName", function(accountSeq) {
   return account.name;
 });
 
+// 주식 이름
+Vue.filter("stockName", function(stockSeq) {
+  let stock = store.state.stock.stockMap[stockSeq];
+  if(stock == null) {
+    return null;
+  }
+  return stock.name;
+});
+
+// 주식 연계 계좌
+Vue.filter("stockAccountName", function(stockSeq) {
+  let stock = store.state.stock.stockMap[stockSeq];
+  if(stock == null) {
+    return null;
+  }
+  let account = store.state.account.accountMap[stock.accountSeq];
+  if(account == null) {
+    return null;
+  }
+  return account.name;
+});
+
 // 카테고리 이름
 Vue.filter("categoryName", function(categorySeq) {
   let category = store.state.category.categoryMap[categorySeq];

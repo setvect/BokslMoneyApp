@@ -66,10 +66,10 @@
                   <colgroup>
                     <col width="10%" />
                     <col width="15%" />
-                    <col width="10%" />
                     <col width="15%" />
-                    <col width="15%" />
-                    <col width="15%" />
+                    <col width="13%" />
+                    <col width="13%" />
+                    <col width="19%" />
                     <col width="15%" />
                   </colgroup>
                   <thead>
@@ -85,10 +85,10 @@
                     <tr v-for="t in listSelectDayTrading" :key="t.tradingSeq">
                       <td :style="{color:getStockKindAttr(t.kind).color}">{{getStockKindAttr(t.kind).title}}</td>
                       <td>{{t.note}}</td>
-                      <td>{{t.stockSeq}}</td>
+                      <td>{{t.stockSeq | stockName}}</td>
                       <td class="text-right">{{t.price | numberFormat}}</td>
-                      <td>{{t.quantity | numberFormat}}</td>
-                      <td>계좌</td>
+                      <td class="text-right">{{t.quantity | numberFormat}}</td>
+                      <td>{{t.stockSeq | stockAccountName}}</td>
                       <td class="text-center">
                         <div class="btn-group btn-group-xs">
                           <button type="button" class="btn btn-success btn-sm" @click="editStockForm(t)">수정</button>
@@ -206,6 +206,7 @@ export default {
     this.$store.dispatch("loadAcount")
       .then(()=>this.$store.dispatch("loadCategory"))
       .then(()=>this.$store.dispatch("loadCode"))
+      .then(()=>this.$store.dispatch("loadStock"))
       .then(()=>{
         this.initCalendar();
         // 지출, 이체, 수입 버튼 클릭

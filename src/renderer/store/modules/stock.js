@@ -1,24 +1,24 @@
 import _ from "lodash";
 
-const account = {
+const stock = {
   state: {
-    accountList: [],
-    accountMap: {},
+    stockList: [],
+    stockMap: {},
   },
   mutations: {
-    setAcount: (state, accountList) => {
-      state.accountList = accountList;
-      state.accountMap = _.keyBy(accountList, "accountSeq");
+    setStock: (state, stockList) => {
+      state.stockList = stockList;
+      state.stockMap = _.keyBy(stockList, "stockSeq");
     },
   },
   actions: {
     // 제가 접속 가능한 프로젝트 목록
-    loadAcount({
+    loadStock({
       commit,
     }) {
       return new Promise((resolve, reject) => {
-        ElectronUtil.invoke("account/listItem", {}, result=>{
-          commit("setAcount", result);
+        ElectronUtil.invoke("stock/listItem", null, result=>{
+          commit("setStock", result);
           resolve();
         }, {
           errorCall: error => {
@@ -30,4 +30,4 @@ const account = {
   },
 };
 
-export default account;
+export default stock;

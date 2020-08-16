@@ -48,7 +48,8 @@ export default {
         accountSeq,
       };
     }
-
+    console.log("##########################");
+    console.log("where :>> ", where);
     const result = await stock.findAll({
       where,
       order: ["name"],
