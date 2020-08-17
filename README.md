@@ -11,29 +11,35 @@
 * 분류 및 각종 코드관리
 * 수입/지출/이체 내역 및 자산 변동 통계
 
-### Build Setup
+### 초기 셋팅
 
 ```bash
+# 사전 작업
+Start-Process powershell -Verb runAs
+# powershell 창 열런 상태에서 실행
+# 명령어 실행이 오래(10분 이상) 걸릴 수 있다.
+npm --add-python-to-path='true' --debug install --global windows-build-tools
+
+# 다시 일반 terminal에서 명렁이 실행
+npm run postinstall
+
 # install dependencies
 npm install
 
-# 프로그램 실행
-npm run postinstall # 최초 한번
-npm run start
-
-
-# 인스톨 파일 만들기(최초 한번)
-Start-Process powershell -Verb runAs
-npm --add-python-to-path='true' --debug install --global windows-build-tools
-
 #./dise/ 폴더에 실행파일 만들어짐.
 npm run build
-
 ```
 
 ### 개발 실행
 1. `npm start` 실행
 1. 로그인. 기본 비밀번호 `boksl`
+
+### 인스톨 버전 만들기
+
+```bash
+#./dise/ 폴더에 실행파일 만들어짐.
+npm run build
+```
 
 ---
 ## 주요화면
