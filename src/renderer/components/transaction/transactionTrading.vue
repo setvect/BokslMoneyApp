@@ -110,7 +110,7 @@ import "jquery-ui/themes/base/all.css";
 import transactionMixin from "./transaction-mixin.js";
 
 export default {
-  name:"transactionStock",
+  name:"transactionTrading",
   data() {
     return {
       item: { stockSeq:0, price: 0, fee: 0, tax:0, quantity:0, kind: "BUYING", },
@@ -143,16 +143,16 @@ export default {
       this.actionType = "add";
       this.selectDate = date;
       this.item.tradingDate = this.selectDate.format("YYYY-MM-DD");
-      delete this.item.transactionSeq;
-      this.openForm(this.item.kind);
+      delete this.item.tradingSeq;
+      this.openForm();
     },
     // 수정 폼
-    openEditForm(transaction) {
+    openEditForm(item) {
       this.actionType = "edit";
-      this.selectDate = moment(transaction.tradingDate);
-      this.item = transaction;
+      this.selectDate = moment(item.tradingDate);
+      this.item = item;
       this.item.tradingDate = this.selectDate.format("YYYY-MM-DD");
-      this.openForm(this.item.kind);
+      this.openForm();
     },
     // datepicker
     updateDate(d) {
@@ -165,11 +165,10 @@ export default {
       $("._datepicker").data("daterangepicker").setStartDate(this.selectDate.format("YYYY-MM-DD"));
     },
     // 계좌 입력 팝업창.
-    openForm(kind) {
+    openForm() {
       if (this.tradingAccount == null) {
         this.tradingAccount = this.stockAccountList.length == 0 ? null : this.stockAccountList[0];
       }
-      this.item.kind = kind;
       this.loadOftenUsed();
       this.closeReload = false;
 
@@ -199,8 +198,6 @@ export default {
           return;
         }
         let actionName = this.actionType == "add" ? "trading/addItem" : "trading/editItem";
-
-        console.log("this.item :>> ", this.item);
 
         ElectronUtil.invoke(actionName, this.item, (result)=>{
           this.closeReload = true;

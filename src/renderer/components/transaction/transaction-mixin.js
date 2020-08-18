@@ -50,7 +50,7 @@ export default {
           this.$refs.popupMemo.openAddForm(this.selectDate);
         }
       } else if (type == "STOCK") {
-        this.$refs.stock.openAddForm(this.selectDate);
+        this.$refs.trading.openAddForm(this.selectDate);
       } else {
         this.$refs.popupAdd.openAddForm(type, this.selectDate);
       }

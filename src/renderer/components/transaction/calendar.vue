@@ -91,8 +91,8 @@
                       <td>{{t.stockSeq | stockAccountName}}</td>
                       <td class="text-center">
                         <div class="btn-group btn-group-xs">
-                          <button type="button" class="btn btn-success btn-sm" @click="editStockForm(t)">수정</button>
-                          <button type="button" class="btn btn-dark btn-sm" @click="deleteStockAction(t)">삭제</button>
+                          <button type="button" class="btn btn-success btn-sm" @click="editTradingForm(t)">수정</button>
+                          <button type="button" class="btn btn-dark btn-sm" @click="deleteTradingAction(t)">삭제</button>
                         </div>
                       </td>
                     </tr>
@@ -144,7 +144,7 @@
       <memo ref="popupMemo" />
     </div>
     <div>
-      <stock ref="stock" />
+      <trading ref="trading" />
     </div>
   </div>
 </template>
@@ -159,17 +159,17 @@ import "jquery-contextmenu/dist/jquery.contextMenu.css";
 
 import CalendarUtil from "../../common/calendar-util.js";
 import transactionMixin from "../../components/transaction/transaction-mixin.js";
-import stockMixin from "../../components/transaction/stock-mixin.js";
+import tradingMixin from "../../components/transaction/trading-mixin.js";
 import memoComponent from "./memo.vue";
 import itemAddComponent from "./transactionAdd.vue";
-import stockComponent from "./transactionStock.vue";
+import tradingComponent from "./transactionTrading.vue";
 import "../../common/vue-common.js";
 import { TYPE_VALUE } from "../../common/constant.js";
 
 // vue 객체 생성
 export default {
   name:"calender",
-  mixins: [transactionMixin, stockMixin],
+  mixins: [transactionMixin, tradingMixin],
   data: function() {
     return {
       calendar: null,
@@ -180,7 +180,7 @@ export default {
   components: {
     add: itemAddComponent,
     memo: memoComponent,
-    stock: stockComponent,
+    trading: tradingComponent,
   },
   computed: {
     // 선택된 날짜의 지출, 수입, 이체 내역
@@ -239,7 +239,6 @@ export default {
         },
         // 이벤트를 달력 셀에 표시
         eventRender(event, element) {
-          console.log("event :>> ", event);
           // 거래별 합산
           if (event.type) {
             let t = TYPE_VALUE[event.type];
@@ -278,6 +277,7 @@ export default {
           SPENDING: { name: "지출", icon: "fa-minus-square", },
           INCOME: { name: "수입", icon: "fa-check-square-o", },
           TRANSFER: { name: "이체", icon: "fa-plus-square", },
+          STOCK: { name: "주식 매매", icon: "fa-line-chart", },
           MEMO: { name: "메모", icon: "fa-sticky-note-o", },
         },
       });
@@ -302,13 +302,11 @@ export default {
         let transactionSet = this.transactionList.map(t => {
           return { date: moment(t.transactionDate).format("YYYY-MM-DD"), kind: t.kind, money: t.money, };
         });
-        console.log("##################################################");
         ElectronUtil.invoke("trading/listItem", { from: start.toDate(), to: end.toDate(), }, result=>{
           this.tradingList = result;
           let tradingSet = this.tradingList.map(t => {
             return { date: moment(t.tradingDate).format("YYYY-MM-DD"), kind: t.kind, money: t.price * t.quantity, };
           });
-          console.log("transactionSet :>> ", transactionSet, tradingSet);
 
           this.multiUpdate(transactionSet, tradingSet);
         });

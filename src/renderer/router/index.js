@@ -24,6 +24,11 @@ export default new Router({
       component: require("@/components/transaction/grid.vue").default,
     },
     {
+      path: "/stock",
+      name: "transaction-stock",
+      component: require("@/components/transaction/tradingGrid.vue").default,
+    },
+    {
       path: "/settlement",
       name: "settlement",
       component: require("@/components/settlement/settlement.vue").default,

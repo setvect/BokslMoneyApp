@@ -17,7 +17,7 @@ import { ipcRenderer } from "electron";
 import userEdit from "./user/loginUserEdit.vue";
 import leftMenu from "./include/menu.vue";
 export default {
-  name: "bokslMoney",
+  name: "home",
   components:{
     userEdit, leftMenu,
   },

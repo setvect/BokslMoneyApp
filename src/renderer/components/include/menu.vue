@@ -21,6 +21,11 @@
               <i class="fa fa-th"></i> 가계부 쓰기(표)
             </router-link>
           </li>
+          <li :class="{'active': currentName == 'transaction-stock'}">
+            <router-link :to="{name: 'transaction-stock'}">
+              <i class="fa fa-line-chart"></i> 주식 매매
+            </router-link>
+          </li>
           <li :class="{'active': currentName == 'settlement'}">
             <router-link :to="{name: 'settlement'}">
               <i class="fa fa-database"></i> 결산
