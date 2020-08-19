@@ -27,14 +27,15 @@ export default {
     // 정보 수정
     ipcMain.handle("trading/editItem", async(event, item) => {
       const saveItem = await trading.findByPk(item.tradingSeq);
+      await this.revertStock(item);
       await saveItem.update(item);
     });
 
     // ================ 삭제 ================
     ipcMain.handle("trading/deleteItem", async(event, tradingSeq) => {
-      const saveItem = await trading.findByPk(tradingSeq);
-      saveItem.deleteF = true;
-      await saveItem.save();
+      const item = await trading.findByPk(tradingSeq);
+      await this.revertStock(item);
+      await item.destroy();
     });
   },
   async list(param) {
@@ -64,5 +65,24 @@ export default {
       plain: true,
     }));
     return rtnValue;
+  },
+  async revertStock(trading) {
+    console.log("revertStock - trading :>> ", trading);
+    let money = trading.money;
+    if (trading.kind == "BUYING") {
+      // await this.subStock(trading.receiveAccount, money);
+    } else if (trading.kind == "SELL") {
+      // await this.addStock(trading.payAccount, money);
+    }
+  },
+  async addStock(tradingSeq, money) {
+    let acc = await trading.findByPk(tradingSeq);
+    // acc.balance = acc.balance + money;
+    // await acc.save();
+  },
+  async subStock(tradingSeq, money) {
+    let acc = await trading.findByPk(tradingSeq);
+    // acc.balance = acc.balance - money;
+    // await acc.save();
   },
 };

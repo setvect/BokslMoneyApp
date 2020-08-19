@@ -129,6 +129,18 @@
                       </td>
                       <td class="text-right">{{sumTransfer | numberFormat}}</td>
                     </tr>
+                    <tr>
+                      <td>
+                        <span :style="{color:getKindAttr('BUYING').color}" style="line-height: normal ">매수</span>
+                      </td>
+                      <td class="text-right">{{sumBuying | numberFormat}}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span :style="{color:getKindAttr('SELL').color}" style="line-height: normal ">매도</span>
+                      </td>
+                      <td class="text-right">{{sumSell | numberFormat}}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
