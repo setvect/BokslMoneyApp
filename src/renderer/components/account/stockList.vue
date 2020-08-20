@@ -17,6 +17,7 @@
                 <th>구매금액</th>
                 <th>종목상세</th>
                 <th>메모</th>
+                <th>기능</th>
               </tr>
             </thead>
             <tbody>
@@ -29,6 +30,12 @@
                   <a v-if="item.link" @click="openBrowser(item.link)" style="cursor:pointer" target="_blank">링크</a>
                 </td>
                 <td>{{item.note }}</td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-xs">
+                    <button type="button" class="btn btn-success btn-sm" @click="openEditForm(item)">수정</button>
+                    <button type="button" class="btn btn-dark btn-sm" @click="deleteAction(item)">삭제</button>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -81,8 +88,19 @@ export default {
       const htmlText = CommonUtil.replaceAll(html.outerHTML, "<table", "<table border='1'");
       CommonUtil.download(htmlText, "주식목록.xls", "text/html;encoding:utf-8");
     },
+    openEditForm(item) {
+      $("#stockListModal").modal("hide");
+      this.$parent.$refs.stockAdd.openEditForm(item);
+    },
+    deleteAction(item) {
+      if (!confirm("삭제?")) {
+        return;
+      }
+      ElectronUtil.invoke("stock/deleteItem", item.stockSeq, () => {
+        this.loadStock(item.accountSeq);
+      });
+    },
     openBrowser(link) {
-      console.log("link :>> ", link);
       require("electron").shell.openExternal(link);
     },
   },

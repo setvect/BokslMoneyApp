@@ -44,6 +44,10 @@ const tradingVo = connSeque.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    sellGains: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   }, {
     classMethods: {},
     tableName: "DB_TRADING",

@@ -127,6 +127,7 @@
 | KIND         | 유형           |     | varchar | 20  | Y        | BUYING, SELL    |
 | TRADING_DATE | 매매일         |     | date    |     | Y        |
 | PRICE        | 가격           |     | integer |     | Y        |
-| QUANTITY     | 수량           |     | integer |     | Y        |
-| TAX          | 세금           |     | integer |     | Y        |
-| FEES         | 수수료         |     | integer |     | Y        |
+| QUANTITY     | 수량           |     | integer |     | N        |
+| TAX          | 세금           |     | integer |     | N        |
+| FEES         | 수수료         |     | integer |     | N        |
+| SELL_GAINS   | 매도차익       |     | integer |     | N        |
