@@ -48,7 +48,7 @@
             <div class="form-group row">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">잔고:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <input type="number" class="form-control" name="balance" v-model="item.balance" v-validate="'required|integer|max:11|between:-2000000000,2000000000'" data-vv-as="잔고 " />
+                <my-currency-input v-model="item.balance" class="form-control" name="balance" maxlength="10" v-validate="'required|integer|max:11|between:-2000000000,2000000000'" data-vv-as="잔고 "></my-currency-input>
                 <span class="error" v-if="errors.has('balance')">{{errors.first('balance')}}</span>
               </div>
             </div>
@@ -110,7 +110,7 @@
 export default {
   data() {
     return {
-      item: {},
+      item: { balance:0, },
       actionType: "add",
       kindCodeList: [],
     };
