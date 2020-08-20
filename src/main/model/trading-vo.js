@@ -18,7 +18,7 @@ const tradingVo = connSeque.define(
     },
     note: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     kind: {
       type: DataTypes.STRING(20),

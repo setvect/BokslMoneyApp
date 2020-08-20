@@ -36,6 +36,7 @@
                     <th>종목</th>
                     <th>단가</th>
                     <th>수량</th>
+                    <th>매도 차익</th>
                     <th>거래계좌</th>
                     <th>날짜</th>
                     <th>기능</th>
@@ -48,6 +49,7 @@
                     <td>{{t.stockSeq | stockName}}</td>
                     <td class="text-right">{{t.price | numberFormat}}</td>
                     <td class="text-right">{{t.quantity | numberFormat}}</td>
+                    <td class="text-right">{{t.sellGains || 0 | numberFormat}}</td>
                     <td>{{t.stockSeq | stockAccountName}}</td>
                     <td>{{t.tradingDate | dateFormat('YYYY.MM.DD')}}</td>
                     <td class="text-center">

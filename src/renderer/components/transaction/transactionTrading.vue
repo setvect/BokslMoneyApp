@@ -36,7 +36,7 @@
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">종목:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <select class="form-control" v-model="item.stockSeq" name="stockSeq" v-validate="'required'" data-vv-as="종목 ">
-                    <option v-for="stock in stockList" v-bind:value="stock.stockSeq" :key="stock.accountSeq">{{stock.name}} : {{stock.quantity | numberFormat}}원 ({{stock.purchaseAmount}})</option>
+                    <option v-for="stock in stockList" v-bind:value="stock.stockSeq" :key="stock.stockSeq">{{stock.name}} : {{stock.quantity | numberFormat}}주 ({{stock.purchaseAmount| numberFormat}}원)</option>
                   </select>
                   <span class="error" v-if="errors.has('stockSeq')">{{errors.first('stockSeq')}}</span>
                 </div>
@@ -44,7 +44,7 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">메모:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <input id="stockMemoField" type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'required'" data-vv-as="메모 " />
+                  <input id="stockMemoField" type="text" class="form-control _note" name="note" v-model="item.note" v-validate="'max:50'" data-vv-as="메모 " />
                   <span class="error" v-if="errors.has('note')">{{errors.first('note')}}</span>
                 </div>
               </div>

@@ -5,6 +5,7 @@ import {
   Op
 } from "sequelize";
 import trading from "../../model/trading-vo.js";
+import stock from "../../model/stock-vo.js";
 
 export default {
   init() {
@@ -19,6 +20,7 @@ export default {
 
     ipcMain.handle("trading/addItem", async(event, item) => {
       item.deleteF = false;
+      item.sellGains = await this.calcSellGains(item);
       const instance = await trading.create(item);
       return instance;
     });
@@ -28,6 +30,8 @@ export default {
     ipcMain.handle("trading/editItem", async(event, item) => {
       const saveItem = await trading.findByPk(item.tradingSeq);
       await this.revertStock(item);
+
+      item.sellGains = await this.calcSellGains(item);
       await saveItem.update(item);
     });
 
@@ -84,5 +88,22 @@ export default {
     let acc = await trading.findByPk(tradingSeq);
     // acc.balance = acc.balance - money;
     // await acc.save();
+  },
+  // 매도 차익 계산
+  async calcSellGains(tradingItem) {
+    // 매도만 매도 차익 계산
+    if (tradingItem.kind != "SELL") {
+      return 0;
+    }
+
+    let stockItem = await stock.findByPk(tradingItem.stockSeq, {
+      raw: true,
+    });
+    // 평단가
+    let avg = stockItem.purchaseAmount / stockItem.quantity;
+
+    let total = tradingItem.price * tradingItem.quantity;
+    // 매도 차익
+    return total - (avg * tradingItem.quantity);
   },
 };
