@@ -5,7 +5,8 @@ import {
   Op
 } from "sequelize";
 import trading from "../../model/trading-vo.js";
-import stock from "../../model/stock-vo.js";
+import stockVo from "../../model/stock-vo.js";
+import accountVo from "../../model/account-vo.js";
 
 export default {
   init() {
@@ -21,6 +22,8 @@ export default {
     ipcMain.handle("trading/addItem", async(event, item) => {
       item.deleteF = false;
       item.sellGains = await this.calcSellGains(item);
+      // TODO 주식 계좌 정보 반영 해야됨
+      await this.applyAccount(item);
       const instance = await trading.create(item);
       return instance;
     });
@@ -70,24 +73,42 @@ export default {
     }));
     return rtnValue;
   },
-  async revertStock(trading) {
-    console.log("revertStock - trading :>> ", trading);
-    let money = trading.money;
-    if (trading.kind == "BUYING") {
-      // await this.subStock(trading.receiveAccount, money);
-    } else if (trading.kind == "SELL") {
-      // await this.addStock(trading.payAccount, money);
+  async applyAccount(tradingItem) {
+    console.log("revertStock - trading :>> ", tradingItem);
+    let money = tradingItem.price * tradingItem.quantity;
+    if (tradingItem.kind == "BUYING") {
+      await this.buyingStock(tradingItem);
+    } else if (tradingItem.kind == "SELL") {
+      await this.sellStock(tradingItem);
     }
   },
-  async addStock(tradingSeq, money) {
-    let acc = await trading.findByPk(tradingSeq);
-    // acc.balance = acc.balance + money;
-    // await acc.save();
+  async revertStock(tradingItem) {
+    console.log("revertStock - trading :>> ", trading);
+    if (tradingItem.kind == "BUYING") {
+      await this.buyingStock(tradingItem);
+    } else if (tradingItem.kind == "SELL") {
+      await this.sellStock(tradingItem);
+    }
   },
-  async subStock(tradingSeq, money) {
-    let acc = await trading.findByPk(tradingSeq);
-    // acc.balance = acc.balance - money;
-    // await acc.save();
+  async buyingStock(tradingItem) {
+    let stockItem = await stockVo.findByPk(tradingItem.stockSeq, {
+      raw: true,
+    });
+
+    let acc = await accountVo.findByPk(stockItem.accountSeq);
+    let money = tradingItem.price * tradingItem.quantity;
+    acc.balance = acc.balance - money - tradingItem.tax - tradingItem.fee;
+    await acc.save();
+  },
+  async sellStock(tradingItem) {
+    let stockItem = await stockVo.findByPk(tradingItem.stockSeq, {
+      raw: true,
+    });
+
+    let acc = await accountVo.findByPk(stockItem.accountSeq);
+    let money = tradingItem.price * tradingItem.quantity;
+    acc.balance = acc.balance + money - tradingItem.tax - tradingItem.fee;
+    await acc.save();
   },
   // 매도 차익 계산
   async calcSellGains(tradingItem) {
@@ -96,7 +117,7 @@ export default {
       return 0;
     }
 
-    let stockItem = await stock.findByPk(tradingItem.stockSeq, {
+    let stockItem = await stockVo.findByPk(tradingItem.stockSeq, {
       raw: true,
     });
     // 평단가
