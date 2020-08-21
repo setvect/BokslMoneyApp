@@ -15,6 +15,7 @@
                 <th>종목</th>
                 <th>수량</th>
                 <th>구매금액</th>
+                <th>평단가</th>
                 <th>종목상세</th>
                 <th>메모</th>
                 <th>기능</th>
@@ -26,6 +27,7 @@
                 <td>{{item.name}}</td>
                 <td class="text-right">{{item.quantity | numberFormat}}</td>
                 <td class="text-right">{{item.purchaseAmount | numberFormat}}</td>
+                <td class="text-right">{{Math.round(item.purchaseAmount / item.quantity) | numberFormat}}</td>
                 <td>
                   <a v-if="item.link" @click="openBrowser(item.link)" style="cursor:pointer" target="_blank">링크</a>
                 </td>
