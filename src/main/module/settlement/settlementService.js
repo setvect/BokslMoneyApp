@@ -12,6 +12,7 @@ import {
 } from "sequelize";
 
 import connSeque from "../../model/connSeque.js";
+import stockService from "../stock/stockService.js";
 
 export default {
   init() {
@@ -58,45 +59,96 @@ export default {
       return groupOfMonthSum;
     });
 
+    /**
+     * 시작 년도 부터 현재까지 재산 변화
+     */
     ipcMain.handle("settlement/statAssets", async(event, condition) => {
-      const fromDate = (moment([condition.fromYear, 0, 1])).toDate();
-      const records = await connSeque.query(`
-        SELECT STRFTIME('%Y-%m', TRANSACTION_DATE) AS DATE, KIND, SUM(MONEY) AS MONEY
-        FROM BE_TRANSACTION
-        WHERE TRANSACTION_DATE >= :fromDate
-        GROUP BY STRFTIME('%Y-%m', TRANSACTION_DATE), KIND
-        ORDER BY 1, 2
-      `,
-      {
-        replacements: { fromDate: fromDate, },
-        type: QueryTypes.SELECT,
-      });
-      let dateByGroup = _.groupBy(records, "DATE");
-
-      let sumOfMonth = _.map(dateByGroup, (value, key) => {
-        let monthType = _.chain(value)
-          .keyBy("kind")
-          .mapValues("MONEY")
-          .value();
-        let profit = (monthType["INCOME"] || 0) - (monthType["SPENDING"] || 0);
-
-        return { "DATE": new Date(key + "-01").getTime(), profit, };
-      });
-
-      let allAcount = await accountService.listAccount();
-      const totalAssets = _.sumBy(allAcount, "balance");
-
-      let rangeSum = _.sumBy(sumOfMonth, "profit");
-
-      let result = _.chain(sumOfMonth).keyBy("DATE").mapValues((v) => {
+      let transactionSumOfMonth = await this.getTransactionSumOfMonth(condition);
+      let tradingSumOfMonth = await this.getTradingSumOfMonth(condition);
+      let rangeSum = _.sumBy(transactionSumOfMonth, "profit");
+      let assetsSumOfMonth = _.chain([...transactionSumOfMonth, ...tradingSumOfMonth]).groupBy("DATE").map((objs, keys)=>({
+        "DATE": keys,
+        "profit": _.sumBy(objs, "profit"),
+      })).value();
+      let totalProperty = await this.getTotalProperty();
+      let result = _.chain(assetsSumOfMonth).keyBy("DATE").mapValues((v) => {
         rangeSum -= v.profit;
-        let diff = totalAssets - rangeSum;
+        let diff = totalProperty - rangeSum;
         return diff;
       }).value();
 
       return result;
     });
   },
+  /**
+   * 월단위 거래(지출, 수입) 금액 합산
+   * @param {*} condition
+   */
+  async getTransactionSumOfMonth(condition) {
+    const fromDate = (moment([condition.fromYear, 0, 1])).toDate();
+    const records = await connSeque.query(`
+      SELECT STRFTIME('%Y-%m', TRANSACTION_DATE) AS DATE, KIND, SUM(MONEY) AS MONEY
+      FROM BE_TRANSACTION
+      WHERE TRANSACTION_DATE >= :fromDate
+      GROUP BY STRFTIME('%Y-%m', TRANSACTION_DATE), KIND
+      ORDER BY 1, 2
+    `, {
+      replacements: {
+        fromDate: fromDate,
+      },
+      type: QueryTypes.SELECT,
+    });
+    let dateByGroup = _.groupBy(records, "DATE");
+
+    let sumOfMonth = _.map(dateByGroup, (value, key) => {
+      let monthType = _.chain(value)
+        .keyBy("kind")
+        .mapValues("MONEY")
+        .value();
+      let profit = (monthType["INCOME"] || 0) - (monthType["SPENDING"] || 0);
+
+      return {
+        "DATE": new Date(key + "-01").getTime(),
+        profit,
+      };
+    });
+    return sumOfMonth;
+  },
+  /**
+   * 주식 거래시 발생한 이익, 손해(세금, 수수료 포함)을 월단위 계산
+   * @param {*} condition
+   */
+  async getTradingSumOfMonth(condition) {
+    const fromDate = (moment([condition.fromYear, 0, 1])).toDate();
+    let tradingList = await tradingService.list({ from: fromDate, to: moment("210001231", "YYYYMMDD").toDate(), });
+    let sumOfMonth = _.chain(tradingList).map((v, key)=>{
+      v["TRADING_MONTH"] = moment(v["tradingDate"]).format("YYYY-MM");
+      return v;
+    }).groupBy("TRADING_MONTH").map((values, key)=>{
+      let feeSum = _.chain(values).sumBy("fee").value() || 0;
+      let taxSum = _.chain(values).sumBy("tax").value() || 0;
+      let sellGainsSum = _.chain(values).sumBy("sellGains").value() || 0;
+      let profit = sellGainsSum - feeSum - taxSum;
+      return {
+        "DATE": new Date(key + "-01").getTime(),
+        profit,
+      };
+    }).value();
+    return sumOfMonth;
+  },
+  /**
+   * 전체 재산(계좌 잔고 + 주식 매입 금액)
+   */
+  async getTotalProperty() {
+    // 계좌 잔고 합계
+    let allAcount = await accountService.listAccount();
+    const totalAccount = _.sumBy(allAcount, "balance");
+    // 주식 구매금액
+    let allStock = await stockService.listStock();
+    const totalStock = _.sumBy(allStock, "purchaseAmount");
+    return totalAccount + totalStock;
+  },
+
   async getKindOfMonth(param) {
     let list = await transactionService.list(param);
     let groupByMonthKind = _.reduce(list, (result, item) => {
