@@ -32,7 +32,6 @@ export default {
     // 통계
     runStat() {
       ElectronUtil.invoke("settlement/statAssets", { fromYear: this.fromYear, }, result =>{
-        console.log("result :>> ", result);
         this.accumulateOfMonth = result;
         this.$nextTick(() => {
           this.drawChart();

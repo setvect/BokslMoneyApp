@@ -16,7 +16,7 @@
 <script type="text/javascript">
 import Chart from "chart.js";
 import { TYPE_VALUE } from "../../common/constant.js";
-
+import _ from "lodash";
 export default {
   data() {
     return {
@@ -33,9 +33,16 @@ export default {
     runStat() {
       this.year = this.yearChoice;
       ElectronUtil.invoke("settlement/groupKindOfMonth", { year: this.year, }, result =>{
-        this.kindGroupSum = result;
-        this.$nextTick(() => {
-          this.drawChart();
+        let account = result;
+        ElectronUtil.invoke("settlement/groupTradingKindOfMonth", { year: this.year, }, trading =>{
+          let merge = {};
+          for(let i = 0;i < 12;i++) {
+            merge[i] = _.merge ({}, account[i], trading[i]);
+          }
+          this.kindGroupSum = merge;
+          this.$nextTick(() => {
+            this.drawChart();
+          });
         });
       });
     },
@@ -58,7 +65,7 @@ export default {
           label: value.title,
           backgroundColor: value.color,
           data: data,
-          hidden: key == "TRANSFER",
+          hidden: key == "TRANSFER" || key == "BUYING" || key == "SELL",
         };
         return item;
       });
