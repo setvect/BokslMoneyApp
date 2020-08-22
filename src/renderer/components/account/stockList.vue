@@ -27,7 +27,7 @@
                 <td>{{item.name}}</td>
                 <td class="text-right">{{item.quantity | numberFormat}}</td>
                 <td class="text-right">{{item.purchaseAmount | numberFormat}}</td>
-                <td class="text-right">{{Math.round(item.purchaseAmount / item.quantity) | numberFormat}}</td>
+                <td class="text-right">{{rating(item) | numberFormat}}</td>
                 <td>
                   <a v-if="item.link" @click="openBrowser(item.link)" style="cursor:pointer" target="_blank">링크</a>
                 </td>
@@ -104,6 +104,13 @@ export default {
     },
     openBrowser(link) {
       require("electron").shell.openExternal(link);
+    },
+    // 평단가 계산
+    rating(item) {
+      if(item.quantity == 0) {
+        return 0;
+      }
+      return Math.round(item.purchaseAmount / item.quantity);
     },
   },
 };

@@ -129,7 +129,10 @@ export default {
       raw: true,
     });
     // 평단가
-    let avg = stockItem.purchaseAmount / stockItem.quantity;
+    let avg = 0;
+    if(stockItem.quantity != 0) {
+      avg = stockItem.purchaseAmount / stockItem.quantity;
+    }
 
     let total = tradingItem.price * tradingItem.quantity;
     // 매도 차익
