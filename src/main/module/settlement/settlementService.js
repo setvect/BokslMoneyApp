@@ -73,12 +73,12 @@ export default {
       });
       let dateByGroup = _.groupBy(records, "DATE");
 
-      let sumOfMonth = _.map(dateByGroup, (value, key)=>{
+      let sumOfMonth = _.map(dateByGroup, (value, key) => {
         let monthType = _.chain(value)
           .keyBy("kind")
           .mapValues("MONEY")
           .value();
-        let profit = monthType["INCOME"] - monthType["SPENDING"];
+        let profit = (monthType["INCOME"] || 0) - (monthType["SPENDING"] || 0);
 
         return { "DATE": new Date(key + "-01").getTime(), profit, };
       });
@@ -88,7 +88,7 @@ export default {
 
       let rangeSum = _.sumBy(sumOfMonth, "profit");
 
-      let result = _.chain(sumOfMonth).keyBy("DATE").mapValues((v)=>{
+      let result = _.chain(sumOfMonth).keyBy("DATE").mapValues((v) => {
         rangeSum -= v.profit;
         let diff = totalAssets - rangeSum;
         return diff;

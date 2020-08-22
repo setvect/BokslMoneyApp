@@ -35,5 +35,5 @@
   "[vue]": {
     "editor.defaultFormatter": "octref.vetur"
   },
-  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
 }
