@@ -10,6 +10,8 @@ import BootstrapVue from "bootstrap-vue";
 import VeeValidate from "vee-validate";
 import ko from "vee-validate/dist/locale/ko";
 
+import commonMixin from "./common/common-mixin.js";
+
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -29,7 +31,7 @@ Vue.use(VeeValidate, {
     ko,
   },
 });
-
+Vue.mixin(commonMixin);
 new Vue({
   components: { App, },
   router,

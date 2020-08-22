@@ -22,10 +22,16 @@ export default {
       if (!confirm("삭제하시겠습니까?")) {
         return;
       }
-      console.log("item.tradingSeq :>> ", item.tradingSeq);
       ElectronUtil.invoke("trading/deleteItem", item.tradingSeq, () => this.reload());
     },
-    // 수입, 지출, 이체 합산
+    // 거래내역 조회
+    loadTrading(condition, callBack) {
+      ElectronUtil.invoke("trading/listItem", condition, result=>{
+        this.tradingList = result;
+        callBack();
+      });
+    },
+    // 매매 결과 합산
     sumCalculation(filterCondition) {
       return this.tradingList.filter(filterCondition).reduce((acc, t) => {
         return acc + t.price * t.quantity;

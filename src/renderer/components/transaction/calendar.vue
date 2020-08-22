@@ -215,18 +215,14 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("loadAcount")
-      .then(()=>this.$store.dispatch("loadCategory"))
-      .then(()=>this.$store.dispatch("loadCode"))
-      .then(()=>this.$store.dispatch("loadStock"))
-      .then(()=>{
-        this.initCalendar();
-        // 지출, 이체, 수입 버튼 클릭
-        $("._input").click(event => {
-          let type = $(event.target).attr("data-type");
-          this.addItemForm(type);
-        });
+    this.loadBasicInfo(()=>{
+      this.initCalendar();
+      // 지출, 이체, 수입 버튼 클릭
+      $("._input").click(event => {
+        let type = $(event.target).attr("data-type");
+        this.addItemForm(type);
       });
+    });
   },
   methods: {
     initCalendar() {

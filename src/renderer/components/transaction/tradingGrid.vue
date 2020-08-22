@@ -37,6 +37,8 @@
                     <th>단가</th>
                     <th>수량</th>
                     <th>매도 차익</th>
+                    <th>거래세</th>
+                    <th>수수료</th>
                     <th>거래계좌</th>
                     <th>날짜</th>
                     <th>기능</th>
@@ -49,7 +51,9 @@
                     <td>{{t.stockSeq | stockName}}</td>
                     <td class="text-right">{{t.price | numberFormat}}</td>
                     <td class="text-right">{{t.quantity | numberFormat}}</td>
-                    <td class="text-right">{{t.sellGains || 0 | numberFormat}}</td>
+                    <td :style="{color:getGainsColor(t.sellGains)}" class="text-right">{{t.sellGains || 0 | numberFormat}}</td>
+                    <td class="text-right">{{t.tax || 0 | numberFormat}}</td>
+                    <td class="text-right">{{t.fee || 0 | numberFormat}}</td>
                     <td>{{t.stockSeq | stockAccountName}}</td>
                     <td>{{t.tradingDate | dateFormat('YYYY.MM.DD')}}</td>
                     <td class="text-center">
@@ -192,19 +196,15 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("loadAcount")
-      .then(()=>this.$store.dispatch("loadCategory"))
-      .then(()=>this.$store.dispatch("loadCode"))
-      .then(()=>this.$store.dispatch("loadStock"))
-      .then(()=>{
-        this.initUi();
-        this.loadTrading();
-        // 지출, 이체, 수입 버튼 클릭
-        $("._input").click(event => {
-          let type = $(event.target).attr("data-type");
-          this.addItemForm(type);
-        });
+    this.loadBasicInfo(()=>{
+      this.initUi();
+      this.loadList();
+      // 지출, 이체, 수입 버튼 클릭
+      $("._input").click(event => {
+        let type = $(event.target).attr("data-type");
+        this.addItemForm(type);
       });
+    });
   },
   methods: {
     // UI 객체 초기화
@@ -286,11 +286,10 @@ export default {
     reload() {
       this.search();
     },
-    // 거래내역 조회
-    loadTrading() {
-      ElectronUtil.invoke("trading/listItem", this.condition, result=>{
+    // 매매내역 조회
+    loadList() {
+      this.loadTrading(this.condition, ()=>{
         this.destroyGrid();
-        this.tradingList = result;
         this.$nextTick(() => {
           this.initGrid();
         });
@@ -298,7 +297,7 @@ export default {
     },
     // 검색
     search() {
-      this.loadTrading();
+      this.loadList();
     },
     // 달 이동
     moveMonth(diff) {

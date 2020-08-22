@@ -27,14 +27,6 @@ export default {
     };
   },
   computed: {
-    yearList() {
-      let years = [];
-      let d = new Date();
-      for (let y = 2007; y <= d.getFullYear(); y++) {
-        years.push(y);
-      }
-      return years.reverse();
-    },
   },
   methods: {
     // 통계

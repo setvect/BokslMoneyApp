@@ -2,12 +2,12 @@ import {
   ipcMain
 } from "electron";
 import transactionService from "../transaction/transactionService.js";
+import tradingService from "../trading/tradingService.js";
 import accountService from "../account/accountService.js";
 
 import moment from "moment";
 import _ from "lodash";
 import {
-  Op,
   QueryTypes
 } from "sequelize";
 
@@ -47,6 +47,15 @@ export default {
       param.to = moment(param.from).add(1, "year").toDate();
       const kindOfMonth = await this.getKindOfMonth(param);
       return kindOfMonth;
+    });
+
+    // 매수, 매도, 거래세, 수수료, 매도차익을 월별로 합상
+    ipcMain.handle("settlement/groupTradingKindOfMonth", async(event, condition) => {
+      let param = {};
+      param.from = (moment([condition.year, 0, 1])).toDate();
+      param.to = moment(param.from).add(1, "year").toDate();
+      const groupOfMonthSum = await this.getTradingKindOfMonth(param);
+      return groupOfMonthSum;
     });
 
     ipcMain.handle("settlement/statAssets", async(event, condition) => {
@@ -99,6 +108,32 @@ export default {
         result[month][item.kind] = 0;
       }
       result[month][item.kind] += item.money;
+      return result;
+    }, {});
+    return groupByMonthKind;
+  },
+  /**
+   * 주식 거래 매도, 매수 유형별 그룹핑
+   * @param {*} param
+   */
+  async getTradingKindOfMonth(param) {
+    let list = await tradingService.list(param);
+    let groupByMonthKind = _.reduce(list, (result, item) => {
+      let month = item.tradingDate.getMonth();
+      if (result[month] == null) {
+        result[month] = {};
+        result[month]["BUYING"] = 0;
+        result[month]["SELL"] = 0;
+        result[month]["TAX"] = 0;
+        result[month]["FEE"] = 0;
+        result[month]["SELL_GAINS"] = 0;
+      }
+
+      result[month][item.kind] += item.price * item.quantity;
+      result[month]["TAX"] += item.tax;
+      result[month]["FEE"] += item.fee;
+      result[month]["SELL_GAINS"] += item.sellGains;
+
       return result;
     }, {});
     return groupByMonthKind;

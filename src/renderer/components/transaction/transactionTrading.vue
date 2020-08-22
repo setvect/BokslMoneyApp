@@ -76,7 +76,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="control-label col-md-2 col-sm-2 col-xs-2">세금:</label>
+                <label class="control-label col-md-2 col-sm-2 col-xs-2">거래세:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <my-currency-input v-model="item.tax" class="form-control" name="tax" maxlength="5"></my-currency-input>
                 </div>

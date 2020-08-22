@@ -42,7 +42,7 @@
                     <th>금액</th>
                     <th>수수료</th>
                     <th>출금계좌</th>
-                    <th>일금계좌</th>
+                    <th>입금계좌</th>
                     <th>날짜</th>
                     <th>기능</th>
                   </tr>
@@ -200,18 +200,15 @@ export default {
   },
   computed: {},
   mounted() {
-    this.$store.dispatch("loadAcount")
-      .then(()=>this.$store.dispatch("loadCategory"))
-      .then(()=>this.$store.dispatch("loadCode"))
-      .then(()=>{
-        this.initUi();
-        this.loadTransaction();
-        // 지출, 이체, 수입 버튼 클릭
-        $("._input").click(event => {
-          let type = $(event.target).attr("data-type");
-          this.addItemForm(type);
-        });
+    this.loadBasicInfo(()=>{
+      this.initUi();
+      this.loadTransaction();
+      // 지출, 이체, 수입 버튼 클릭
+      $("._input").click(event => {
+        let type = $(event.target).attr("data-type");
+        this.addItemForm(type);
       });
+    });
   },
   methods: {
     // UI 객체 초기화
@@ -356,10 +353,10 @@ export default {
 </script>
 
 <style scoped>
-.checkbox label{
+.checkbox label {
   margin-right: 10px;
 }
-.form-inline{
-  margin-bottom: 5px;;
+.form-inline {
+  margin-bottom: 5px;
 }
 </style>

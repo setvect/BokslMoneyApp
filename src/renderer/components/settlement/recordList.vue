@@ -22,7 +22,7 @@
                 <th>금액</th>
                 <th>수수료</th>
                 <th>출금계좌</th>
-                <th>일금계좌</th>
+                <th>입금계좌</th>
                 <th>날짜</th>
               </tr>
             </thead>
@@ -54,9 +54,6 @@
 <script type="text/javascript">
 import moment from "moment";
 import _ from "lodash";
-import "datatables";
-import "datatables.net-buttons";
-import "datatables.net-buttons/js/buttons.html5.js";
 
 import transactionMixin from "../../components/transaction/transaction-mixin.js";
 import "../../common/vue-common.js";
