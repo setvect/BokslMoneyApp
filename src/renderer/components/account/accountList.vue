@@ -1,15 +1,19 @@
 <template>
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="form-row">
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label for="inputCity">재산(내가 모은 돈)</label>
         <span class="form-control text-right">{{property | numberFormat}}</span>
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
+        <label for="inputCity">주식</label>
+        <span class="form-control text-right">{{sumTotalStock | numberFormat}}</span>
+      </div>
+      <div class="form-group col-md-3">
         <label for="inputCity">자산(마이너스가 아닌 계좌 합)</label>
         <span class="form-control text-right">{{asset | numberFormat}}</span>
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label for="inputCity">부채(마이너스 계좌 합)</label>
         <span class="form-control text-right">{{debt | numberFormat}}</span>
       </div>
@@ -20,6 +24,7 @@
           <th>자산종류</th>
           <th>이름</th>
           <th>잔고</th>
+          <th>주식합계</th>
           <th>이율</th>
           <th>계좌(카드)번호</th>
           <th>월 납입액</th>
@@ -35,6 +40,7 @@
             <a @click="readForm(item)" href="javascript:void(0)">{{item.name}}</a>
           </td>
           <td class="text-right">{{item.balance | numberFormat}}</td>
+          <td class="text-right">{{sumStock(item.accountSeq) | numberFormat}}</td>
           <td>{{item.interestRate}}</td>
           <td>{{item.accountNumber}}</td>
           <td>{{item.monthlyPay}}</td>
@@ -55,12 +61,16 @@
 </template>
 
 <script type="text/javascript">
+import _ from "lodash";
 import "datatables";
 import "datatables.net-buttons";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables/media/css/jquery.dataTables.css";
 
 import "../../common/vue-common.js";
+import {
+  mapGetters
+} from "vuex";
 
 export default {
   data() {
@@ -73,8 +83,14 @@ export default {
   },
   props: {},
   computed: {
+    ...mapGetters([
+      "stockList"
+    ]),
     property() {
       return this.asset + this.debt;
+    },
+    sumTotalStock() {
+      return _.sumBy(this.stockList, "purchaseAmount");
     },
     asset() {
       let value = this.itemList.reduce(function(acc, item) {
@@ -94,6 +110,11 @@ export default {
       }, 0);
       return value;
     },
+  },
+  mounted() {
+    this.loadBasicInfo(()=>{
+      this.list();
+    });
   },
   methods: {
     // 리스트
@@ -147,6 +168,10 @@ export default {
     openStockList(accountSeq) {
       this.$parent.$refs.stockList.openForm(accountSeq);
     },
+    sumStock(accountSeq) {
+      let sum = _.chain(this.stockList).filter(stock => stock.accountSeq == accountSeq).sumBy("purchaseAmount").value();
+      return sum;
+    },
     // 엑셀 다운로드
     exportExcel() {
       const csvData = [];
@@ -167,9 +192,6 @@ export default {
       const csvString = CommonUtil.convertHtmlTable(csvData);
       CommonUtil.download(csvString, "계좌목록.xls", "text/html;encoding:utf-8");
     },
-  },
-  mounted() {
-    this.list();
   },
 };
 </script>
