@@ -19,6 +19,7 @@
                 <th>종목</th>
                 <th>단가</th>
                 <th>수량</th>
+                <th>합산금액</th>
                 <th>매도 차익</th>
                 <th>거래세</th>
                 <th>수수료</th>
@@ -33,6 +34,7 @@
                 <td>{{t.stockSeq | stockName}}</td>
                 <td class="text-right">{{t.price | numberFormat}}</td>
                 <td class="text-right">{{t.quantity | numberFormat}}</td>
+                <td class="text-right">{{t.price * t.quantity | numberFormat}}</td>
                 <td :style="{color:getGainsColor(t.sellGains)}" class="text-right">{{t.sellGains || 0 | numberFormat}}</td>
                 <td class="text-right">{{t.tax || 0 | numberFormat}}</td>
                 <td class="text-right">{{t.fee || 0 | numberFormat}}</td>
