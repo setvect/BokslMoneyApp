@@ -26,21 +26,6 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="control-label col-md-3 col-sm-3 col-xs-3">수량:</label>
-              <div class="col-md-9 col-sm-9 col-xs-9">
-                <my-currency-input
-                  v-model="item.quantity"
-                  class="form-control"
-                  name="quantity"
-                  maxlength="10"
-                  v-validate="'required|integer|max:11|between:0,999999999'"
-                  data-vv-as="수량 "
-                  @press-enter="addAction(true)"
-                ></my-currency-input>
-                <span class="error" v-if="errors.has('quantity')">{{errors.first('quantity')}}</span>
-              </div>
-            </div>
-            <div class="form-group row">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">구입금액:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
                 <my-currency-input
@@ -53,6 +38,21 @@
                   @press-enter="addAction(true)"
                 ></my-currency-input>
                 <span class="error" v-if="errors.has('purchaseAmount')">{{errors.first('purchaseAmount')}}</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="control-label col-md-3 col-sm-3 col-xs-3">수량:</label>
+              <div class="col-md-9 col-sm-9 col-xs-9">
+                <my-currency-input
+                  v-model="item.quantity"
+                  class="form-control"
+                  name="quantity"
+                  maxlength="10"
+                  v-validate="'required|integer|max:11|between:0,999999999'"
+                  data-vv-as="수량 "
+                  @press-enter="addAction(true)"
+                ></my-currency-input>
+                <span class="error" v-if="errors.has('quantity')">{{errors.first('quantity')}}</span>
               </div>
             </div>
             <div class="form-group row">
