@@ -60,7 +60,10 @@ export default {
       if (!confirm("삭제하시겠습니까?")) {
         return;
       }
-      ElectronUtil.invoke("transaction/deleteItem", item.transactionSeq, () => this.reload());
+      ElectronUtil.invoke("transaction/deleteItem", item.transactionSeq, () => {
+        this.loadBasicInfo();
+        this.reload();
+      });
     },
     // 수입, 지출, 이체 합산
     sumCalculation(filterCondition) {

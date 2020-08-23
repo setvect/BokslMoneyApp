@@ -22,11 +22,14 @@ export default {
       if (!confirm("삭제하시겠습니까?")) {
         return;
       }
-      ElectronUtil.invoke("trading/deleteItem", item.tradingSeq, () => this.reload());
+      ElectronUtil.invoke("trading/deleteItem", item.tradingSeq, () => {
+        this.loadBasicInfo();
+        this.reload();
+      });
     },
     // 거래내역 조회
     loadTrading(condition, callBack) {
-      ElectronUtil.invoke("trading/listItem", condition, result=>{
+      ElectronUtil.invoke("trading/listItem", condition, result => {
         this.tradingList = result;
         callBack();
       });

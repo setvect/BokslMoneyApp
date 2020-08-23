@@ -328,6 +328,7 @@ export default {
           } else {
             $("#addItem").modal("hide");
           }
+          this.loadBasicInfo();
         });
       });
     },

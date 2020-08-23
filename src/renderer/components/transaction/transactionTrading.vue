@@ -166,7 +166,8 @@ export default {
     },
     // 계좌 입력 팝업창.
     openForm() {
-      if (this.tradingAccount == null) {
+      let tempAcc = this.stockAccountList.find(acc => acc == this.tradingAccount);
+      if(tempAcc == null) {
         this.tradingAccount = this.stockAccountList.length == 0 ? null : this.stockAccountList[0];
       }
       this.loadOftenUsed();
@@ -212,6 +213,7 @@ export default {
           } else {
             $("#stockAddFrom").modal("hide");
           }
+          this.loadBasicInfo();
         });
       });
     },
