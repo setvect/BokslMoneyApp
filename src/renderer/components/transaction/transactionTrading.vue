@@ -162,7 +162,7 @@ export default {
     addDate(diff) {
       this.selectDate.add(diff, "days");
       this.item.tradingDate = this.selectDate.format("YYYY-MM-DD");
-      $("._datepicker").data("daterangepicker").setStartDate(this.selectDate.format("YYYY-MM-DD"));
+      $("#stockAddFrom ._datepicker").data("daterangepicker").setStartDate(this.selectDate.format("YYYY-MM-DD"));
     },
     // 계좌 입력 팝업창.
     openForm() {

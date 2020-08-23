@@ -256,7 +256,7 @@ export default {
     addDate(diff) {
       this.selectDate.add(diff, "days");
       this.item.transactionDate = this.selectDate.format("YYYY-MM-DD");
-      $("._datepicker").data("daterangepicker").setStartDate(this.selectDate.format("YYYY-MM-DD"));
+      $("#addItem ._datepicker").data("daterangepicker").setStartDate(this.selectDate.format("YYYY-MM-DD"));
     },
     // 계좌 입력 팝업창.
     openForm(kind) {
