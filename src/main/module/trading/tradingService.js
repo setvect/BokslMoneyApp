@@ -22,7 +22,6 @@ export default {
     ipcMain.handle("trading/addItem", async(event, item) => {
       item.deleteF = false;
       item.sellGains = await this.calcSellGains(item);
-      // TODO 주식 계좌 정보 반영 해야됨
       await this.calcStock(item);
       const instance = await trading.create(item);
       return instance;
@@ -89,8 +88,10 @@ export default {
       stockItem.purchaseAmount += tradingItem.price * tradingItem.quantity;
     } else if (tradingItem.kind == "SELL") {
       acc.balance = acc.balance + money - tradingItem.tax - tradingItem.fee;
+      let avg = this.getAvgRatio(stockItem);
       stockItem.quantity -= tradingItem.quantity;
-      stockItem.purchaseAmount -= tradingItem.price * tradingItem.quantity;
+      // 평단가에서 주식 수량 빼기
+      stockItem.purchaseAmount -= avg * tradingItem.quantity;
     }
 
     await acc.save();
@@ -112,7 +113,10 @@ export default {
     } else if (tradingItem.kind == "SELL") {
       acc.balance = acc.balance - money + tradingItem.tax + tradingItem.fee;
       stockItem.quantity += tradingItem.quantity;
-      stockItem.purchaseAmount += tradingItem.price * tradingItem.quantity;
+      // 매도 차익을 기준으로 평단가 계산
+      let sellMoney = tradingItem.price * tradingItem.quantity - tradingItem.sellGains;
+      let avg = Math.round(sellMoney / tradingItem.quantity);
+      stockItem.purchaseAmount += avg * tradingItem.quantity;
     }
 
     await acc.save();
@@ -129,13 +133,16 @@ export default {
       raw: true,
     });
     // 평단가
-    let avg = 0;
-    if(stockItem.quantity != 0) {
-      avg = stockItem.purchaseAmount / stockItem.quantity;
-    }
+    let avg = this.getAvgRatio(stockItem);
 
     let total = tradingItem.price * tradingItem.quantity;
     // 매도 차익
     return total - (avg * tradingItem.quantity);
+  },
+  getAvgRatio(stockItem) {
+    if(stockItem.quantity == 0) {
+      return 0;
+    }
+    return Math.round(stockItem.purchaseAmount / stockItem.quantity);
   },
 };

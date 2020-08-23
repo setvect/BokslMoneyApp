@@ -4,7 +4,7 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">aaaa</h5>
+          <h5 class="modal-title">주식 목록</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body" style="max-height: 600px; overflow: auto;">

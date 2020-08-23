@@ -15,6 +15,8 @@ ALTER TABLE "BA_ACCOUNT"
 - NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8
 
 ### 완료
+- PBM-20200823: 주식 매도시 주식 구입금액 계산 변경
+  구입금액 = 기존 구입금액 - 평단가 * 매도 수량
 - NEW-20200808(20200823): 주식 거래 기능
   - 매도, 매수 및 거래 내용 변경/삭제 시 거래 계좌 잔고, 주식 수량 및 구매 금액 변경 => OK
   - 결산 항목에 주식 항목 추가 => OK
