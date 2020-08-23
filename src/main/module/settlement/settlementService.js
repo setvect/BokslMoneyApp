@@ -65,11 +65,13 @@ export default {
     ipcMain.handle("settlement/statAssets", async(event, condition) => {
       let transactionSumOfMonth = await this.getTransactionSumOfMonth(condition);
       let tradingSumOfMonth = await this.getTradingSumOfMonth(condition);
-      let rangeSum = _.sumBy(transactionSumOfMonth, "profit");
-      let assetsSumOfMonth = _.chain([...transactionSumOfMonth, ...tradingSumOfMonth]).groupBy("DATE").map((objs, keys)=>({
+      let totalSumOfMonth = [...transactionSumOfMonth, ...tradingSumOfMonth];
+      let rangeSum = _.sumBy(totalSumOfMonth, "profit");
+      let assetsSumOfMonth = _.chain(totalSumOfMonth).groupBy("DATE").map((objs, keys)=>({
         "DATE": keys,
         "profit": _.sumBy(objs, "profit"),
       })).value();
+
       let totalProperty = await this.getTotalProperty();
       let result = _.chain(assetsSumOfMonth).keyBy("DATE").mapValues((v) => {
         rangeSum -= v.profit;
@@ -146,6 +148,8 @@ export default {
     // 주식 구매금액
     let allStock = await stockService.listStock();
     const totalStock = _.sumBy(allStock, "purchaseAmount");
+    console.log("###################################");
+    console.log("totalAccount :>> ", totalAccount, totalStock);
     return totalAccount + totalStock;
   },
 

@@ -17,6 +17,7 @@ ALTER TABLE "BA_ACCOUNT"
 - NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8
 
 ### 완료
+- PBM-20200823: 자산 변화량 차트 계산 오류 수정
 - NEW-20200823: 계좌 관리에 주식 자산도 표시
 - PBM-20200823: 주식 매매 표에서 매수, 매도 필터링 안되는 문제 해결
 - PBM-20200823: 주식 매매 입력창, 전날, 다음날 버튼 동작 오류 수정
