@@ -28,6 +28,7 @@
 | MONTHLY_PAY    | 월 납입액      |     | varchar | 100  |
 | TRANSFER_DATE  | 이체일         |     | varchar | 100  |
 | NOTE           | 메모 내용      |     | varchar | 1000 |
+| ENABLE_F       | 활성 여부      |     | varchar | 1    | Y        |
 | STOCK_F        | 주식 게좌 여부 |     | varchar | 1    | Y        |
 | DELETE_F       | 삭제 여부      |     | varchar | 1    | Y        |
 
@@ -115,6 +116,7 @@
 | PURCHASE_AMOUNT | 구매금액       |     | integer |      | Y        |
 | LINK            | 상세정보 링크  |     | varchar | 200  |
 | NOTE            | 메모 내용      |     | varchar | 1000 |
+| ENABLE_F        | 활성 여부      |     | varchar | 1    | Y        |
 | DELETE_F        | 삭제 여부      |     | varchar | 1    | Y        |
 
 - DB_TRADING: 매매

@@ -53,7 +53,7 @@
                     <td class="text-right">{{t.price | numberFormat}}</td>
                     <td class="text-right">{{t.quantity | numberFormat}}</td>
                     <td class="text-right">{{t.price * t.quantity | numberFormat}}</td>
-                    <td :style="{color:getGainsColor(t.sellGains)}" class="text-right">{{t.sellGains || 0 | numberFormat}}</td>
+                    <td :style="{color:getGainsColor(t.sellGains)}" class="text-right">{{t.sellGains || 0 | numberFormat}} ({{calcEarningRate(t)}}%)</td>
                     <td class="text-right">{{t.tax || 0 | numberFormat}}</td>
                     <td class="text-right">{{t.fee || 0 | numberFormat}}</td>
                     <td>{{t.stockSeq | stockAccountName}}</td>

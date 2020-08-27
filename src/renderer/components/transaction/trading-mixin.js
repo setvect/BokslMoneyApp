@@ -40,5 +40,14 @@ export default {
         return acc + t.price * t.quantity;
       }, 0);
     },
+    // 수익율%
+    calcEarningRate(tradingItem) {
+      if(tradingItem.kind == "BUYING") {
+        return 0;
+      }
+      let sell = tradingItem.price * tradingItem.quantity;
+      let buy = sell - tradingItem.sellGains;
+      return ((tradingItem.sellGains / buy) * 100).toFixed(1);
+    },
   },
 };

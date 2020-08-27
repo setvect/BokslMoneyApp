@@ -57,7 +57,7 @@ export default {
         [Op.like]: `%${param.note}%`,
       };
     }
-    if (param.kindTypeSet) {
+    if (param.kindTypeSet && param.kindTypeSet.length > 0) {
       where["kind"] = param.kindTypeSet;
     }
 

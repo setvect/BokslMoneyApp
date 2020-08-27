@@ -94,6 +94,19 @@
                 <span class="error" v-if="errors.has('note')">{{errors.first('note')}}</span>
               </div>
             </div>
+            <div class="form-group row">
+              <label class="control-label col-md-3 col-sm-3 col-xs-3">활성:</label>
+              <div class="col-md-9 col-sm-9 col-xs-9" style="margin-top:10px;">
+                <label class="form-check-label">
+                  <input v-model="item.enableF" type="radio" :value="1" />
+                  예
+                </label>
+                <label class="form-check-label">
+                  <input v-model="item.enableF" type="radio" :value="0" />
+                  아니오
+                </label>
+              </div>
+            </div>
           </form>
         </div>
         <div class="modal-footer">

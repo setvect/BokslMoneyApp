@@ -31,6 +31,7 @@
           <th>만기일</th>
           <th>주식계좌</th>
           <th>메모</th>
+          <th>활성</th>
         </tr>
       </thead>
       <tbody>
@@ -50,6 +51,7 @@
             <button v-show="item.stockF" @click="openStockList(item.accountSeq)" type="button" class="btn btn-success btn-xs">목록 ({{item.stockList.length}})</button>
           </td>
           <td class="td-ell">{{item.note}}</td>
+          <td class="text-center">{{item.enableF ? "예": "아니오"}}</td>
         </tr>
       </tbody>
     </table>

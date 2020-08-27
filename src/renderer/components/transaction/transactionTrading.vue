@@ -110,10 +110,10 @@ import "jquery-ui/themes/base/all.css";
 import transactionMixin from "./transaction-mixin.js";
 
 export default {
-  name:"transactionTrading",
+  name: "transactionTrading",
   data() {
     return {
-      item: { stockSeq:0, price: 0, fee: 0, tax:0, quantity:0, kind: "BUYING", },
+      item: { stockSeq: 0, price: 0, fee: 0, tax: 0, quantity: 0, kind: "BUYING", },
       tradingAccount: null,
       actionType: "add",
       itemPath: null,
@@ -122,21 +122,20 @@ export default {
       closeReload: false,
     };
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     stockAccountList() {
-      return this.accountList.filter(a=>a.stockF);
+      return this.accountEnableList.filter((a) => a.stockF);
     },
     // 주식 항목
     stockList() {
-      if(this.tradingAccount != null) {
-        return this.tradingAccount.stockList;
+      if (this.tradingAccount != null) {
+        return this.tradingAccount.stockList.filter((s) => s.enableF);
       }
       return [];
     },
   },
-  mixins:[transactionMixin],
+  mixins: [transactionMixin],
   methods: {
     // 등록 폼
     openAddForm(date) {
@@ -166,29 +165,35 @@ export default {
     },
     // 계좌 입력 팝업창.
     openForm() {
-      let tempAcc = this.stockAccountList.find(acc => acc == this.tradingAccount);
-      if(tempAcc == null) {
+      let tempAcc = this.stockAccountList.find((acc) => acc == this.tradingAccount);
+      if (tempAcc == null) {
         this.tradingAccount = this.stockAccountList.length == 0 ? null : this.stockAccountList[0];
       }
       this.loadOftenUsed();
       this.closeReload = false;
 
-      $("._datepicker").daterangepicker({
-        singleDatePicker: true,
-        singleClasses: "",
-        showDropdowns: true,
-        startDate: this.selectDate.format("YYYY-MM-DD"),
-      }, (start) => {
-        this.item.tradingDate = start.format("YYYY-MM-DD");
-      });
-      this.$validator.reset();
-      $("#stockAddFrom").off().on("hidden.bs.modal", () => {
-        if (this.closeReload) {
-          this.$parent.reload();
+      $("._datepicker").daterangepicker(
+        {
+          singleDatePicker: true,
+          singleClasses: "",
+          showDropdowns: true,
+          startDate: this.selectDate.format("YYYY-MM-DD"),
+        },
+        (start) => {
+          this.item.tradingDate = start.format("YYYY-MM-DD");
         }
-      }).on("shown.bs.modal", () =>{
-        $("#stockMemoField").focus();
-      });
+      );
+      this.$validator.reset();
+      $("#stockAddFrom")
+        .off()
+        .on("hidden.bs.modal", () => {
+          if (this.closeReload) {
+            this.$parent.reload();
+          }
+        })
+        .on("shown.bs.modal", () => {
+          $("#stockMemoField").focus();
+        });
       $("#stockAddFrom").modal();
     },
     // 등록 또는 수정
@@ -200,7 +205,7 @@ export default {
         }
         let actionName = this.actionType == "add" ? "trading/addItem" : "trading/editItem";
 
-        ElectronUtil.invoke(actionName, this.item, (result)=>{
+        ElectronUtil.invoke(actionName, this.item, (result) => {
           this.closeReload = true;
           if (cont && this.actionType == "add") {
             this.item.note = "";
@@ -209,7 +214,7 @@ export default {
             this.item.tax = 0;
             this.item.fee = 0;
             // 포커스가 제대로 안되서 timeout 적용. $nextTick 안됨.
-            setTimeout(()=> $("#stockMemoField").focus(), 100);
+            setTimeout(() => $("#stockMemoField").focus(), 100);
           } else {
             $("#stockAddFrom").modal("hide");
           }
@@ -222,7 +227,7 @@ export default {
     },
     // 자주쓰는 거래 정보
     loadOftenUsed() {
-      ElectronUtil.invoke("oftenUsed/listItem", this.item.kind, (result)=>{
+      ElectronUtil.invoke("oftenUsed/listItem", this.item.kind, (result) => {
         this.oftenUsedList = result;
       });
     },

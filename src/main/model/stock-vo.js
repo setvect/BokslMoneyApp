@@ -35,6 +35,10 @@ const stockVo = connSeque.define(
       type: DataTypes.STRING(1000),
       allowNull: true,
     },
+    enableF: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     deleteF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

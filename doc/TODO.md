@@ -5,11 +5,16 @@
 ```sql
 ALTER TABLE "BA_ACCOUNT"
 	ADD COLUMN "stock_f" TINYINT NOT NULL DEFAULT '0';
+
+ALTER TABLE "BA_ACCOUNT"
+	ADD COLUMN "enable_f" TINYINT NOT NULL DEFAULT '1';
+
+ALTER TABLE "DA_STOCK"
+	ADD COLUMN "enable_f" TINYINT NOT NULL DEFAULT '1';
 ```
 
-
 ### 진행예정
-- PBM-20200823: 결산에서 주식 목록 표시되지 않음
+- PBM-20200827: 주식 계속 입력 시 거래계좌 포커스를 잃어 버림
 - PBM-20200823: 가계부 쓰기(표), 주식 매매(표) 검색 계속하면 테이블 넓이가 변경됨
 - PBM-20200823: 주식 계좌가 두개 이상인 경우. 거래 내역 수정시 거래 내역 셀렉트 박스가 이전 입력 내용으로 선택되지 않음.
 - PBM-20200820: 모달창이 안에 있는 폼 element가 선택되지 않는 문제(모달창을 열었다 닫았다 하는 상황에서 발생)
@@ -18,6 +23,9 @@ ALTER TABLE "BA_ACCOUNT"
 - NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8
 
 ### 완료
+- NEW-20200824(20200827): 매도차익에 수익률 표시
+- NEW-20200827: 계좌, 주식 활성/비활성. 비활성화된 항목은 거래 내역에 표시 하지 않음.
+- PBM-20200823(20200827): 결산에서 주식 목록 표시되지 않음
 - PBM-20200823: 자산 변화량 차트 계산 오류 수정
 - NEW-20200823: 계좌 관리에 주식 자산도 표시
 - PBM-20200823: 주식 매매 표에서 매수, 매도 필터링 안되는 문제 해결

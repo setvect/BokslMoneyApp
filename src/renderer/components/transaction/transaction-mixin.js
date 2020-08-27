@@ -26,6 +26,10 @@ export default {
     sumTransfer() {
       return this.sumCalculation((t) => t.kind == "TRANSFER");
     },
+    // 활성화된 계좌 반환
+    accountEnableList() {
+      return this.accountList.filter(a => a.enableF);
+    },
   },
   methods: {
     getAttributeList(kind) {

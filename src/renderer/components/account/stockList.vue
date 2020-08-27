@@ -18,6 +18,7 @@
                 <th>평단가</th>
                 <th>종목상세</th>
                 <th>메모</th>
+                <th>활성</th>
                 <th>기능</th>
               </tr>
             </thead>
@@ -32,6 +33,7 @@
                   <a v-if="item.link" @click="openBrowser(item.link)" style="cursor:pointer" target="_blank">링크</a>
                 </td>
                 <td>{{item.note }}</td>
+                <td class="text-center">{{item.enableF ? "예": "아니오"}}</td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs">
                     <button type="button" class="btn btn-success btn-sm" @click="openEditForm(item)">수정</button>
@@ -70,9 +72,8 @@ export default {
       stockList: [],
     };
   },
-  computed: {
-  },
-  mounted() { },
+  computed: {},
+  mounted() {},
   methods: {
     openForm(accountSeq) {
       this.loadStock(accountSeq);
@@ -80,7 +81,7 @@ export default {
     },
     // 거래내역 조회
     loadStock(accountSeq) {
-      ElectronUtil.invoke("stock/listItem", accountSeq, result=>{
+      ElectronUtil.invoke("stock/listItem", accountSeq, (result) => {
         this.stockList = result;
       });
     },
@@ -107,7 +108,7 @@ export default {
     },
     // 평단가 계산
     rating(item) {
-      if(item.quantity == 0) {
+      if (item.quantity == 0) {
         return 0;
       }
       return Math.round(item.purchaseAmount / item.quantity);
