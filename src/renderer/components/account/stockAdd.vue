@@ -115,7 +115,7 @@ export default {
     // 등록 폼
     openAddForm(item) {
       this.actionType = "add";
-      this.openForm({ ...item, quantity:0, purchaseAmount:0, });
+      this.openForm({ ...item, quantity:0, purchaseAmount:0, enableF:1, });
     },
     // 수정 폼
     openEditForm(item) {
