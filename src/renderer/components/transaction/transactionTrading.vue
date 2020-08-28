@@ -26,16 +26,17 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">거래계좌:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <select class="form-control" v-model="tradingAccount" name="receiveAccount" v-validate="'required'" data-vv-as="거래 계좌 ">
-                    <option v-for="account in stockAccountList" v-bind:value="account" :key="account.accountSeq">{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
+                  <select class="form-control" v-model="accountSeq" @change="item.stockSeq = 0" name="accountSeq" v-validate="'required|greaterThanZero'" data-vv-as="거래 계좌 ">
+                    <option v-for="account in stockAccountList" :value="account.accountSeq" :key="account.accountSeq">{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
                   </select>
-                  <span class="error" v-if="errors.has('receiveAccount')">{{errors.first('receiveAccount')}}</span>
+                  <span class="error" v-if="errors.has('accountSeq')">{{errors.first('accountSeq')}}</span>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">종목:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <select class="form-control" v-model="item.stockSeq" name="stockSeq" v-validate="'required'" data-vv-as="종목 ">
+                  <select class="form-control" v-model="item.stockSeq" name="stockSeq" v-validate="'required|greaterThanZero'" data-vv-as="종목 ">
+                    <option :value="0">==선택해라==</option>
                     <option v-for="stock in stockList" v-bind:value="stock.stockSeq" :key="stock.stockSeq">{{stock.name}} : {{stock.quantity | numberFormat}}주 ({{stock.purchaseAmount| numberFormat}}원)</option>
                   </select>
                   <span class="error" v-if="errors.has('stockSeq')">{{errors.first('stockSeq')}}</span>
@@ -106,7 +107,9 @@ import "daterangepicker/daterangepicker.css";
 import "jquery-ui/ui/core";
 import "jquery-ui/ui/widgets/autocomplete.js";
 import "jquery-ui/themes/base/all.css";
-
+import {
+  mapGetters
+} from "vuex";
 import transactionMixin from "./transaction-mixin.js";
 
 export default {
@@ -114,7 +117,7 @@ export default {
   data() {
     return {
       item: { stockSeq: 0, price: 0, fee: 0, tax: 0, quantity: 0, kind: "BUYING", },
-      tradingAccount: null,
+      accountSeq: null,
       actionType: "add",
       itemPath: null,
       selectDate: null,
@@ -122,15 +125,32 @@ export default {
       closeReload: false,
     };
   },
+  created() {
+    this.$validator.extend(
+      "greaterThanZero", {
+        getMessage: field => field + " 선택하세요.",
+        validate: (value) => {
+          // value must be > zero
+          if (value > 0) {
+            return true;
+          }
+          return false;
+        },
+      });
+  },
   mounted() {},
   computed: {
+    ...mapGetters([
+      "accountList"
+    ]),
     stockAccountList() {
       return this.accountEnableList.filter((a) => a.stockF);
     },
     // 주식 항목
     stockList() {
-      if (this.tradingAccount != null) {
-        return this.tradingAccount.stockList.filter((s) => s.enableF);
+      if (this.accountSeq) {
+        let account = this.accountList.find((a) => a.accountSeq == this.accountSeq);
+        return account.stockList.filter((s) => s.enableF);
       }
       return [];
     },
@@ -165,9 +185,9 @@ export default {
     },
     // 계좌 입력 팝업창.
     openForm() {
-      let tempAcc = this.stockAccountList.find((acc) => acc == this.tradingAccount);
+      let tempAcc = this.stockAccountList.find((acc) => acc.accountSeq == this.accountSeq);
       if (tempAcc == null) {
-        this.tradingAccount = this.stockAccountList.length == 0 ? null : this.stockAccountList[0];
+        this.accountSeq = this.stockAccountList.length == 0 ? null : this.stockAccountList[0].accountSeq;
       }
       this.loadOftenUsed();
       this.closeReload = false;
