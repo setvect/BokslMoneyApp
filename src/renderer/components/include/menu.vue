@@ -1,10 +1,10 @@
 <template>
   <div class="left_col scroll-view">
     <div class="navbar nav_title" style="border: 0; padding:0">
-      <a href="/" class="site_title">
+      <router-link :to="{name: 'transaction-calendar'}" class="site_title">
         <i class="fa fa-paw"></i>
         <span>복슬머니</span>
-      </a>
+      </router-link>
     </div>
     <div class="clearfix"></div>
     <!-- sidebar menu -->
