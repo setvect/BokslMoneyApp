@@ -162,7 +162,7 @@ export default {
     },
     // 등록 폼
     addForm() {
-      this.$parent.$refs.popupAdd.openAddForm({});
+      this.$parent.$refs.popupAdd.openAddForm({ enableF:1, stockF:0, });
     },
     addStock(accountSeq) {
       this.$parent.$refs.stockAdd.openAddForm({ accountSeq, });

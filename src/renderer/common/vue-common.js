@@ -108,6 +108,10 @@ Vue.component("my-currency-input", {
   computed: {
     displayValue: {
       get() {
+        if(this.value == null) {
+          return "";
+        }
+
         if (this.isInputActive) {
           // Cursor is inside the input field. unformat display value for user
           return this.value.toString();
