@@ -72,6 +72,7 @@ export default {
 
     let condition = {
       where,
+      order: ["transactionDate"],
       // raw: true,
       nest: true,
       include: [{

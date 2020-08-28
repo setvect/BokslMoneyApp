@@ -64,6 +64,7 @@ export default {
     let condition = {
       where,
       // raw: true,
+      order: ["tradingDate"],
       nest: true,
     };
     if (param.returnCount) {

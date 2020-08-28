@@ -14,8 +14,8 @@
           <table ref="dataTable" class="table table-striped jambo_table bulk_action table-bordered">
             <thead>
               <tr class="headings">
+                <th>No</th>
                 <th>유형</th>
-                <th>내용</th>
                 <th>종목</th>
                 <th>단가</th>
                 <th>수량</th>
@@ -28,9 +28,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="t in tradingList" :key="t.tradingSeq">
+              <tr v-for="(t,idx) in tradingList" :key="t.tradingSeq">
+                <td>{{idx + 1}}</td>
                 <td :style="{color:getKindAttr(t.kind).color}">{{getKindAttr(t.kind).title}}</td>
-                <td>{{t.note}}</td>
                 <td>{{t.stockSeq | stockName}}</td>
                 <td class="text-right">{{t.price | numberFormat}}</td>
                 <td class="text-right">{{t.quantity | numberFormat}}</td>
