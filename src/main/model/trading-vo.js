@@ -5,7 +5,7 @@ import {
 import stockVo from "./stock-vo.js";
 
 const tradingVo = connSeque.define(
-  "stock", {
+  "trading", {
     tradingSeq: {
       type: DataTypes.INTEGER,
       allowNull: false,

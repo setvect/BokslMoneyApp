@@ -7,6 +7,7 @@ import {
 import trading from "../../model/trading-vo.js";
 import stockVo from "../../model/stock-vo.js";
 import accountVo from "../../model/account-vo.js";
+import connSeque from "../../model/connSeque.js";
 
 export default {
   init() {
@@ -59,6 +60,15 @@ export default {
     }
     if (param.kindTypeSet && param.kindTypeSet.length > 0) {
       where["kind"] = param.kindTypeSet;
+    }
+    if (param.accountSeq) {
+      const tempSQL = connSeque.dialect.QueryGenerator.selectQuery("DA_STOCK", {
+        attributes: ["stock_seq"],
+        where: {
+          "account_seq": param.accountSeq,
+        }, })
+        .slice(0, -1); // to remove the ';' from the end of the SQL
+      where["stock_seq"] = { [Op.in]: connSeque.literal(`(${tempSQL})`), };
     }
 
     let condition = {

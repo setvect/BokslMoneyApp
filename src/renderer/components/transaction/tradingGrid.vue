@@ -12,10 +12,6 @@
           <div v-cloak>
             <div class="col-md-9 col-sm-9 col-xs-12">
               <div class="form-inline">
-                <div class="form-group">
-                  <label for="memo_field">메모:</label>
-                  <input v-model="condition.note" type="text" class="form-control" id="memo_field" @keyup.13="search()" />
-                </div>
                 <div class="checkbox form-group" style="margin:0 10px">
                   <label>
                     <input v-model="condition.kindTypeSet" type="checkbox" value="BUYING" class="flat" /> 매수
@@ -91,7 +87,7 @@
                     <div class="col-sm-9">
                       <select v-model="condition.accountSeq" class="form-control" name="account">
                         <option v-bind:value="0">== 전체 ==</option>
-                        <option v-for="account in stockAccountList" v-bind:value="account" :key="account.accountSeq">{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
+                        <option v-for="account in stockAccountList" v-bind:value="account.accountSeq" :key="account.accountSeq">{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
                       </select>
                     </div>
                   </div>
