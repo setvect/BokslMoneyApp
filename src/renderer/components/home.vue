@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import { ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
+import { FindInPage } from "electron-find";
 import userEdit from "./user/loginUserEdit.vue";
 import leftMenu from "./include/menu.vue";
 export default {
@@ -24,6 +25,10 @@ export default {
   mounted() {
     ipcRenderer.on("changePassword", (event, page, query) => {
       this.$refs.userEdit.openForm();
+    });
+    ipcRenderer.on("on-find", (e, args) => {
+      let findInPage = new FindInPage(remote.getCurrentWebContents());
+      findInPage.openFindWindow();
     });
   },
 };

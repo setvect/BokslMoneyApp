@@ -34,6 +34,7 @@ export default{
     window.on("closed", () => {
       window = null;
     });
+    return window;
   },
   makeDir(dir) {
     const fs = require("fs");

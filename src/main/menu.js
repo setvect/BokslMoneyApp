@@ -28,6 +28,13 @@ export default {
           },
         },
         {
+          label: "찾기",
+          accelerator: "Ctrl+F",
+          click(item, focusedWindow) {
+            focusedWindow.webContents.send("on-find");
+          },
+        },
+        {
           label: "Toggle DevTools",
           click(item, focusedWindow) {
             focusedWindow.toggleDevTools();
