@@ -28,7 +28,7 @@
                 <button type="button" class="btn btn-success ml-auto" style="margin: 0" @click="exportExcel();">내보내기(엑셀)</button>
               </div>
 
-              <table class="table table-striped jambo_table bulk_action table-bordered" id="grid">
+              <table ref="dataTable" class="table table-striped jambo_table bulk_action table-bordered" id="grid">
                 <thead>
                   <tr class="headings">
                     <th>No</th>
@@ -320,30 +320,9 @@ export default {
     },
     // 엑셀 다운로드
     exportExcel() {
-      const csvData = [];
-      csvData.push(["유형", "메모", "대분류", "소분류", "금액", "수수료", "출금계좌", "입금계좌", "날짜"]);
-      this.transactionList.forEach(item => {
-        const record = [];
-        record.push(this.getKindAttr(item.kind).title);
-        record.push(item.note);
-        record.push(this.categoryMap[item.category.parentSeq].name);
-        record.push(item.category.name);
-        record.push(item.money.toLocaleString());
-        record.push(item.fee.toLocaleString());
-
-        let payAccount = this.accountMap[item.payAccount];
-        record.push(payAccount == null ? "" : payAccount.name);
-
-        let receiveAccount = this.accountMap[item.receiveAccount];
-        record.push(receiveAccount == null ? "" : receiveAccount.name);
-
-        record.push(CommonUtil.formatDate(item.transactionDate, "YYYY.MM.DD"));
-        csvData.push(record);
-      });
-      const csvString = CommonUtil.convertHtmlTable(csvData);
-      let fromLabel = CommonUtil.formatDate(this.condition.from, "YYYY.MM.DD");
-      let toLabel = CommonUtil.formatDate(this.condition.to, "YYYY.MM.DD");
-      CommonUtil.download(csvString, `거래 내역(${fromLabel}~${toLabel}).xls`, "text/html;encoding:utf-8");
+      let html = this.$refs.dataTable;
+      const htmlText = CommonUtil.replaceAll(html.outerHTML, "<table", "<table border='1'");
+      CommonUtil.download(htmlText, `주식 매매 내역(${CommonUtil.formatDate(this.condition.from, "YYYY.MM.DD")}_${CommonUtil.formatDate(this.condition.to, "YYYY.MM.DD")}).xls`, "text/html;encoding:utf-8");
     },
   },
 };
