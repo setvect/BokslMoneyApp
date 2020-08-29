@@ -52,17 +52,20 @@ npm run build
 * 목록 보기
 ![Server Map](readme/pic3.png)
 
-* 결산 내역
+* 주식 매매 내역
 ![Server Map](readme/pic4.png)
 
-* 수입/지출/이체 그래프
+* 결산 내역
 ![Server Map](readme/pic5.png)
 
-* 자산 변환 그래프
+* 수입/지출/이체 그래프
 ![Server Map](readme/pic6.png)
 
-* 계좌 목록
+* 자산 변환 그래프
 ![Server Map](readme/pic7.png)
+
+* 계좌 목록
+![Server Map](readme/pic8.png)
 
 ---
 
