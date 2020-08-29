@@ -37,7 +37,10 @@
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <select class="form-control" v-model="item.stockSeq" name="stockSeq" v-validate="'required|greaterThanZero'" data-vv-as="종목 ">
                     <option :value="0">==선택해라==</option>
-                    <option v-for="stock in stockList" v-bind:value="stock.stockSeq" :key="stock.stockSeq">{{stock.name}} : {{stock.quantity | numberFormat}}주 ({{stock.purchaseAmount| numberFormat}}원)</option>
+                    <option v-for="stock in stockList" v-bind:value="stock.stockSeq" :key="stock.stockSeq">
+                      {{stock.name}} : {{stock.quantity | numberFormat}}주
+                      ({{stock.purchaseAmount | numberFormat}}원, 평단가: {{(Math.round(stock.purchaseAmount / stock.quantity))| numberFormat}}원)
+                    </option>
                   </select>
                   <span class="error" v-if="errors.has('stockSeq')">{{errors.first('stockSeq')}}</span>
                 </div>
