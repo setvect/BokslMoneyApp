@@ -27,7 +27,7 @@ npm run postinstall
 # install dependencies
 npm install
 
-#./dise/ 폴더에 실행파일 만들어짐.
+#./dist/ 폴더에 실행파일 만들어짐.
 npm run build
 ```
 
@@ -38,7 +38,7 @@ npm run build
 ### 인스톨 버전 만들기
 
 ```bash
-#./dise/ 폴더에 실행파일 만들어짐.
+#./dist/ 폴더에 실행파일 만들어짐.
 npm run build
 ```
 
