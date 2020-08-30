@@ -6,10 +6,10 @@ export default {
   },
   computed: {
     sumBuying() {
-      return this.sumCalculation((t) => t.kind == "BUYING");
+      return this.sumTrading((t) => t.kind == "BUYING");
     },
     sumSell() {
-      return this.sumCalculation((t) => t.kind == "SELL");
+      return this.sumTrading((t) => t.kind == "SELL");
     },
   },
 
@@ -35,7 +35,7 @@ export default {
       });
     },
     // 매매 결과 합산
-    sumCalculation(filterCondition) {
+    sumTrading(filterCondition) {
       return this.tradingList.filter(filterCondition).reduce((acc, t) => {
         return acc + t.price * t.quantity;
       }, 0);
