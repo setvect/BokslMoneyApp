@@ -55,7 +55,7 @@ export default {
   },
   mounted() {
     // TODO 로그인 페이지 통과. 향후 아래 코드 제거
-    this.$router.push({ name: "transaction-calendar", });
+    // this.$router.push({ name: "transaction-calendar", });
   },
 };
 </script>
