@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/setvect/BokslMoneyApp#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.10.1",
