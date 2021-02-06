@@ -6,13 +6,14 @@ var CalendarUtil = {};
 // 해당 년 주요 기념일 반환
 CalendarUtil.getAnniversary = function(year) {
   const lunarDay = [
-    { yearDiff: -1, month: 12, date: 30, name: "설날(연휴)", },
-    { yearDiff: 0, month: 1, date: 1, name: "설날", },
-    { yearDiff: 0, month: 1, date: 2, name: "설날(연휴)", },
-    { yearDiff: 0, month: 4, date: 8, name: "석가탄신일", },
-    { yearDiff: 0, month: 8, date: 14, name: "추석(연휴)", },
-    { yearDiff: 0, month: 8, date: 15, name: "추석", },
-    { yearDiff: 0, month: 8, date: 16, name: "추석(연휴)", }
+    { yearDiff: -1, month: 12, date: 30, holiday: true, name: "설날(연휴)", },
+    { yearDiff: 0, month: 1, date: 1, holiday: true, name: "설날", },
+    { yearDiff: 0, month: 1, date: 2, holiday: true, name: "설날(연휴)", },
+    { yearDiff: 0, month: 4, date: 8, holiday: true, name: "석가탄신일", },
+    { yearDiff: 0, month: 8, date: 14, holiday: true, name: "추석(연휴)", },
+    { yearDiff: 0, month: 8, date: 14, holiday: false, name: "반달이 생일", },
+    { yearDiff: 0, month: 8, date: 15, holiday: true, name: "추석", },
+    { yearDiff: 0, month: 8, date: 16, holiday: true, name: "추석(연휴)", }
   ];
 
   let result = [];
@@ -88,7 +89,7 @@ CalendarUtil.getAnniversary = function(year) {
       .format("YYYY-MM-DD");
     result.push({
       date: lunarDatePattern,
-      event: { name: value.name, holiday: true, },
+      event: { name: value.name, holiday: value.holiday, },
     });
   });
   return result;
