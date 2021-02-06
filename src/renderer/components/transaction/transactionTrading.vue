@@ -66,17 +66,17 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="control-label col-md-2 col-sm-2 col-xs-2">단가:</label>
-                <div class="col-md-10 col-sm-10 col-xs-10">
-                  <my-currency-input v-model="item.price" @press-enter="addAction(true)" class="form-control" name="price" maxlength="10" v-validate="'required'" data-vv-as="단가 "></my-currency-input>
-                  <span class="error" v-if="errors.has('price')">{{errors.first('price')}}</span>
-                </div>
-              </div>
-              <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">수량:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
                   <my-currency-input v-model="item.quantity" @press-enter="addAction(true)" class="form-control" name="quantity" maxlength="10" v-validate="'required'" data-vv-as="수량 "></my-currency-input>
                   <span class="error" v-if="errors.has('quantity')">{{errors.first('quantity')}}</span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-2 col-sm-2 col-xs-2">단가:</label>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                  <my-currency-input v-model="item.price" @press-enter="addAction(true)" class="form-control" name="price" maxlength="10" v-validate="'required'" data-vv-as="단가 "></my-currency-input>
+                  <span class="error" v-if="errors.has('price')">{{errors.first('price')}}</span>
                 </div>
               </div>
               <div class="form-group row">

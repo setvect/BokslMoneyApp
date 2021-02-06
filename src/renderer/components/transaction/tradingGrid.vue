@@ -30,8 +30,8 @@
                     <th>No</th>
                     <th>유형</th>
                     <th>종목</th>
-                    <th>단가</th>
                     <th>수량</th>
+                    <th>단가</th>
                     <th>합산금액</th>
                     <th>매도 차익</th>
                     <th>거래세</th>
@@ -46,8 +46,8 @@
                     <td>{{idx + 1}}</td>
                     <td :style="{color:getKindAttr(t.kind).color}">{{getKindAttr(t.kind).title}}</td>
                     <td>{{t.stockSeq | stockName}}</td>
-                    <td class="text-right">{{t.price | numberFormat}}</td>
                     <td class="text-right">{{t.quantity | numberFormat}}</td>
+                    <td class="text-right">{{t.price | numberFormat}}</td>
                     <td class="text-right">{{t.price * t.quantity | numberFormat}}</td>
                     <td :style="{color:getGainsColor(t.sellGains)}" class="text-right">{{t.sellGains || 0 | numberFormat}} ({{calcEarningRate(t)}}%)</td>
                     <td class="text-right">{{t.tax || 0 | numberFormat}}</td>

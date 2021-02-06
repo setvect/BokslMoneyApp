@@ -67,8 +67,8 @@
                     <col width="10%" />
                     <col width="15%" />
                     <col width="15%" />
-                    <col width="13%" />
-                    <col width="13%" />
+                    <col width="10%" />
+                    <col width="16%" />
                     <col width="19%" />
                     <col width="15%" />
                   </colgroup>
@@ -76,8 +76,8 @@
                     <th>유형</th>
                     <th>내용</th>
                     <th>종목</th>
-                    <th>단가</th>
                     <th>수량</th>
+                    <th>단가 / 합계</th>
                     <th>거래계좌</th>
                     <th>기능</th>
                   </thead>
@@ -86,8 +86,8 @@
                       <td :style="{color:getKindAttr(t.kind).color}">{{getKindAttr(t.kind).title}}</td>
                       <td>{{t.note}}</td>
                       <td>{{t.stockSeq | stockName}}</td>
-                      <td class="text-right">{{t.price | numberFormat}}</td>
                       <td class="text-right">{{t.quantity | numberFormat}}</td>
+                      <td class="text-right">{{t.price | numberFormat}}<br/> = {{t.quantity * t.price | numberFormat}}</td>
                       <td>{{t.stockSeq | stockAccountName}}</td>
                       <td class="text-center">
                         <div class="btn-group btn-group-xs">
