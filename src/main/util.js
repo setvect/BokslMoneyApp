@@ -16,10 +16,10 @@ export default{
         nodeIntegration: true,
       },
     });
-    window.setIcon(path.join(__dirname, "assets/icons/boksl-32.png"));
-
+    logger.info(`isDevelopment: ${isDevelopment}`);
     if (isDevelopment) {
       window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
+      window.setIcon(path.join(__dirname, "assets/icons/boksl-256.png"));
       window.webContents.openDevTools();
     } else {
       window.loadURL(

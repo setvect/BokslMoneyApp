@@ -87,13 +87,23 @@
     "appId": "boksl",
     "productName": "BokslMoney",
     "directories": {
-      "output": "dist"
+      "output": "dist",
+      "buildResources": "src/main/assets"
+    },
+    "mac": {
+      "icon": "./src/main/assets/icons/boksl-256.icns",
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "icon": "./src/main/assets/icons/boksl-256.png"
     },
     "files": [
-      "./main/assets/**/*"
+      "./src/main/assets/**/*"
     ],
     "target": "NSIS",
     "nsis": {
+      "installerIcon": "./src/main/assets/icons/boksl-256.ico",
+      "installerHeaderIcon": "./src/main/assets/icons/boksl-256.ico",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     }
