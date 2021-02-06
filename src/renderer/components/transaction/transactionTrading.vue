@@ -2,7 +2,7 @@
   <div id="stockAddFrom" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
-      <div class="modal-content">
+      <div v-if="this.item != null" class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">주식 매매 {{actionType == 'add' ? '등록' : '수정'}}</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -114,12 +114,13 @@ import {
   mapGetters
 } from "vuex";
 import transactionMixin from "./transaction-mixin.js";
+import store from "../../store/index.js";
 
 export default {
   name: "transactionTrading",
   data() {
     return {
-      item: { stockSeq: 0, price: 0, fee: 0, tax: 0, quantity: 0, kind: "BUYING", },
+      item: null,
       accountSeq: null,
       actionType: "add",
       itemPath: null,
@@ -163,6 +164,7 @@ export default {
     // 등록 폼
     openAddForm(date) {
       this.actionType = "add";
+      this.item = { stockSeq: 0, price: 0, fee: 0, tax: 0, quantity: 0, kind: "BUYING", },
       this.selectDate = date;
       this.item.tradingDate = this.selectDate.format("YYYY-MM-DD");
       delete this.item.tradingSeq;
@@ -188,9 +190,10 @@ export default {
     },
     // 계좌 입력 팝업창.
     openForm() {
-      let tempAcc = this.stockAccountList.find((acc) => acc.accountSeq == this.accountSeq);
-      if (tempAcc == null) {
-        this.accountSeq = this.stockAccountList.length == 0 ? null : this.stockAccountList[0].accountSeq;
+      const stockSeq = this.item.stockSeq;
+      const stock = store.state.stock.stockMap[stockSeq];
+      if (stock != null) {
+        this.accountSeq = stock.accountSeq;
       }
       this.loadOftenUsed();
       this.closeReload = false;
