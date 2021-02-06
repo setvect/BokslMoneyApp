@@ -16,8 +16,7 @@ export default{
         nodeIntegration: true,
       },
     });
-    logger.info(path.join(__dirname, "assets/icons/boksl-16.png"));
-    // window.setIcon(path.join(__dirname, "assets/icons/boksl-16.png"));
+    window.setIcon(path.join(__dirname, "assets/icons/boksl-32.png"));
 
     if (isDevelopment) {
       window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
