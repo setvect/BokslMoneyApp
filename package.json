@@ -48,7 +48,7 @@
     "jquery-contextmenu": "^2.9.0",
     "jquery-ui": "^1.12.1",
     "jszip": "^3.3.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "log4js": "^6.3.0",
     "moment": "^2.24.0",
     "moment-lunar": "0.0.4",
