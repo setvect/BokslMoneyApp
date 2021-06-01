@@ -11,3 +11,4 @@ temp/
 thumbs.db
 !.gitkeep
 logs/*
+/.history

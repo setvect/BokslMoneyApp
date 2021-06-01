@@ -177,12 +177,13 @@ export default {
     // 엑셀 다운로드
     exportExcel() {
       const csvData = [];
-      csvData.push(["자산종류", "이름", "잔고", "이률", "계좌(카드)번호", "월 납입액", "만기일", "메모"]);
+      csvData.push(["자산종류", "이름", "잔고", "주식합계", "이률", "계좌(카드)번호", "월 납입액", "만기일", "메모"]);
       this.itemList.forEach(item => {
         const record = [];
         record.push(item.kindName);
         record.push(item.name);
         record.push(item.balance.toString());
+        record.push(this.sumStock(item.accountSeq).toString());
         record.push(item.interestRate);
         record.push(item.accountNumber);
         record.push(item.monthlyPay);
