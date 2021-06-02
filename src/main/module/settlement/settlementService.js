@@ -145,11 +145,9 @@ export default {
     // 계좌 잔고 합계
     let allAcount = await accountService.listAccount();
     const totalAccount = _.sumBy(allAcount, "balance");
-    // 주식 구매금액
+    // 주식 매수금액
     let allStock = await stockService.listStock();
     const totalStock = _.sumBy(allStock, "purchaseAmount");
-    console.log("###################################");
-    console.log("totalAccount :>> ", totalAccount, totalStock);
     return totalAccount + totalStock;
   },
 

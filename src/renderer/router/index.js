@@ -24,7 +24,7 @@ export default new Router({
       component: require("@/components/transaction/grid.vue").default,
     },
     {
-      path: "/stock",
+      path: "/stockTrading",
       name: "transaction-stock",
       component: require("@/components/transaction/tradingGrid.vue").default,
     },
@@ -47,6 +47,11 @@ export default new Router({
       path: "/account",
       name: "account",
       component: require("@/components/account/account.vue").default,
+    },
+    {
+      path: "/stock",
+      name: "stock",
+      component: require("@/components/stock/stock.vue").default,
     },
     {
       path: "/code",

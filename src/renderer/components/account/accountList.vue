@@ -2,20 +2,24 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="form-row">
       <div class="form-group col-md-3">
-        <label for="inputCity">재산(내가 모은 돈)</label>
+        <label>재산(내가 모은 돈)</label>
         <span class="form-control text-right">{{ property | numberFormat }}</span>
       </div>
       <div class="form-group col-md-3">
-        <label for="inputCity">주식</label>
+        <label>주식</label>
         <span class="form-control text-right">{{ sumTotalStock | numberFormat }}</span>
       </div>
       <div class="form-group col-md-3">
-        <label for="inputCity">자산(마이너스가 아닌 계좌 합)</label>
+        <label>자산(마이너스가 아닌 계좌 합)</label>
         <span class="form-control text-right">{{ asset | numberFormat }}</span>
       </div>
-      <div class="form-group col-md-3">
-        <label for="inputCity">부채(마이너스 계좌 합)</label>
+      <div class="form-group col-md-2">
+        <label>부채(마이너스 계좌 합)</label>
         <span class="form-control text-right">{{ debt | numberFormat }}</span>
+      </div>
+      <div class="form-group col-md-1">
+        <label>필터링</label>
+        <b-form-checkbox v-model="enableFilter">활성 계좌만 </b-form-checkbox>
       </div>
     </div>
     <table class="table table-striped jambo_table bulk_action table-bordered" id="grid">
@@ -36,7 +40,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in itemList" :key="item.accountSeq" style="cursor: pointer">
+        <tr v-for="item in accountFilterList" :key="item.accountSeq" style="cursor: pointer">
           <td>{{ item.kindName }}</td>
           <td>{{ item.accountTypeName }}</td>
           <td>
@@ -97,6 +101,7 @@ export default {
       gridTable: null,
       // 정렬 조건 유지하기 위함
       order: [0, "asc"],
+      enableFilter: true,
     };
   },
   mixins: [accountMixin],
@@ -125,6 +130,12 @@ export default {
         return acc;
       }, 0);
       return value;
+    },
+    accountFilterList() {
+      if (this.enableFilter) {
+        return this.itemList.filter((s) => s.enableF);
+      }
+      return this.itemList;
     },
   },
   mounted() {
@@ -156,14 +167,6 @@ export default {
                 },
               }
             ],
-          });
-
-          this.gridTable.order(this.order).draw();
-          $("#grid").on("order.dt", () => {
-            if (this.gridTable.order().length == 0) {
-              return;
-            }
-            this.order = this.gridTable.order()[0];
           });
 
           // 엑셀 다운로드 button 감추기

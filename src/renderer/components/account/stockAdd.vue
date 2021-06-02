@@ -68,7 +68,7 @@
                   name="balance"
                   maxlength="10"
                   v-validate="'required|integer|max:11|between:-2000000000,2000000000'"
-                  data-vv-as="구매금액 "
+                  data-vv-as="매수금액 "
                   @press-enter="addAction(true)"
                 ></my-currency-input>
                 <span class="error" v-if="errors.has('purchaseAmount')">{{ errors.first("purchaseAmount") }}</span>
@@ -193,12 +193,12 @@ export default {
         if (this.actionType == "add") {
           ElectronUtil.invoke("stock/addItem", this.item, () => {
             $("#addStock").modal("hide");
-            this.$parent.$refs.pageList.list();
+            this.$emit("close");
           });
         } else {
           ElectronUtil.invoke("stock/editItem", this.item, () => {
             $("#addStock").modal("hide");
-            this.$parent.$refs.pageList.list();
+            this.$emit("close");
           });
         }
       });

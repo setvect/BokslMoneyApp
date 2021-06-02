@@ -15,7 +15,7 @@
                 <th>종목</th>
                 <th>종류</th>
                 <th>상장국가</th>
-                <th>구매금액</th>
+                <th>매수금액</th>
                 <th>수량</th>
                 <th>평단가</th>
                 <th>종목상세</th>
@@ -106,16 +106,6 @@ export default {
       ElectronUtil.invoke("stock/deleteItem", item.stockSeq, () => {
         this.loadStock(item.accountSeq);
       });
-    },
-    openBrowser(link) {
-      require("electron").shell.openExternal(link);
-    },
-    // 평단가 계산
-    rating(item) {
-      if (item.quantity == 0) {
-        return 0;
-      }
-      return Math.round(item.purchaseAmount / item.quantity);
     },
   },
 };

@@ -116,7 +116,7 @@
 | STOCK_TYPE      | 주식 종류      |     | integer |      | Y        | CB_CODE_ITEM.CODE_ITEM_SEQ<br>코드 값 TYPE_STOCK<br>개별종목, 지수 ETF 등 |
 | NATION          | 상장국가       |     | integer |      | Y        | CB_CODE_ITEM.TYPE_NATION<br>코드 값 TYPE_NATION<br>국내, 미국 등          |
 | QUANTITY        | 수량           |     | integer |      | Y        |                                                                           |
-| PURCHASE_AMOUNT | 구매금액       |     | integer |      | Y        |                                                                           |
+| PURCHASE_AMOUNT | 매수금액       |     | integer |      | Y        |                                                                           |
 | LINK            | 상세정보 링크  |     | varchar | 200  |          |                                                                           |
 | NOTE            | 메모 내용      |     | varchar | 1000 |          |                                                                           |
 | ENABLE_F        | 활성 여부      |     | varchar | 1    | Y        |                                                                           |

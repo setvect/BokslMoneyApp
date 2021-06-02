@@ -32,7 +32,7 @@ export default {
         .then(() => this.$store.dispatch("loadCategory"))
         .then(() => this.$store.dispatch("loadCode"))
         .then(() => this.$store.dispatch("loadStock")).then(() => {
-          if(callback == null) {
+          if (callback == null) {
             return;
           }
           callback();
@@ -43,15 +43,23 @@ export default {
       return TYPE_VALUE[kind];
     },
     getGainsColor(value) {
-      if(value == 0) {
+      if (value == 0) {
         return null;
-      }
-      else if(value > 0) {
+      } else if (value > 0) {
         return "#f51818";
-      }else{
+      } else {
         return "#1b61d1";
       }
     },
-
+    // 평단가 계산
+    rating(item) {
+      if (item.quantity == 0) {
+        return 0;
+      }
+      return Math.round(item.purchaseAmount / item.quantity);
+    },
+    openBrowser(link) {
+      require("electron").shell.openExternal(link);
+    },
   },
 };

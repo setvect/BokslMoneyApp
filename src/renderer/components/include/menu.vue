@@ -23,7 +23,7 @@
           </li>
           <li :class="{'active': currentName == 'transaction-stock'}">
             <router-link :to="{name: 'transaction-stock'}">
-              <i class="fa fa-line-chart"></i> 주식 매매
+              <i class="fa fa-credit-card"></i> 주식 매매
             </router-link>
           </li>
           <li :class="{'active': currentName == 'settlement'}">
@@ -44,6 +44,11 @@
           <li :class="{'active': currentName == 'account'}">
             <router-link :to="{name: 'account'}">
               <i class="fa fa-money"></i> 계좌 관리
+            </router-link>
+          </li>
+          <li :class="{'active': currentName == 'stock'}">
+            <router-link :to="{name: 'stock'}">
+              <i class="fa fa-line-chart"></i> 매수 종목
             </router-link>
           </li>
           <li :class="{'active': currentName == 'code'}">
