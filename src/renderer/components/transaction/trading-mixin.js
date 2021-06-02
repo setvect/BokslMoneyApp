@@ -40,14 +40,18 @@ export default {
         return acc + t.price * t.quantity;
       }, 0);
     },
+    getRealSellGains(trade) {
+      return trade.sellGains - trade.tax - trade.fee;
+    },
     // 수익율%
     calcEarningRate(tradingItem) {
       if(tradingItem.kind == "BUYING") {
         return 0;
       }
+      const realSellGains = this.getRealSellGains(tradingItem);
       let sell = tradingItem.price * tradingItem.quantity;
-      let buy = sell - tradingItem.sellGains;
-      return ((tradingItem.sellGains / buy) * 100).toFixed(1);
+      let buy = sell - realSellGains;
+      return ((realSellGains / buy) * 100).toFixed(1);
     },
   },
 };
