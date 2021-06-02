@@ -21,7 +21,7 @@
               </div>
             </div>
 
-            <table class="table table-striped jambo_table bulk_action table-bordered" id="grid">
+            <table ref="dataTable" class="table table-striped jambo_table bulk_action table-bordered" id="grid">
               <thead>
                 <tr class="headings">
                   <th>종목</th>
@@ -59,6 +59,11 @@
                 </tr>
               </tbody>
             </table>
+            <div style="margin-top: 10px">
+              <button type="button" class="btn btn-success" style="margin: 0; float: right" @click="exportExcel()">
+                내보내기(엑셀)
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -128,6 +133,12 @@ export default {
     reload() {
       // 주식 매수 정보 다시 불러옴
       this.loadBasicInfo(() => {});
+    },
+    // 엑셀 다운로드
+    exportExcel() {
+      let html = this.$refs.dataTable;
+      const htmlText = CommonUtil.replaceAll(html.outerHTML, "<table", "<table border='1'");
+      CommonUtil.download(htmlText, "매수종목.xls", "text/html;encoding:utf-8");
     },
   },
 };

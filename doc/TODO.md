@@ -23,6 +23,7 @@ ALTER TABLE "DA_STOCK"
 - NEW-20200522: 컴포넌트 옵션 순서 권고사항으로 변경: https://kr.vuejs.org/v2/style-guide/index.html#%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%98%B5%EC%85%98-%EC%88%9C%EC%84%9C-%EC%B6%94%EC%B2%9C%ED%95%A8
 
 ### 완료
+- NEW-20210602: 매수 내역 엑셀 저장
 - NEW-20210602: 매도차익 계산시 수수료, 거래세 포함
 - NEW-20210205(20210602): 모든 계좌에있는 주식 잔고 현황 목록
 - NEW-20210601(20210602): 주식 유형 코드화
