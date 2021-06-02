@@ -3,28 +3,29 @@
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="inputCity">재산(내가 모은 돈)</label>
-        <span class="form-control text-right">{{property | numberFormat}}</span>
+        <span class="form-control text-right">{{ property | numberFormat }}</span>
       </div>
       <div class="form-group col-md-3">
         <label for="inputCity">주식</label>
-        <span class="form-control text-right">{{sumTotalStock | numberFormat}}</span>
+        <span class="form-control text-right">{{ sumTotalStock | numberFormat }}</span>
       </div>
       <div class="form-group col-md-3">
         <label for="inputCity">자산(마이너스가 아닌 계좌 합)</label>
-        <span class="form-control text-right">{{asset | numberFormat}}</span>
+        <span class="form-control text-right">{{ asset | numberFormat }}</span>
       </div>
       <div class="form-group col-md-3">
         <label for="inputCity">부채(마이너스 계좌 합)</label>
-        <span class="form-control text-right">{{debt | numberFormat}}</span>
+        <span class="form-control text-right">{{ debt | numberFormat }}</span>
       </div>
     </div>
     <table class="table table-striped jambo_table bulk_action table-bordered" id="grid">
       <thead>
         <tr class="headings">
           <th>자산종류</th>
+          <th>계좌성격</th>
           <th>이름</th>
           <th>잔고</th>
-          <th>주식합계</th>
+          <th>주식 매수가</th>
           <th>이율</th>
           <th>계좌(카드)번호</th>
           <th>월 납입액</th>
@@ -35,29 +36,46 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item) in itemList" :key="item.accountSeq" style="cursor: pointer">
-          <td>{{item.kindName}}</td>
+        <tr v-for="item in itemList" :key="item.accountSeq" style="cursor: pointer">
+          <td>{{ item.kindName }}</td>
+          <td>{{ item.accountTypeName }}</td>
           <td>
-            <a @click="readForm(item)" href="javascript:void(0)">{{item.name}}</a>
+            <a @click="readForm(item)" href="javascript:void(0)">{{ item.name }}</a>
           </td>
-          <td class="text-right">{{item.balance | numberFormat}}</td>
-          <td class="text-right">{{sumStock(item.accountSeq) | numberFormat}}</td>
-          <td>{{item.interestRate}}</td>
-          <td>{{item.accountNumber}}</td>
-          <td>{{item.monthlyPay}}</td>
-          <td>{{item.expDate}}</td>
+          <td class="text-right">{{ item.balance | numberFormat }}</td>
+          <td class="text-right">{{ sumStock(item.accountSeq) | numberFormat }}</td>
+          <td>{{ item.interestRate }}</td>
+          <td>{{ item.accountNumber }}</td>
+          <td>{{ item.monthlyPay }}</td>
+          <td>{{ item.expDate }}</td>
           <td class="text-center">
-            <button v-show="item.stockF" @click="addStock(item.accountSeq)" type="button" class="btn btn-success btn-xs">주식 등록</button>
-            <button v-show="item.stockF" @click="openStockList(item.accountSeq)" type="button" class="btn btn-success btn-xs">목록 ({{item.stockList.length}})</button>
+            <button
+              v-show="item.stockF"
+              @click="addStock(item.accountSeq)"
+              type="button"
+              class="btn btn-success btn-xs"
+            >
+              주식 등록
+            </button>
+            <button
+              v-show="item.stockF"
+              @click="openStockList(item.accountSeq)"
+              type="button"
+              class="btn btn-success btn-xs"
+            >
+              목록 ({{ item.stockList.length }})
+            </button>
           </td>
-          <td class="td-ell">{{item.note}}</td>
-          <td class="text-center">{{item.enableF ? "예": "아니오"}}</td>
+          <td class="td-ell">{{ item.note }}</td>
+          <td class="text-center">{{ item.enableF ? "예" : "아니오" }}</td>
         </tr>
       </tbody>
     </table>
-    <div style="margin-top:10px;">
+    <div style="margin-top: 10px">
       <button type="button" class="btn btn-success" @click="addForm()">추가</button>
-      <button type="button" class="btn btn-success" style="margin: 0;float: right" @click="exportExcel();">내보내기(엑셀)</button>
+      <button type="button" class="btn btn-success" style="margin: 0; float: right" @click="exportExcel()">
+        내보내기(엑셀)
+      </button>
     </div>
   </div>
 </template>
@@ -70,9 +88,7 @@ import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables/media/css/jquery.dataTables.css";
 
 import "../../common/vue-common.js";
-import {
-  mapGetters
-} from "vuex";
+import accountMixin from "./account-mixin.js";
 
 export default {
   data() {
@@ -83,11 +99,9 @@ export default {
       order: [0, "asc"],
     };
   },
+  mixins: [accountMixin],
   props: {},
   computed: {
-    ...mapGetters([
-      "stockList"
-    ]),
     property() {
       return this.asset + this.debt;
     },
@@ -114,14 +128,14 @@ export default {
     },
   },
   mounted() {
-    this.loadBasicInfo(()=>{
+    this.loadBasicInfo(() => {
       this.list();
     });
   },
   methods: {
     // 리스트
     list() {
-      ElectronUtil.invoke("account/listItem", {}, result => {
+      ElectronUtil.invoke("account/listItem", {}, (result) => {
         if (this.gridTable != null) {
           this.gridTable.destroy();
         }
@@ -162,7 +176,7 @@ export default {
     },
     // 등록 폼
     addForm() {
-      this.$parent.$refs.popupAdd.openAddForm({ enableF:1, stockF:0, });
+      this.$parent.$refs.popupAdd.openAddForm({ enableF: 1, stockF: 0, });
     },
     addStock(accountSeq) {
       this.$parent.$refs.stockAdd.openAddForm({ accountSeq, });
@@ -170,17 +184,25 @@ export default {
     openStockList(accountSeq) {
       this.$parent.$refs.stockList.openForm(accountSeq);
     },
-    sumStock(accountSeq) {
-      let sum = _.chain(this.stockList).filter(stock => stock.accountSeq == accountSeq).sumBy("purchaseAmount").value();
-      return sum;
-    },
     // 엑셀 다운로드
     exportExcel() {
       const csvData = [];
-      csvData.push(["자산종류", "이름", "잔고", "주식합계", "이률", "계좌(카드)번호", "월 납입액", "만기일", "메모"]);
-      this.itemList.forEach(item => {
+      csvData.push([
+        "자산종류",
+        "계좌성격",
+        "이름",
+        "잔고",
+        "주식 매수가",
+        "이률",
+        "계좌(카드)번호",
+        "월 납입액",
+        "만기일",
+        "메모"
+      ]);
+      this.itemList.forEach((item) => {
         const record = [];
         record.push(item.kindName);
+        record.push(item.accountTypeName);
         record.push(item.name);
         record.push(item.balance.toString());
         record.push(this.sumStock(item.accountSeq).toString());

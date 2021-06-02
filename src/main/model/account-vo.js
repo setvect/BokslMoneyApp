@@ -22,6 +22,10 @@ const accountVo = connSeque.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    accountType: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     balance: {
       type: DataTypes.INTEGER,
       allowNull: false,

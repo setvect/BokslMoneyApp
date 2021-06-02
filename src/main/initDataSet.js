@@ -824,14 +824,6 @@ export default {
     deleteF: false,
   },
   {
-    categorySeq: 137,
-    kind: "SPENDING",
-    name: "엉아사업비",
-    parentSeq: 126,
-    orderNo: 4,
-    deleteF: false,
-  },
-  {
     categorySeq: 138,
     kind: "INCOME",
     name: "받은돈",
@@ -1011,6 +1003,21 @@ export default {
     codeMainId: "ATTR_INCOME",
     name: "수입속성",
     deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_STOCK",
+    name: "주식종류",
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_ACCOUNT",
+    name: "계좌성격",
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_NATION",
+    name: "주식 상장국가",
+    deleteF: false,
   }
   ],
   codeItem: [{
@@ -1019,121 +1026,226 @@ export default {
     name: "단순 수입",
     orderNo: 1,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "ATTR_INCOME",
     codeItemSeq: 1,
     name: "투자 수입",
     orderNo: 2,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "ATTR_SPENDING",
     codeItemSeq: 2,
     name: "단순 지출",
     orderNo: 1,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "ATTR_SPENDING",
     codeItemSeq: 7,
     name: "고정 지출",
     orderNo: 2,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "ATTR_TRANSFER",
     codeItemSeq: 5,
     name: "단순 이체",
     orderNo: 1,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "ATTR_TRANSFER",
     codeItemSeq: 6,
     name: "투자 이체",
     orderNo: 2,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "ATTR_TRANSFER",
     codeItemSeq: 11,
     name: "부채 이체",
     orderNo: 3,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 1,
     name: "신용카드",
     orderNo: 1,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 2,
     name: "체크카드",
     orderNo: 2,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 3,
     name: "은행통장",
     orderNo: 3,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 4,
     name: "정기예금",
     orderNo: 4,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 5,
     name: "정기적금",
     orderNo: 5,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 6,
     name: "주식",
     orderNo: 6,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 7,
     name: "펀드",
     orderNo: 7,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 8,
     name: "받을돈(미수금)",
     orderNo: 8,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 9,
     name: "빌린돈",
     orderNo: 9,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 10,
     name: "보험",
     orderNo: 10,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 11,
     name: "전세보증금",
     orderNo: 11,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 12,
     name: "지갑",
     orderNo: 12,
     deleteF: false,
-  }, {
+  },
+  {
     codeMainId: "KIND_CODE",
     codeItemSeq: 13,
     name: "포인트",
     orderNo: 13,
     deleteF: false,
-  }],
+  },
+  {
+    codeMainId: "TYPE_STOCK",
+    codeItemSeq: 14,
+    name: "개별종목",
+    orderNo: 14,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_STOCK",
+    codeItemSeq: 15,
+    name: "지수 ETF",
+    orderNo: 15,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_STOCK",
+    codeItemSeq: 16,
+    name: "리츠 ETF",
+    orderNo: 16,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_STOCK",
+    codeItemSeq: 17,
+    name: "엑티브 ETF",
+    orderNo: 17,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_STOCK",
+    codeItemSeq: 18,
+    name: "채권 ETF",
+    orderNo: 18,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_ACCOUNT",
+    codeItemSeq: 19,
+    name: "고정자산",
+    orderNo: 19,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_ACCOUNT",
+    codeItemSeq: 20,
+    name: "저축자산",
+    orderNo: 20,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_ACCOUNT",
+    codeItemSeq: 21,
+    name: "투자자산",
+    orderNo: 21,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_ACCOUNT",
+    codeItemSeq: 22,
+    name: "부채자산",
+    orderNo: 22,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_NATION",
+    codeItemSeq: 23,
+    name: "국내",
+    orderNo: 23,
+    deleteF: false,
+  },
+  {
+    codeMainId: "TYPE_NATION",
+    codeItemSeq: 24,
+    name: "국내상장 외국 ETF",
+    orderNo: 24,
+    deleteF: false,
+  },
+  {
+    codeMainId: "미국",
+    codeItemSeq: 25,
+    name: "국내",
+    orderNo: 25,
+    deleteF: false,
+  }
+
+  ],
   account: [{
     name: "현금",
     accountNumber: "",

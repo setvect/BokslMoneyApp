@@ -26,10 +26,17 @@
                 <th scope="row">자산종류</th>
                 <td>
                   {{item.kindName}}
-                  <code v-if="item.stockF">O</code>
                 </td>
+                <th scope="row">계좌성격</th>
+                <td>
+                  {{item.accountTypeName}}
+                </td>
+              </tr>
+              <tr>
                 <th scope="row">잔고</th>
                 <td>{{item.balance | numberFormat}}</td>
+                <th scope="row">주식매입가</th>
+                <td>{{sumStock(item.accountSeq) | numberFormat}}</td>
               </tr>
               <tr>
                 <th scope="row">이율</th>
@@ -66,6 +73,7 @@
 
 <script type="text/javascript">
 import "../../common/vue-common.js";
+import accountMixin from "./account-mixin.js";
 
 export default {
   data() {
@@ -73,6 +81,7 @@ export default {
       item: {},
     };
   },
+  mixins: [accountMixin],
   methods: {
     openReadForm(item) {
       this.item = $.extend(true, {}, item);

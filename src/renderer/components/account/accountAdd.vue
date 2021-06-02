@@ -33,6 +33,15 @@
               </div>
             </div>
             <div class="form-group row">
+              <label class="control-label col-md-3 col-sm-3 col-xs-3">계좌성격:</label>
+              <div class="col-md-9 col-sm-9 col-xs-9">
+                <select class="form-control" name="accountType" v-model="item.accountType" v-validate="'required'" data-vv-as="계좌성격 ">
+                  <option v-for="accountType in accountTypeList" v-bind:value="accountType.codeItemSeq" :key="accountType.name">{{ accountType.name }}</option>
+                </select>
+                <span class="error" v-if="errors.has('accountType')">{{errors.first('accountType')}}</span>
+              </div>
+            </div>
+            <div class="form-group row">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">주식계좌 여부:</label>
               <div class="col-md-9 col-sm-9 col-xs-9" style="margin-top:10px;">
                 <label class="form-check-label">
@@ -126,6 +135,7 @@ export default {
       item: { balance:0, },
       actionType: "add",
       kindCodeList: [],
+      accountTypeList: [],
     };
   },
   methods: {
@@ -162,15 +172,18 @@ export default {
         }
       });
     },
-    // 자산 코드 읽어 오기
-    listKindCode() {
+    // 계좌 등록에 사용될 코드 목록 불러옴
+    loadCodeList() {
       ElectronUtil.invoke("code/listItem", "KIND_CODE", result => {
         this.kindCodeList = result;
+      });
+      ElectronUtil.invoke("code/listItem", "TYPE_ACCOUNT", result => {
+        this.accountTypeList = result;
       });
     },
   },
   mounted() {
-    this.listKindCode();
+    this.loadCodeList();
     $("#addItem").off().on("shown.bs.modal", function() {
       $("#nameField").focus();
     });

@@ -44,12 +44,15 @@ export default {
       raw: true,
     });
     // 자산 종류
-    const codeMap = await codeService.getMappingCode("KIND_CODE");
+    const kindCodeMap = await codeService.getMappingCode("KIND_CODE");
+    // 계좌 성격
+    const accountCodeMap = await codeService.getMappingCode("TYPE_ACCOUNT");
     // 연결 주식 맵핑
     let stockList = await stockService.listStock();
 
     accountList.forEach((account) => {
-      account.kindName = codeMap[account.kindCode].name;
+      account.kindName = kindCodeMap[account.kindCode].name;
+      account.accountTypeName = accountCodeMap[account.accountType].name;
       account.stockList = stockList.filter(s => s.accountSeq == account.accountSeq);
     });
 

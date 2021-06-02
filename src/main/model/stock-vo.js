@@ -19,6 +19,14 @@ const stockVo = connSeque.define(
       type: DataTypes.STRING(100),
       allowNull: false,
     },
+    stockType: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    nation: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
