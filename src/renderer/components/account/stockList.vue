@@ -13,6 +13,8 @@
               <tr class="headings">
                 <th>No</th>
                 <th>종목</th>
+                <th>종류</th>
+                <th>상장국가</th>
                 <th>구매금액</th>
                 <th>수량</th>
                 <th>평단가</th>
@@ -26,6 +28,8 @@
               <tr v-for="(item, idx) in stockList" :key="idx">
                 <td>{{idx + 1}}</td>
                 <td>{{item.name}}</td>
+                <td>{{item.typeName}}</td>
+                <td>{{item.nationName}}</td>
                 <td class="text-right">{{item.purchaseAmount | numberFormat}}</td>
                 <td class="text-right">{{item.quantity | numberFormat}}</td>
                 <td class="text-right">{{rating(item) | numberFormat}}</td>

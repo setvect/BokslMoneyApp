@@ -4,7 +4,7 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">{{actionType == 'add' ? '등록' : '수정'}}</h5>
+          <h5 class="modal-title">{{ actionType == "add" ? "등록" : "수정" }}</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
@@ -12,17 +12,51 @@
             <div class="form-group row">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">종목:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <input id="nameField" type="text" class="form-control" name="name" v-model="item.name" v-validate="'required|max:20'" data-vv-as="종목 " />
-                <span class="error" v-if="errors.has('name')">{{errors.first('name')}}</span>
+                <input
+                  id="nameField"
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  v-model="item.name"
+                  v-validate="'required|max:20'"
+                  data-vv-as="종목 "
+                />
+                <span class="error" v-if="errors.has('name')">{{ errors.first("name") }}</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="control-label col-md-3 col-sm-3 col-xs-3">주식종류:</label>
+              <div class="col-md-9 col-sm-9 col-xs-9">
+                <select class="form-control" name="stockType" v-model="item.stockType" v-validate="'required'" data-vv-as="주식종류 ">
+                  <option v-for="stockType in stockTypeList" v-bind:value="stockType.codeItemSeq" :key="stockType.name">{{ stockType.name }}</option>
+                </select>
+                <span class="error" v-if="errors.has('stockType')">{{errors.first('stockType')}}</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="control-label col-md-3 col-sm-3 col-xs-3">상장국가:</label>
+              <div class="col-md-9 col-sm-9 col-xs-9">
+                <select class="form-control" name="stockType" v-model="item.nation" v-validate="'required'" data-vv-as="상장국가 ">
+                  <option v-for="nation in nationList" v-bind:value="nation.codeItemSeq" :key="nation.name">{{ nation.name }}</option>
+                </select>
+                <span class="error" v-if="errors.has('nation')">{{errors.first('nation')}}</span>
               </div>
             </div>
             <div class="form-group row">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">연결게좌:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <select class="form-control" name="accountSeq" v-model="item.accountSeq" v-validate="'required'" data-vv-as="연결계좌 ">
-                  <option v-for="account in listStockAccount" :value="account.accountSeq" :key="account.accountSeq">{{ account.name }}</option>
+                <select
+                  class="form-control"
+                  name="accountSeq"
+                  v-model="item.accountSeq"
+                  v-validate="'required'"
+                  data-vv-as="연결계좌 "
+                >
+                  <option v-for="account in listStockAccount" :value="account.accountSeq" :key="account.accountSeq">
+                    {{ account.name }}
+                  </option>
                 </select>
-                <span class="error" v-if="errors.has('accountSeq')">{{errors.first('accountSeq')}}</span>
+                <span class="error" v-if="errors.has('accountSeq')">{{ errors.first("accountSeq") }}</span>
               </div>
             </div>
             <div class="form-group row">
@@ -37,7 +71,7 @@
                   data-vv-as="구매금액 "
                   @press-enter="addAction(true)"
                 ></my-currency-input>
-                <span class="error" v-if="errors.has('purchaseAmount')">{{errors.first('purchaseAmount')}}</span>
+                <span class="error" v-if="errors.has('purchaseAmount')">{{ errors.first("purchaseAmount") }}</span>
               </div>
             </div>
             <div class="form-group row">
@@ -52,26 +86,39 @@
                   data-vv-as="수량 "
                   @press-enter="addAction(true)"
                 ></my-currency-input>
-                <span class="error" v-if="errors.has('quantity')">{{errors.first('quantity')}}</span>
+                <span class="error" v-if="errors.has('quantity')">{{ errors.first("quantity") }}</span>
               </div>
             </div>
             <div class="form-group row">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">상세정보 링크:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <input type="text" class="form-control" name="link" v-model="item.link" v-validate="'max:100|url'" data-vv-as="상세정보 링크 " />
-                <span class="error" v-if="errors.has('link')">{{errors.first('link')}}</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="link"
+                  v-model="item.link"
+                  v-validate="'max:100|url'"
+                  data-vv-as="상세정보 링크 "
+                />
+                <span class="error" v-if="errors.has('link')">{{ errors.first("link") }}</span>
               </div>
             </div>
             <div class="form-group row">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">메모 내용:</label>
               <div class="col-md-9 col-sm-9 col-xs-9">
-                <textarea class="form-control" name="note" v-model="item.note" v-validate="'max:500'" data-vv-as="메모 내용 "></textarea>
-                <span class="error" v-if="errors.has('note')">{{errors.first('note')}}</span>
+                <textarea
+                  class="form-control"
+                  name="note"
+                  v-model="item.note"
+                  v-validate="'max:500'"
+                  data-vv-as="메모 내용 "
+                ></textarea>
+                <span class="error" v-if="errors.has('note')">{{ errors.first("note") }}</span>
               </div>
             </div>
             <div class="form-group row">
               <label class="control-label col-md-3 col-sm-3 col-xs-3">활성:</label>
-              <div class="col-md-9 col-sm-9 col-xs-9" style="margin-top:10px;">
+              <div class="col-md-9 col-sm-9 col-xs-9" style="margin-top: 10px">
                 <label class="form-check-label">
                   <input v-model="item.enableF" type="radio" :value="1" />
                   예
@@ -98,24 +145,29 @@ export default {
   data() {
     return {
       item: {
-        quantity:0,
-        purchaseAmount:0,
+        quantity: 0,
+        purchaseAmount: 0,
       },
       actionType: "add",
       listStockAccount: [],
+      stockTypeList: [],
+      nationList: [],
     };
   },
   mounted() {
     this.listAccount();
-    $("#addStock").off().on("shown.bs.modal", function() {
-      $("#nameField").focus();
-    });
+    this.loadCodeList();
+    $("#addStock")
+      .off()
+      .on("shown.bs.modal", function() {
+        $("#nameField").focus();
+      });
   },
   methods: {
     // 등록 폼
     openAddForm(item) {
       this.actionType = "add";
-      this.openForm({ ...item, quantity:0, purchaseAmount:0, enableF:1, });
+      this.openForm({ ...item, quantity: 0, purchaseAmount: 0, enableF: 1, });
     },
     // 수정 폼
     openEditForm(item) {
@@ -128,13 +180,13 @@ export default {
       $("#addStock").modal();
     },
     listAccount() {
-      ElectronUtil.invoke("account/listItem", {}, result => {
-        this.listStockAccount = result.filter(r=>r.stockF);
+      ElectronUtil.invoke("account/listItem", {}, (result) => {
+        this.listStockAccount = result.filter((r) => r.stockF);
       });
     },
     // 등록 또는 수정
     addAction() {
-      this.$validator.validateAll().then(result => {
+      this.$validator.validateAll().then((result) => {
         if (!result) {
           return;
         }
@@ -149,6 +201,15 @@ export default {
             this.$parent.$refs.pageList.list();
           });
         }
+      });
+    },
+    // 주식에 사용될 코드
+    loadCodeList() {
+      ElectronUtil.invoke("code/listItem", "TYPE_STOCK", (result) => {
+        this.stockTypeList = result;
+      });
+      ElectronUtil.invoke("code/listItem", "TYPE_NATION", (result) => {
+        this.nationList = result;
       });
     },
   },

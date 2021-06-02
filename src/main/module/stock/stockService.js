@@ -2,6 +2,7 @@ import {
   ipcMain
 } from "electron";
 import stock from "../../model/stock-vo.js";
+import codeService from "../code/codeService";
 
 export default {
   init() {
@@ -48,12 +49,23 @@ export default {
         accountSeq,
       };
     }
-    const result = await stock.findAll({
+    const stockList = await stock.findAll({
       where,
       order: ["name"],
       raw: true,
     });
 
-    return result;
+    // 주식 종류
+    const stockCodeMap = await codeService.getMappingCode("TYPE_STOCK");
+    // 상장 국가
+    const nationCodeMap = await codeService.getMappingCode("TYPE_NATION");
+
+    stockList.forEach((stock) => {
+      stock.typeName = stockCodeMap[stock.stockType].name;
+      stock.nationName = nationCodeMap[stock.nation].name;
+    });
+
+
+    return stockList;
   },
 };
