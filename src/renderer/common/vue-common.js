@@ -19,7 +19,7 @@ Vue.filter("dateFormat", (value, format) => {
 // 계좌 이름
 Vue.filter("accountName", function(accountSeq) {
   let account = store.state.account.accountMap[accountSeq];
-  if(account == null) {
+  if (account == null) {
     return null;
   }
   return account.name;
@@ -28,7 +28,7 @@ Vue.filter("accountName", function(accountSeq) {
 // 주식 이름
 Vue.filter("stockName", function(stockSeq) {
   let stock = store.state.stock.stockMap[stockSeq];
-  if(stock == null) {
+  if (stock == null) {
     return null;
   }
   return stock.name;
@@ -37,11 +37,11 @@ Vue.filter("stockName", function(stockSeq) {
 // 주식 연계 계좌
 Vue.filter("stockAccountName", function(stockSeq) {
   let stock = store.state.stock.stockMap[stockSeq];
-  if(stock == null) {
+  if (stock == null) {
     return null;
   }
   let account = store.state.account.accountMap[stock.accountSeq];
-  if(account == null) {
+  if (account == null) {
     return null;
   }
   return account.name;
@@ -50,7 +50,7 @@ Vue.filter("stockAccountName", function(stockSeq) {
 // 카테고리 이름
 Vue.filter("categoryName", function(categorySeq) {
   let category = store.state.category.categoryMap[categorySeq];
-  if(category == null) {
+  if (category == null) {
     return null;
   }
   return category.name;
@@ -98,7 +98,12 @@ Vue.component("datepicker", {
 Vue.component("my-currency-input", {
   props: ["value"],
   template: `
-			<input type="text" v-model="displayValue" @blur="isInputActive = false" @focus="isInputActive = true" @keyup.13="emitEnter()"/>
+			<input type="text"
+			v-model="displayValue"
+			@blur="isInputActive=false"
+			style='text-align:right;'
+			@focus="isInputActive=true"
+			@keyup.13="emitEnter()" />
 		`,
   data() {
     return {
@@ -108,7 +113,7 @@ Vue.component("my-currency-input", {
   computed: {
     displayValue: {
       get() {
-        if(this.value == null) {
+        if (this.value == null) {
           return "";
         }
 

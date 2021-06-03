@@ -136,3 +136,34 @@
 | TAX          | 세금           |     | integer |     | N        |                 |
 | FEES         | 수수료         |     | integer |     | N        |                 |
 | SELL_GAINS   | 매도차익       |     | integer |     | N        |                 |
+
+## 스냅샷
+
+- EA_SNAPSHOT: 스냅샷
+
+| Column Name  | Attribute Name | Key | Type    | Len | Not Null | Description |
+| ------------ | -------------- | --- | ------- | --- | -------- | ----------- |
+| SNAPSHOT_SEQ | 일련번호       | PK  | integer |     | Y        |             |
+| NOTE         | 메모 내용      |     | varchar | 100 | Y        |             |
+| REG_DATE     | 작성일         |     | date    |     | Y        |             |
+| DELETE_F     | 삭제 여부      |     | varchar | 1   | Y        |             |
+
+- EB_ASSET_GROUP: 계좌성격별 그룹
+
+| Column Name     | Attribute Name | Key | Type    | Len | Not Null | Description                                                                 |
+| --------------- | -------------- | --- | ------- | --- | -------- | --------------------------------------------------------------------------- |
+| ASSET_GROUP_SEQ | 일련번호       | PK  | integer |     | Y        |                                                                             |
+| SNAPSHOT_SEQ    | 스냅샷         | FK  | integer |     | Y        | EA_SNAPSHOT 외래키                                                          |
+| ACCOUNT_TYPE    | 계좌성격       |     | integer |     | Y        | CB_CODE_ITEM.CODE_ITEM_SEQ<br>코드 값 TYPE_ACCOUNT<br>고정자산, 투자자산 등 |
+| TOTAL_AMOUNT    | 합산 금액      |     | integer |     | Y        |                                                                             |
+| EVALUATE_AMOUNT | 평가 금액      |     | integer |     | Y        |                                                                             |
+
+- EC_STOCK_EVALUATE: 주식 종목
+
+| Column Name        | Attribute Name | Key | Type    | Len | Not Null | Description        |
+| ------------------ | -------------- | --- | ------- | --- | -------- | ------------------ |
+| STOCK_EVALUATE_SEQ | 일련번호       | PK  | integer |     | Y        |                    |
+| SNAPSHOT_SEQ       | 스냅샷         | FK  | integer |     | Y        | EA_SNAPSHOT 외래키 |
+| STOCK_SEQ          | 관련 주식      | FK  | integer |     | Y        | DA_STOCK 외래키    |
+| BUY_AMOUNT         | 매수 금액      |     | integer |     | Y        |                    |
+| EVALUATE_AMOUNT    | 평가 금액      |     | integer |     | Y        |                    |

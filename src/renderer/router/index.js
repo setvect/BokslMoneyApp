@@ -54,6 +54,11 @@ export default new Router({
       component: require("@/components/stock/stock.vue").default,
     },
     {
+      path: "/snapshot",
+      name: "snapshot",
+      component: require("@/components/snapshot/snapshot.vue").default,
+    },
+    {
       path: "/code",
       name: "code",
       component: require("@/components/code/code.vue").default,

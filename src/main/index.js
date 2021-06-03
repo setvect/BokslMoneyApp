@@ -15,6 +15,9 @@ import memoService from "./module/memo/memoService.js";
 import userService from "./module/user/userService.js";
 import stockService from "./module/stock/stockService.js";
 import tradingService from "./module/trading/tradingService.js";
+import snapshotService from "./module/snapshot/snapshotService.js";
+import assetGroupService from "./module/snapshot/assetGroupService.js";
+import stockEvaluateService from "./module/snapshot/stockEvaluateService.js";
 
 import util from "./util.js";
 import userVo from "./model/user-vo.js";
@@ -26,6 +29,9 @@ import transactionVo from "./model/transaction-vo.js";
 import codeMainVo from "./model/codeMain-vo.js";
 import codeItemVo from "./model/codeItem-vo.js";
 import stockVo from "./model/stock-vo.js";
+import snapshotVo from "./model/snapshot-vo.js";
+import assetGroupVo from "./model/assetGroup-vo.js";
+import stockEvaluateVo from "./model/stockEvaluate-vo";
 import constant from "./constant.js";
 
 import initDataSet from "./initDataSet.js";
@@ -110,6 +116,9 @@ async function init() {
   await transactionVo.sync();
   await stockVo.sync();
   await tradingVo.sync();
+  await snapshotVo.sync();
+  await assetGroupVo.sync();
+  await stockEvaluateVo.sync();
 
   // event init
   loginService.init();
@@ -123,4 +132,7 @@ async function init() {
   memoService.init();
   stockService.init();
   tradingService.init();
+  snapshotService.init();
+  assetGroupService.init();
+  stockEvaluateService.init();
 }

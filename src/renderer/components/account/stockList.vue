@@ -58,8 +58,6 @@
 </template>
 
 <script type="text/javascript">
-import { ipcRenderer } from "electron";
-
 import "datatables";
 import "datatables.net-buttons";
 import "datatables.net-buttons/js/buttons.html5.js";

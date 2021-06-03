@@ -51,6 +51,11 @@
               <i class="fa fa-line-chart"></i> 매수 종목
             </router-link>
           </li>
+          <li :class="{'active': currentName == 'snapshot'}">
+            <router-link :to="{name: 'snapshot'}">
+              <i class="fa fa-camera-retro"></i> 자산 스냅샷
+            </router-link>
+          </li>
           <li :class="{'active': currentName == 'code'}">
             <router-link :to="{name: 'code'}">
               <i class="fa fa-book"></i> 코드 관리
