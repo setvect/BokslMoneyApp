@@ -25,7 +25,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <table class="table table-striped jambo_table bulk_action table-bordered">
+              <table class="table table-striped jambo_table bulk_action table-bordered" id="stockGrid">
                 <thead>
                   <tr class="headings">
                     <th>종목</th>
@@ -86,6 +86,7 @@ export default {
       item: {},
       actionType: "add",
       stockEvaluateList: [],
+      gridTable: null,
     };
   },
   mixins: [snapshotMixin],
@@ -147,6 +148,7 @@ export default {
               evaluateAmount: s.evaluateAmount,
             };
           });
+          this.initGrid();
         });
       }
     },
@@ -177,6 +179,21 @@ export default {
     calcEarningRate(item) {
       const realSellGains = this.getRealGains(item);
       return ((realSellGains / item.buyAmount) * 100).toFixed(1);
+    },
+    initGrid() {
+      this.$nextTick(() => {
+        if (this.gridTable != null) {
+          this.gridTable.destroy();
+        }
+
+        this.gridTable = $("#stockGrid").DataTable({
+          paging: false,
+          bInfo: false,
+          searching: false,
+          dom: "Bfrtip",
+          buttons: [],
+        });
+      });
     },
   },
 };
