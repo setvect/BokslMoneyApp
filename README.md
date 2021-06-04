@@ -76,3 +76,14 @@ npm run build
 
 1. Prettier 설정(포맷팅 등) [https://ux.stories.pe.kr/150](https://ux.stories.pe.kr/150)
 1. ESLient 설정 [https://eslint.org/docs/rules/](https://eslint.org/docs/rules/)
+
+## 릴리즈
+### ver 0.4 alpha-2021.06.04
+- 기능 추가
+  - 리벨러싱을 위한 자산 스냅샷 저장
+  - 모든 계좌에있는 주식 잔고 현황 목록
+  - 주식 유형 항목 추가
+  - 계좌 성격 항목 추가
+  - 계좌 다운로드 시 주식 합계 정보 제공
+- 기능 변경
+  - 매도차익 계산시 수수료, 거래세 포함
