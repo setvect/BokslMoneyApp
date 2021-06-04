@@ -78,6 +78,7 @@
 <script type="text/javascript">
 import { mapGetters } from "vuex";
 import snapshotMixin from "./snapshot-mixin.js";
+import _ from "lodash";
 
 export default {
   data() {
@@ -119,8 +120,8 @@ export default {
       $("#addItem").modal();
     },
     loadStock() {
-      // 현재 주식종목을 기준으로 등록
       if (this.isAddForm) {
+        // 현재 주식종목을 기준으로 등록
         this.stockEvaluateList = this.stockList
           .filter((s) => s.enableF)
           .map((s) => {
@@ -134,6 +135,19 @@ export default {
               evaluateAmount: s.purchaseAmount,
             };
           });
+      } else {
+        // 등록 당시 입력했던 주식을 기준으로 조회
+        ElectronUtil.invoke("snapshot/getItem", this.item.snapshotSeq, (snapshot) => {
+          this.item = snapshot;
+          const stockMap = _.chain(this.stockList).keyBy("stockSeq").value();
+          this.stockEvaluateList = snapshot.stockEvaluates.map((s) => {
+            return {
+              ...stockMap[s.stockSeq],
+              buyAmount: s.buyAmount,
+              evaluateAmount: s.evaluateAmount,
+            };
+          });
+        });
       }
     },
     // 등록 또는 수정
@@ -149,9 +163,9 @@ export default {
             this.$emit("close");
           });
         } else {
-          ElectronUtil.invoke("account/editItem", this.item, () => {
+          ElectronUtil.invoke("snapshot/editItem", this.item, () => {
             $("#addItem").modal("hide");
-            this.$parent.$refs.pageList.list();
+            this.$emit("close");
           });
         }
       });

@@ -63,6 +63,9 @@ export default {
     assetGroups: {
       type: Array,
       required: true,
+      default: function() {
+        return [];
+      },
     },
   },
   computed: {

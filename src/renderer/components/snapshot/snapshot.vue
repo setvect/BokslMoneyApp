@@ -14,8 +14,10 @@
               <thead>
                 <tr class="headings">
                   <th>설명</th>
-                  <th>합산자산</th>
-                  <th>평가자산</th>
+                  <th>합산자산(원)</th>
+                  <th>평가자산(원)</th>
+                  <th>수익금(원)</th>
+                  <th>수익률(%)</th>
                   <th>날짜</th>
                   <th>기능</th>
                 </tr>
@@ -27,10 +29,16 @@
                   </td>
                   <td class="text-right">{{ item.totalAmount | numberFormat }}</td>
                   <td class="text-right">{{ item.evaluateAmount | numberFormat }}</td>
+                  <td class="text-right" :style="{ color: getGainsColor(item.evaluateAmount - item.totalAmount) }">
+                    {{ (item.evaluateAmount - item.totalAmount) | numberFormat }}
+                  </td>
+                  <td class="text-right" :style="{ color: getGainsColor(item.evaluateAmount - item.totalAmount) }">
+                    {{ (((item.evaluateAmount - item.totalAmount) / item.totalAmount) * 100).toFixed(1) }}
+                  </td>
                   <td class="text-center">{{ item.regDate | dateFormat("YYYY.MM.DD") }}</td>
                   <td class="text-center">
                     <div class="btn-group btn-group-xs">
-                      <button type="button" class="btn btn-success btn-sm" @click="openEditForm(item)">수정</button>
+                      <button type="button" class="btn btn-success btn-sm" @click="editForm(item)">수정</button>
                       <button type="button" class="btn btn-dark btn-sm" @click="deleteAction(item)">삭제</button>
                     </div>
                   </td>
@@ -75,12 +83,23 @@ export default {
     addForm() {
       this.$refs.snapshotAdd.openAddForm({});
     },
+    editForm(item) {
+      this.$refs.snapshotAdd.openEditForm(item);
+    },
     openSnapshot(item) {
       this.$refs.snapshotRead.open(item.snapshotSeq);
     },
     list() {
       ElectronUtil.invoke("snapshot/listItem", {}, (result) => {
         this.snapshotList = result;
+      });
+    },
+    deleteAction(item) {
+      if (!confirm("삭제?")) {
+        return;
+      }
+      ElectronUtil.invoke("snapshot/deleteItem", item.snapshotSeq, () => {
+        this.list();
       });
     },
     exportExcel() {

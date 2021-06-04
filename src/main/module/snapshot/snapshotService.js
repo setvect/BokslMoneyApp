@@ -44,50 +44,25 @@ export default {
       item.deleteF = false;
       item.regDate = new Date();
       const snapshotItem = await snapshot.create(item);
-      const stockEvaluateList = item.stockEvaluateList;
-      stockEvaluateList.forEach((s) => {
-        s.snapshotSeq = snapshotItem.snapshotSeq;
-      });
-
-      const accountList = await accountService.listAccount();
-      const assetGroupItem = _.chain(accountList)
-        .groupBy("accountType")
-        .map((accountType, id) => ({
-          snapshotSeq: snapshotItem.snapshotSeq,
-          accountType: id,
-          totalAmount: _.sumBy(accountType, (o) => {
-            const purchaseSum = _.chain(stockEvaluateList).filter(s => s.accountSeq === o.accountSeq).sumBy("buyAmount").value();
-            return o.balance + purchaseSum;
-          }),
-          evaluateAmount: _.sumBy(accountType, (o) => {
-            const evaluateSum = _.chain(stockEvaluateList).filter(s => s.accountSeq === o.accountSeq).sumBy("evaluateAmount").value();
-            return o.balance + evaluateSum;
-          }),
-        }))
-        .value();
-
-      await assetGroup.bulkCreate(assetGroupItem);
-      await stockEvaluate.bulkCreate(stockEvaluateList);
+      item.snapshotSeq = snapshotItem.snapshotSeq;
+      await this.updateStock(item);
     });
 
     // ================ 수정 ================
     // 정보 수정
     ipcMain.handle("snapshot/editItem", async(event, item) => {
-      const saveItem = await snapshot.findByPk(item.stockSeq);
+      const saveItem = await snapshot.findByPk(item.snapshotSeq);
       await saveItem.update(item);
+      await this.updateStock(item);
     });
 
     // ================ 삭제 ================
-    ipcMain.handle("snapshot/deleteItem", async(event, stockSeq) => {
-      const saveItem = await snapshot.findByPk(stockSeq);
+    ipcMain.handle("snapshot/deleteItem", async(event, snapshotSeq) => {
+      const saveItem = await snapshot.findByPk(snapshotSeq);
       saveItem.deleteF = true;
       await saveItem.save();
     });
   },
-  /**
-   *
-   * @param {*} snapshotSeq 연결계좌
-   */
   async listSnapshot() {
     let where = {
       deleteF: false,
@@ -112,8 +87,43 @@ export default {
       group: ["snapshotSeq"],
       raw: true,
     });
-
-
     return snapshotList;
+  },
+  async updateStock(item) {
+    await assetGroup.destroy({
+      where: {
+        snapshotSeq: item.snapshotSeq,
+      },
+    });
+    await stockEvaluate.destroy({
+      where: {
+        snapshotSeq: item.snapshotSeq,
+      },
+    });
+
+    const stockEvaluateList = item.stockEvaluateList;
+    stockEvaluateList.forEach((s) => {
+      s.snapshotSeq = item.snapshotSeq;
+    });
+
+    const accountList = await accountService.listAccount();
+    const assetGroupItem = _.chain(accountList)
+      .groupBy("accountType")
+      .map((accountType, id) => ({
+        snapshotSeq: item.snapshotSeq,
+        accountType: id,
+        totalAmount: _.sumBy(accountType, (o) => {
+          const purchaseSum = _.chain(stockEvaluateList).filter(s => s.accountSeq === o.accountSeq).sumBy("buyAmount").value();
+          return o.balance + purchaseSum;
+        }),
+        evaluateAmount: _.sumBy(accountType, (o) => {
+          const evaluateSum = _.chain(stockEvaluateList).filter(s => s.accountSeq === o.accountSeq).sumBy("evaluateAmount").value();
+          return o.balance + evaluateSum;
+        }),
+      }))
+      .value();
+
+    await assetGroup.bulkCreate(assetGroupItem);
+    await stockEvaluate.bulkCreate(stockEvaluateList);
   },
 };
