@@ -19,7 +19,7 @@
       </div>
       <div class="form-group col-md-1">
         <label>필터링</label>
-        <b-form-checkbox v-model="enableFilter">활성 계좌만 </b-form-checkbox>
+        <b-form-checkbox v-model="enableFilter" @change="list">활성 계좌만 </b-form-checkbox>
       </div>
     </div>
     <table class="table table-striped jambo_table bulk_action table-bordered" id="grid">
@@ -102,6 +102,7 @@ export default {
       // 정렬 조건 유지하기 위함
       order: [0, "asc"],
       enableFilter: true,
+      accountFilterList: [],
     };
   },
   mixins: [accountMixin],
@@ -131,12 +132,6 @@ export default {
       }, 0);
       return value;
     },
-    accountFilterList() {
-      if (this.enableFilter) {
-        return this.itemList.filter((s) => s.enableF);
-      }
-      return this.itemList;
-    },
   },
   mounted() {
     this.loadBasicInfo(() => {
@@ -151,6 +146,11 @@ export default {
           this.gridTable.destroy();
         }
         this.itemList = result;
+        if (this.enableFilter) {
+          this.accountFilterList = this.itemList.filter((s) => s.enableF);
+        } else {
+          this.accountFilterList = this.itemList;
+        }
         this.$nextTick(() => {
           this.gridTable = $("#grid").DataTable({
             paging: false,
@@ -220,6 +220,7 @@ export default {
       const csvString = CommonUtil.convertHtmlTable(csvData);
       CommonUtil.download(csvString, "계좌목록.xls", "text/html;encoding:utf-8");
     },
+    loadFilterList() {},
   },
 };
 </script>

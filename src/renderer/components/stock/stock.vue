@@ -17,7 +17,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="inputCity">필터링</label>
-                <b-form-checkbox v-model="enableFilter">활성 종목만 </b-form-checkbox>
+                <b-form-checkbox v-model="enableFilter" @change="reload">활성 종목만 </b-form-checkbox>
               </div>
             </div>
 
@@ -83,6 +83,7 @@ export default {
   data: function() {
     return {
       enableFilter: true,
+      stockFilterList: [],
     };
   },
   components: {
@@ -93,20 +94,27 @@ export default {
     sumPurchaseAmount() {
       return _.sumBy(this.stockList, "purchaseAmount");
     },
-    stockFilterList() {
-      if (this.enableFilter) {
-        return this.stockList.filter((s) => s.enableF);
-      }
-      return this.stockList;
-    },
   },
   mounted() {
-    this.init();
+    this.reload();
   },
   methods: {
+    reload() {
+      // 주식 매수 정보 다시 불러옴
+      this.loadBasicInfo(() => this.list());
+    },
     // 거래내역 조회
-    init() {
+    list() {
+      if (this.enableFilter) {
+        this.stockFilterList = this.stockList.filter((s) => s.enableF);
+      } else {
+        this.stockFilterList = this.stockList;
+      }
+
       this.$nextTick(() => {
+        if (this.gridTable != null) {
+          this.gridTable.destroy();
+        }
         this.gridTable = $("#grid").DataTable({
           paging: false,
           bInfo: false,
@@ -129,10 +137,6 @@ export default {
     },
     openEditForm(item) {
       this.$refs.stockAdd.openEditForm(item);
-    },
-    reload() {
-      // 주식 매수 정보 다시 불러옴
-      this.loadBasicInfo(() => {});
     },
     // 엑셀 다운로드
     exportExcel() {
