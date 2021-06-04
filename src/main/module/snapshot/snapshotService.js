@@ -56,7 +56,6 @@ export default {
           snapshotSeq: snapshotItem.snapshotSeq,
           accountType: id,
           totalAmount: _.sumBy(accountType, (o) => {
-            console.log("o.accountSeq :>> ", o.accountSeq);
             const purchaseSum = _.chain(stockEvaluateList).filter(s => s.accountSeq === o.accountSeq).sumBy("buyAmount").value();
             return o.balance + purchaseSum;
           }),
