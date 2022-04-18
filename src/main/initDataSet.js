@@ -1238,9 +1238,9 @@ export default {
     deleteF: false,
   },
   {
-    codeMainId: "미국",
+    codeMainId: "TYPE_NATION",
     codeItemSeq: 25,
-    name: "국내",
+    name: "미국",
     orderNo: 25,
     deleteF: false,
   }
