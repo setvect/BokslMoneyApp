@@ -136,6 +136,7 @@ export default {
               evaluateAmount: s.purchaseAmount,
             };
           });
+        this.initGrid();
       } else {
         // 등록 당시 입력했던 주식을 기준으로 조회
         ElectronUtil.invoke("snapshot/getItem", this.item.snapshotSeq, (snapshot) => {
