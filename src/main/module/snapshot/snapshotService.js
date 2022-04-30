@@ -85,9 +85,12 @@ export default {
         ["snapshotSeq", "DESC"]
       ],
       group: ["snapshotSeq"],
-      raw: true,
     });
-    return snapshotList;
+    // 자바스크립트 객체(특히 날짜)를 가져오기 위해 후처리 추가
+    const rtnValue = snapshotList.map(record => record.get({
+      plain: true,
+    }));
+    return rtnValue;
   },
   async updateStock(item) {
     await assetGroup.destroy({
