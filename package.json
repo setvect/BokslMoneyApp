@@ -50,7 +50,7 @@
     "jszip": "^3.3.0",
     "lodash": "^4.17.15",
     "log4js": "^6.3.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-lunar": "0.0.4",
     "sequelize": "^5.21.7",
     "source-map-support": "^0.5.16",
