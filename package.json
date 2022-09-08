@@ -47,7 +47,7 @@
     "jquery": "^3.4.1",
     "jquery-contextmenu": "^2.9.0",
     "jquery-ui": "^1.12.1",
-    "jszip": "^3.3.0",
+    "jszip": "^3.7.0",
     "lodash": "^4.17.15",
     "log4js": "^6.3.0",
     "moment": "^2.24.0",
