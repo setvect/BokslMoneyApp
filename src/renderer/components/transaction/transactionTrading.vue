@@ -1,6 +1,6 @@
 <template>
   <div id="stockAddFrom" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <!-- Modal content-->
       <div v-if="this.item != null" class="modal-content">
         <div class="modal-header">
@@ -26,22 +26,28 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">거래계좌:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <select class="form-control" v-model="accountSeq" @change="item.stockSeq = 0" name="accountSeq" v-validate="'required|greaterThanZero'" data-vv-as="거래 계좌 ">
-                    <option v-for="account in stockAccountList" :value="account.accountSeq" :key="account.accountSeq">{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
-                  </select>
+                  <v-select
+                    v-model="accountSeq"
+                    v-validate="'required|greaterThanZero'"
+                    name="accountSeq"
+                    data-vv-as="거래 계좌 "
+                    :options="stockAccountOptionList"
+                    :reduce="(option) => option.value"
+                  ></v-select>
                   <span class="error" v-if="errors.has('accountSeq')">{{errors.first('accountSeq')}}</span>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">종목:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <select class="form-control" v-model="item.stockSeq" name="stockSeq" v-validate="'required|greaterThanZero'" data-vv-as="종목 ">
-                    <option :value="0">==선택해라==</option>
-                    <option v-for="stock in stockList" v-bind:value="stock.stockSeq" :key="stock.stockSeq">
-                      {{stock.name}} : {{stock.quantity | numberFormat}}주
-                      ({{stock.purchaseAmount | numberFormat}}원, 평단가: {{(Math.round(stock.purchaseAmount / stock.quantity))| numberFormat}}원)
-                    </option>
-                  </select>
+                  <v-select
+                    v-model="item.stockSeq"
+                    v-validate="'required|greaterThanZero'"
+                    name="stockSeq"
+                    data-vv-as="종목 "
+                    :options="stockListOptionList"
+                    :reduce="(option) => option.value"
+                  ></v-select>
                   <span class="error" v-if="errors.has('stockSeq')">{{errors.first('stockSeq')}}</span>
                 </div>
               </div>
@@ -115,6 +121,7 @@ import {
 } from "vuex";
 import transactionMixin from "./transaction-mixin.js";
 import store from "../../store/index.js";
+import CommonUtil from "../../common/common-util.js";
 
 export default {
   name: "transactionTrading",
@@ -157,6 +164,23 @@ export default {
         return account.stockList.filter((s) => s.enableF);
       }
       return [];
+    },
+    stockAccountOptionList() {
+      return this.stockAccountList.map(account => ({
+        label: `${account.name} : ${CommonUtil.toComma(account.balance)}원 (${account.accountNumber})`,
+        value: account.accountSeq,
+      }));
+    },
+    stockListOptionList() {
+      const options = this.stockList.map(stock => ({
+        label: `${stock.name} : ${CommonUtil.toComma(stock.quantity)}주 ${CommonUtil.toComma(stock.purchaseAmount)}원, 평단가: ${CommonUtil.toComma(Math.round(stock.purchaseAmount / stock.quantity))}`,
+        value: stock.stockSeq,
+      }));
+      options.unshift({
+        label: "==선택해라==",
+        value: 0,
+      });
+      return options;
     },
   },
   mixins: [transactionMixin],

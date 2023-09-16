@@ -57,13 +57,15 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">지출계좌:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <select class="form-control" v-model="item.payAccount" name="payAccount" v-validate="validatePay" data-vv-as="지출계좌 " :disabled="disablePay">
-                    <option
-                      v-for="account in accountEnableList"
-                      v-bind:value="account.accountSeq"
-                      :key="account.accountSeq"
-                    >{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
-                  </select>
+                  <v-select
+                    v-model="item.payAccount"
+                    v-validate="validatePay"
+                    name="payAccount"
+                    data-vv-as="지출계좌 "
+                    :options="accountOptionList"
+                    :disabled="disablePay"
+                    :reduce="(option) => option.value"
+                  ></v-select>
                   <span class="error" v-if="errors.has('payAccount')">{{errors.first('payAccount')}}</span>
                 </div>
               </div>
@@ -71,13 +73,15 @@
               <div class="form-group row">
                 <label class="control-label col-md-2 col-sm-2 col-xs-2">수입계좌:</label>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                  <select class="form-control" v-model="item.receiveAccount" name="receiveAccount" v-validate="validateReceive" data-vv-as="수입계좌 " :disabled="disableReceive">
-                    <option
-                      v-for="account in accountEnableList"
-                      v-bind:value="account.accountSeq"
-                      :key="account.accountSeq"
-                    >{{account.name}} : {{account.balance | numberFormat}}원 ({{account.accountNumber}})</option>
-                  </select>
+                  <v-select
+                    v-model="item.receiveAccount"
+                    v-validate="validateReceive"
+                    name="receiveAccount"
+                    data-vv-as="수입계좌 "
+                    :options="accountOptionList"
+                    :disabled="disableReceive"
+                    :reduce="(option) => option.value"
+                  ></v-select>
                   <span class="error" v-if="errors.has('receiveAccount')">{{errors.first('receiveAccount')}}</span>
                 </div>
               </div>
@@ -163,6 +167,7 @@ import "daterangepicker/daterangepicker.css";
 import "jquery-ui/ui/core";
 import "jquery-ui/ui/widgets/autocomplete.js";
 import "jquery-ui/themes/base/all.css";
+import "vue-select/dist/vue-select.css";
 
 import categoryComponent from "./transactionCategory.vue";
 import oftenComponent from "./transactionOften.vue";
@@ -220,6 +225,17 @@ export default {
       }
       return "required";
     },
+    accountOptionList() {
+      const options = this.accountEnableList.map(account => ({
+        label: `${account.name} : ${CommonUtil.toComma(account.balance)}원 (${account.accountNumber})`,
+        value: account.accountSeq,
+      }));
+      options.unshift({
+        label: "",
+        value: 0,
+      });
+      return options;
+    },
   },
   mixins:[transactionMixin],
   methods: {
@@ -237,6 +253,8 @@ export default {
       this.item.kind = kind;
       delete this.item.transactionSeq;
       this.openForm(this.item.kind);
+      const attributeList = this.getAttributeList(this.item.kind);
+      this.item.attribute = attributeList[0].codeItemSeq;
     },
     // 수정 폼
     openEditForm(transaction) {

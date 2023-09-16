@@ -1,6 +1,7 @@
 import Vue from "vue";
 import CommonUtil from "./common-util.js";
 import store from "../store/index.js";
+import vSelect from "vue-select";
 
 // 숫자 (,)콤마 추가
 Vue.filter("numberFormat", (value) => {
@@ -76,6 +77,9 @@ Vue.directive("br", {
 
 // 컴포넌트(component)
 // 선언
+
+Vue.component("v-select", vSelect);
+
 Vue.component("datepicker", {
   template: "<input/>",
   mounted: () => {
