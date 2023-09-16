@@ -14,15 +14,12 @@
 
 ### 초기 셋팅
 
+**Node.js 버전 16를 사용하기 바란다.** 그 이상 버전은 호환성 문제로 실행 및 빌드가 되지 않는다.
+
 ```bash
 # 사전 작업
-Start-Process powershell -Verb runAs
-# powershell 창 열런 상태에서 실행
-# 명령어 실행이 오래(10분 이상) 걸릴 수 있다.
-npm --add-python-to-path='true' --debug install --global windows-build-tools
-
 # 다시 일반 terminal에서 명렁이 실행
-npm run postinstall
+npm install -g electron-builder
 
 # install dependencies
 npm install
@@ -30,6 +27,11 @@ npm install
 #./dist/ 폴더에 실행파일 만들어짐.
 npm run build
 ```
+
+### 설치 실패 시
+1. "VS looking for Visual Studio 2015" 어쩌구 저쩌구 에러가 나오면
+   - [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/) 설치(기본 옵션으로 설치하면 됨)
+2. 윈도우 관리자 모드 환경에서 실행(윈도우 경우 해당)
 
 ### 개발 실행
 1. `npm start` 실행

@@ -14,6 +14,7 @@ export default{
       height: 1200,
       webPreferences: {
         nodeIntegration: true,
+        contextIsolation: false,
       },
     });
     logger.info(`isDevelopment: ${isDevelopment}`);

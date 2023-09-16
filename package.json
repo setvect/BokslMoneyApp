@@ -52,9 +52,9 @@
     "log4js": "^6.3.0",
     "moment": "^2.24.0",
     "moment-lunar": "0.0.4",
-    "sequelize": "^5.21.7",
+    "sequelize": "^6.26.0",
     "source-map-support": "^0.5.16",
-    "sqlite3": "^4.1.1",
+    "sqlite3": "^5.1.2",
     "sweetalert2": "^9.10.10",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.11",
@@ -66,7 +66,7 @@
     "xlsx": "^0.15.6"
   },
   "devDependencies": {
-    "electron": "^9.4.0",
+    "electron": "^26.2.1",
     "electron-builder": "^22.4.1",
     "electron-webpack": "^2.7.4",
     "eslint": "^6.8.0",
