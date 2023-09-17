@@ -6,6 +6,7 @@ import assetGroup from "../../model/assetGroup-vo.js";
 import stockEvaluate from "../../model/stockEvaluate-vo.js";
 import accountService from "../account/accountService.js";
 import codeService from "../code/codeService";
+import tradingService from "../trading/tradingService.js";
 
 import {
   Sequelize
@@ -68,6 +69,7 @@ export default {
       attributes: [
         "snapshotSeq",
         "note",
+        "stockSellCheckDate",
         "regDate",
         "deleteF",
         [Sequelize.fn("sum", Sequelize.col("TOTAL_AMOUNT")), "totalAmount"],
@@ -87,6 +89,17 @@ export default {
     const rtnValue = snapshotList.map(record => record.get({
       plain: true,
     }));
+
+    for (const item of rtnValue) {
+      if (item.stockSellCheckDate != null) {
+        const sellGainsSum = await tradingService.getSellGainsSum({
+          from: item.stockSellCheckDate,
+          to: item.regDate,
+        });
+
+        item.sellGainsSum = sellGainsSum;
+      }
+    }
     return rtnValue;
   },
   async updateStock(item) {

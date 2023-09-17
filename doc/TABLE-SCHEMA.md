@@ -141,12 +141,13 @@
 
 - EA_SNAPSHOT: 스냅샷
 
-| Column Name  | Attribute Name | Key | Type    | Len | Not Null | Description |
-| ------------ | -------------- | --- | ------- | --- | -------- | ----------- |
-| SNAPSHOT_SEQ | 일련번호       | PK  | integer |     | Y        |             |
-| NOTE         | 메모 내용      |     | varchar | 100 | Y        |             |
-| REG_DATE     | 작성일         |     | date    |     | Y        |             |
-| DELETE_F     | 삭제 여부      |     | varchar | 1   | Y        |             |
+| Column Name           | Attribute Name   | Key | Type    | Len | Not Null | Description                                          |
+| --------------------- | ---------------- | --- | ------- | --- | -------- | ---------------------------------------------------- |
+| SNAPSHOT_SEQ          | 일련번호         | PK  | integer |     | Y        |                                                      |
+| NOTE                  | 메모 내용        |     | varchar | 100 | Y        |                                                      |
+| STOCK_SELL_CHECK_DATE | 주식 매도 체크일 |     | date    |     | N        | 해당일 부터 스냅샷 등록일 사이 주식 매도는 손익 판단 |
+| REG_DATE              | 작성일           |     | date    |     | Y        |                                                      |
+| DELETE_F              | 삭제 여부        |     | varchar | 1   | Y        |                                                      |
 
 - EB_ASSET_GROUP: 계좌성격별 그룹
 

@@ -80,6 +80,10 @@ npm run build
 1. ESLient 설정 [https://eslint.org/docs/rules/](https://eslint.org/docs/rules/)
 
 ## 릴리즈
+### ver 0.5 alpha-2023.09.17
+- 기능 추가
+  - 거래 내역 입력 시 계좌 자동완성 검색
+  - 자산 스냅샷에서 매도 손익 표시
 ### ver 0.4 alpha-2021.06.04
 - 기능 추가
   - 리벨러싱을 위한 자산 스냅샷 저장

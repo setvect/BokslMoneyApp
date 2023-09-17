@@ -2,7 +2,7 @@ import {
   ipcMain
 } from "electron";
 import {
-  Op
+  Op, Sequelize
 } from "sequelize";
 import trading from "../../model/trading-vo.js";
 import stockVo from "../../model/stock-vo.js";
@@ -14,6 +14,10 @@ export default {
     // ================ 조회 ================
     ipcMain.handle("trading/listItem", async(event, param) => {
       return await this.list(param);
+    });
+
+    ipcMain.handle("trading/getSellGainsSum", async(event, param) => {
+      return await this.getSellGainsSum(param);
     });
 
     // ================ 등록 ================
@@ -83,6 +87,38 @@ export default {
     }));
     return rtnValue;
   },
+  /**
+   * @returns 특정 기간 매도 손익(수수료, 세금 포함)
+   */
+  async getSellGainsSum(param) {
+    const where = {
+      tradingDate: {
+        [Op.between]: [param.from, param.to],
+      },
+      kind: "SELL",
+    };
+
+    let condition = {
+      attributes: [
+        [Sequelize.fn("sum", Sequelize.col("sell_gains")), "totalSellGains"],
+        [Sequelize.fn("sum", Sequelize.col("tax")), "totalTax"],
+        [Sequelize.fn("sum", Sequelize.col("fee")), "totalFee"]
+      ],
+      where,
+      // raw: true,
+      nest: true,
+    };
+
+    const result = await trading.findAll(condition);
+    // raw를 false로 하고 이렇게 해야 date 타입 값이 moment에 문제 없이 처리 된다.
+    const totalSellGains = result[0].getDataValue("totalSellGains");
+    const totalTax = result[0].getDataValue("totalTax");
+    const totalFee = result[0].getDataValue("totalFee");
+
+    const rtnValue = (totalSellGains || 0) - (totalTax || 0) - (totalFee || 0);
+    return rtnValue;
+  },
+
   /**
    * 주식 매매를 정보를 통해 주식 거래 계좌, 주식 잔고 계산
    * @param {*} tradingItem 거래 내역

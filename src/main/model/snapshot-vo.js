@@ -20,6 +20,10 @@ const snapshotVo = connSeque.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    stockSellCheckDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
     deleteF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

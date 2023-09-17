@@ -25,6 +25,13 @@
               </div>
             </div>
             <div class="form-group row">
+              <label class="control-label col-md-3 col-sm-3 col-xs-3">메도 체크 시작일:</label>
+              <div class="col-md-9 col-sm-9 col-xs-9">
+                <input v-model="item.stockSellCheckDate" v-once type="text" class="form-control has-feedback-left _datepicker" placeholder="날짜 입력" readonly="readonly" />
+                <!-- <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span> -->
+              </div>
+            </div>
+            <div class="form-group row">
               <table class="table table-striped jambo_table bulk_action table-bordered" id="stockGrid">
                 <thead>
                   <tr class="headings">
@@ -77,6 +84,12 @@
 
 <script type="text/javascript">
 import { mapGetters } from "vuex";
+import moment from "moment";
+import "daterangepicker";
+import "daterangepicker/daterangepicker.css";
+import "jquery-ui/ui/core";
+import "jquery-ui/ui/widgets/autocomplete.js";
+import "jquery-ui/themes/base/all.css";
 import snapshotMixin from "./snapshot-mixin.js";
 import _ from "lodash";
 
@@ -119,6 +132,18 @@ export default {
       this.item = $.extend(true, {}, item);
 
       $("#addItem").modal();
+      $("._datepicker").daterangepicker({
+        singleDatePicker: true,
+        singleClasses: "",
+        showDropdowns: true,
+        startDate: moment().format("YYYY-MM-DD"),
+      }, (start) => {
+        this.item.stockSellCheckDate = start.format("YYYY-MM-DD");
+      });
+
+      if(this.item.stockSellCheckDate != null) {
+        $("#addItem ._datepicker").data("daterangepicker").setStartDate(moment(this.item.stockSellCheckDate).format("YYYY-MM-DD"));
+      }
     },
     loadStock() {
       if (this.isAddForm) {

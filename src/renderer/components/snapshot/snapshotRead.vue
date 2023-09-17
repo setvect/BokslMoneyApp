@@ -24,6 +24,15 @@
           <div class="form-group row">
             <snapshotStockList :stockEvaluateList="stockEvaluateList" />
           </div>
+          <template v-if="item.stockSellCheckDate != null">
+            <div class="form-group row">
+              주식 매도 내역(기간: {{ item.stockSellCheckDate | dateFormat("YYYY.MM.DD") }} ~
+              {{ item.regDate | dateFormat("YYYY.MM.DD") }})
+            </div>
+            <div class="form-group row">
+              <snapshotStockSellList :stockSellList="stockSellList" />
+            </div>
+          </template>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -41,20 +50,26 @@ import { mapGetters } from "vuex";
 import snapshotStockStats from "./snapshotStockStats.vue";
 import snapshotAccountStats from "./snapshotAccountStats.vue";
 import snapshotStockList from "./snapshotStockList.vue";
+import snapshotStockSellList from "./snapshotStockSellList.vue";
+import tradingMixin from "../../components/transaction/trading-mixin.js";
 import _ from "lodash";
 
 export default {
+  name: "snapshotRead",
+  mixins: [tradingMixin],
   data() {
     return {
       item: {},
       actionType: "add",
       stockEvaluateList: [],
+      stockSellList: [],
     };
   },
   components: {
     snapshotAccountStats,
     snapshotStockStats,
     snapshotStockList,
+    snapshotStockSellList,
   },
   computed: {
     ...mapGetters(["stockList"]),
@@ -76,6 +91,19 @@ export default {
             evaluateAmount: s.evaluateAmount,
           };
         });
+        if(this.item.stockSellCheckDate != null) {
+          this.loadSellTrade(this.item.stockSellCheckDate, this.item.regDate);
+        }
+      });
+    },
+    loadSellTrade(start, end) {
+      const condition = {
+        kindTypeSet: ["SELL"],
+        from: start,
+        to: end,
+      };
+      this.loadTrading(condition, () => {
+        this.stockSellList = this.tradingList;
       });
     },
     exportExcel() {

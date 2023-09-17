@@ -18,6 +18,8 @@
                   <th>평가자산(원)</th>
                   <th>수익금(원)</th>
                   <th>수익률(%)</th>
+                  <th>매도차익</th>
+                  <th>매도범위</th>
                   <th>날짜</th>
                   <th>기능</th>
                 </tr>
@@ -34,6 +36,13 @@
                   </td>
                   <td class="text-right" :style="{ color: getGainsColor(item.evaluateAmount - item.totalAmount) }">
                     {{ (((item.evaluateAmount - item.totalAmount) / item.totalAmount) * 100).toFixed(1) }}
+                  </td>
+                  <td class="text-right" :style="{ color: getGainsColor(item.sellGainsSum) }">{{ item.sellGainsSum | numberFormat }}</td>
+                  <td class="text-center">
+                    <template v-if="item.stockSellCheckDate != null"
+                      >{{ item.stockSellCheckDate | dateFormat("YYYY.MM.DD") }}
+                    </template>
+                    <template v-else>-</template>
                   </td>
                   <td class="text-center">{{ item.regDate | dateFormat("YYYY.MM.DD") }}</td>
                   <td class="text-center">
