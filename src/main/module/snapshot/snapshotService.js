@@ -15,7 +15,6 @@ import _ from "lodash";
 export default {
   init() {
     // ================ 조회 ================
-    // 계좌 목록
     ipcMain.handle("snapshot/listItem", async(event, snapshotSeq) => {
       return await this.listSnapshot(snapshotSeq);
     });
@@ -29,7 +28,6 @@ export default {
         }],
       });
 
-      // 계좌 성격
       const accountCodeMap = await codeService.getMappingCode("TYPE_ACCOUNT");
       const result = snapshotItem.toJSON();
 
@@ -49,7 +47,6 @@ export default {
     });
 
     // ================ 수정 ================
-    // 정보 수정
     ipcMain.handle("snapshot/editItem", async(event, item) => {
       const saveItem = await snapshot.findByPk(item.snapshotSeq);
       await saveItem.update(item);

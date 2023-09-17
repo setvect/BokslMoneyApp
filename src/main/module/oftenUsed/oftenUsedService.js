@@ -10,7 +10,6 @@ import {
 export default {
   init() {
     // ================ 조회 ================
-    // 계좌 목록
     ipcMain.handle("oftenUsed/listItem", async(event, kind) => {
       const result = await oftenUsed.findAll({
         where: {
@@ -24,7 +23,6 @@ export default {
     });
 
     // ================ 등록 ================
-    // 계좌에 대한 계좌 항목 목록
     ipcMain.handle("oftenUsed/addItem", async(event, item) => {
       item.deleteF = false;
       let order = await oftenUsed.max("orderNo", {
@@ -40,7 +38,6 @@ export default {
     });
 
     // ================ 수정 ================
-    // 정보 수정
     ipcMain.handle("oftenUsed/editItem", async(event, item) => {
       const saveItem = await oftenUsed.findByPk(item.oftenUsedSeq);
       await saveItem.update(item);

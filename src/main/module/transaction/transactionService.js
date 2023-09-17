@@ -11,13 +11,11 @@ import {
 export default {
   init() {
     // ================ 조회 ================
-    // 계좌 목록
     ipcMain.handle("transaction/listItem", async(event, param) => {
       return await this.list(param);
     });
 
     // ================ 등록 ================
-    // 계좌에 대한 계좌 항목 목록
     ipcMain.handle("transaction/addItem", async(event, item) => {
       item.deleteF = false;
       const instance = await transaction.create(item);
@@ -26,7 +24,6 @@ export default {
     });
 
     // ================ 수정 ================
-    // 정보 수정
     ipcMain.handle("transaction/editItem", async(event, item) => {
       const beforeTrans = await transaction.findByPk(item.transactionSeq);
       await this.revertAccount(beforeTrans);

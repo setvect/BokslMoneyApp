@@ -7,14 +7,11 @@ import codeService from "../code/codeService";
 export default {
   init() {
     // ================ 조회 ================
-    // 계좌 목록
     ipcMain.handle("stock/listItem", async(event, accountSeq) => {
       return await this.listStock(accountSeq);
     });
 
     // ================ 등록 ================
-    // 계좌에 대한 계좌 항목 목록
-
     ipcMain.handle("stock/addItem", async(event, item) => {
       item.deleteF = false;
       const instance = await stock.create(item);
@@ -22,7 +19,6 @@ export default {
     });
 
     // ================ 수정 ================
-    // 정보 수정
     ipcMain.handle("stock/editItem", async(event, item) => {
       const saveItem = await stock.findByPk(item.stockSeq);
       await saveItem.update(item);

@@ -11,7 +11,7 @@ import {
 export default {
   init() {
     // ================ 조회 ================
-    // 계좌 목록
+    // 목록
     ipcMain.handle("memo/listItem", async(event, param) => {
       const where = {};
       where["memoDate"] = {
@@ -36,7 +36,6 @@ export default {
     });
 
     // ================ 등록 ================
-    // 계좌에 대한 계좌 항목 목록
     ipcMain.handle("memo/addItem", async(event, item) => {
       item.deleteF = false;
       const instance = await memo.create(item);
@@ -44,7 +43,6 @@ export default {
     });
 
     // ================ 수정 ================
-    // 정보 수정
     ipcMain.handle("memo/editItem", async(event, item) => {
       const saveItem = await memo.findByPk(item.memoSeq);
       saveItem.set("note", item.note);

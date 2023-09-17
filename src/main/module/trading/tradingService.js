@@ -12,14 +12,11 @@ import connSeque from "../../model/connSeque.js";
 export default {
   init() {
     // ================ 조회 ================
-    // 계좌 목록
     ipcMain.handle("trading/listItem", async(event, param) => {
       return await this.list(param);
     });
 
     // ================ 등록 ================
-    // 계좌에 대한 계좌 항목 목록
-
     ipcMain.handle("trading/addItem", async(event, item) => {
       item.deleteF = false;
       item.sellGains = await this.calcSellGains(item);
@@ -29,7 +26,6 @@ export default {
     });
 
     // ================ 수정 ================
-    // 정보 수정
     ipcMain.handle("trading/editItem", async(event, item) => {
       const saveItem = await trading.findByPk(item.tradingSeq);
       await this.revertStock(saveItem);
