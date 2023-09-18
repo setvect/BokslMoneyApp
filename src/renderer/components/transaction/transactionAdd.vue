@@ -168,7 +168,7 @@ import "jquery-ui/ui/core";
 import "jquery-ui/ui/widgets/autocomplete.js";
 import "jquery-ui/themes/base/all.css";
 import "vue-select/dist/vue-select.css";
-
+import _ from "lodash";
 import categoryComponent from "./transactionCategory.vue";
 import oftenComponent from "./transactionOften.vue";
 import transactionMixin from "./transaction-mixin.js";
@@ -373,7 +373,9 @@ export default {
     },
     // 자주쓰는 거래 선택
     selectOftenUsed(often) {
-      this.item = Object.assign(this.item, $.extend(true, {}, often));
+      const transactionDate = this.item.transactionDate;
+      this.item = _.cloneDeep(often);
+      this.item.transactionDate = transactionDate;
       if (this.item.money == 0) {
         this.item.money = "";
       }
