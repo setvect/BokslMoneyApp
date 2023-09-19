@@ -379,6 +379,9 @@ export default {
       if (this.item.money == 0) {
         this.item.money = "";
       }
+      if (this.item.fee == null) {
+        this.item.fee = 0;
+      }
       ElectronUtil.invoke("category/getOne", this.item.categorySeq, (result)=>{
         this.item.category = result;
         this.item.parentCategory = result.parentCategory;
