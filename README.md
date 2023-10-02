@@ -18,7 +18,6 @@
 
 ```bash
 # 사전 작업
-# 다시 일반 terminal에서 명렁이 실행
 npm install -g electron-builder
 
 # install dependencies
